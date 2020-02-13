@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">MyApplicationTutorial</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="btnRegistConfirm">Confirm</string>
+    <string name="tvSignIn">SIGN IN</string>
+    <string name="tvUnderText">Join the fitness app that will change your life.</string>
+    <string name="tfUsernameHint">Username</string>
+    <string name="tfPasswordHint">Password</string>
+    <string name="tvDoesntHaveAcc">DON\'T HAVE AN ACCOUNT?</string>
+    <string name="SignUp">SIGN UP</string>
+    <string name="EmailHint">Email</string>
+    <string name="ConfirmPasswordHint">Confirm Password</string>
+    <string name="MaleString">Male</string>
+    <string name="FemaleString">Female</string>
+    <string name="ContinueString">Continue</string>
+    <string name="WeightString">Enter Your Weight</string>
+    <string name="EnterAge">Enter Your Age</string>
+    <string name="ActivityLevel">Choose Your Activity Level</string>
+    <string name="ChooseHeight">Choose Your Height</string>
+    <string name="take_barcode_picture">Take barcode picture</string>
+    <string name="scan_barcode">Scan barcode</string>
+    <string name="open_camera">Open camera</string>
+    <string name="btnMakeExercise">Make your own exercise</string>
+    <string name="title_activity_create_workout">CreateWorkout</string>
+    <string name="title_activity_make_custom_exercise">MakeCustomExercise</string>
+</resources>
