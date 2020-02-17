@@ -57,15 +57,15 @@ public class PersonalInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/physical_data/height");
+                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/personal_information/physical_data/height");
                 userRef.setValue(spHeight.getSelectedItem().toString());
-                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/physical_data/weight");
+                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/personal_information/physical_data/weight");
                 userRef.setValue(etWeight.getText().toString());
-                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/physical_data/activityLevel");
+                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/personal_information/physical_data/activityLevel");
                 userRef.setValue(spActivityLvl.getSelectedItem().toString());
-                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/age");
+                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/personal_information/age");
                 userRef.setValue(etAge.getText().toString());
-                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/gender");
+                userRef = mDB.getReference("Users/user_" + mAuth.getCurrentUser().getUid() + "/personal_information/gender");
                 userRef.setValue(gender);
 
 

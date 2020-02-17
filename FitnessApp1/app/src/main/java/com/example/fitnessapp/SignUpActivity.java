@@ -74,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
         if(user != null) {
             Toast.makeText(this, "You signed up.",  Toast.LENGTH_SHORT).show();
 
-            userRef = mDB.getReference("Users/user_" + user.getUid() + "/username");
+            userRef = mDB.getReference("Users/user_" + user.getUid() + "/personal_information/username");
             userRef.setValue(username);
 
             Intent HomePage = new Intent(this, PersonalInformationActivity.class);

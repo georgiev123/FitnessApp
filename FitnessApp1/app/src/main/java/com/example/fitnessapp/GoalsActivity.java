@@ -96,13 +96,13 @@ public class GoalsActivity extends AppCompatActivity {
                 final String goalWeight = etGoalWeight.getText().toString();
                 if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked()) && goalWeight != "") {
 
-                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/physical_data/training_goal");
+                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/training_goal");
                     userRef.setValue(spTrainingGoal.getSelectedItem().toString());
 
-                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/physical_data/weight_goal");
+                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weight_goal");
                     userRef.setValue(goalWeight).toString();
 
-                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/physical_data/weightLost_weekly");
+                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weightLost_weekly");
                     if(cbFirst.isChecked()) {
                         userRef.setValue(0.25).toString();
                     }else if(cbSecond.isChecked()) {

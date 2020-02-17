@@ -3,6 +3,7 @@ package com.example.fitnessapp;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.fitnessapp.Workouts.WorkoutActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     private Button btnLogOut;
     private Button btnCaloriesDiary;
+    private Button btnWorkouts;
     private TextView currentUsername;
     private TextView tvCalories;
 
@@ -52,13 +55,12 @@ public class HomePageActivity extends AppCompatActivity {
 
         String userId = mauth.getCurrentUser().getUid();
         mDB = FirebaseDatabase.getInstance();
-        userReference = mDB.getReference();
+        userReference = mDB.getReference("/Users/user_" + mauth.getCurrentUser().getUid());
 
 
-
-        userReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 Toast.makeText(HomePageActivity.this, "asdfads", Toast.LENGTH_LONG).show();
                 username = dataSnapshot.child("username").getValue().toString();
                 gender = dataSnapshot.child("gender").getValue().toString();
@@ -74,16 +76,18 @@ public class HomePageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
+
 
 
         currentUsername = findViewById(R.id.tvUsername);
         currentUsername.setText(username);
 
-        calculateCalories(weight,height,age,weeklyGoal,gender,activityLevel,trainingGoal);
+//        calculateCalories(weight,height,age,weeklyGoal,gender,activityLevel,trainingGoal);
 
         tvCalories = findViewById(R.id.tvCaloriesHome);
-        tvCalories.setText(((ProgramData) this.getApplication()).getCalories().toString() + " - 0" + " = error");
+//        tvCalories.setText(((ProgramData) this.getApplication()).getCalories().toString() + " - 0" + " = error");
 
         btnLogOut = findViewById(R.id.btnLogout);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +109,15 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(caloriesDiary);
             }
         });
+
+        btnWorkouts = findViewById(R.id.btnWorkouts);
+        btnWorkouts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, WorkoutActivity.class));
+            }
+        });
+
 
     }
 

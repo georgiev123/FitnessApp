@@ -12,7 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".GoalsActivity"></activity>
+        <activity android:name=".Workouts.ExerciseCustomViewActivity"></activity>
+        <activity android:name=".Workouts.ChestExercisesActivity" />
+        <activity android:name=".Workouts.BackExercisesActivity" />
+        <activity android:name=".Workouts.BicepsExercisesActivity" />
+        <activity android:name=".Workouts.AbsExercisesActivity" />
+        <activity android:name=".Workouts.WorkoutActivity" />
+        <activity android:name=".GoalsActivity" />
         <activity android:name=".ScanCodeActivity" />
         <activity
             android:name=".FoodActivity"

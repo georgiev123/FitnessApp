@@ -24,7 +24,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calories_diary);
 
         tvCaloriesGoal = findViewById(R.id.tvCaloriesGoal);
-        tvCaloriesGoal.setText(((ProgramData) this.getApplication()).getCalories().toString() + " - 0" + " = error");
+//        tvCaloriesGoal.setText(((ProgramData) this.getApplication()).getCalories().toString() + " - 0" + " = error");
 
         btnMeal1 = findViewById(R.id.btnAddFoodMeal1);
         btnMeal1.setOnClickListener(new View.OnClickListener() {
