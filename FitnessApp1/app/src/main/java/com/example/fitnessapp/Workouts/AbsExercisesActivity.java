@@ -13,6 +13,7 @@ import com.example.fitnessapp.R;
 public class AbsExercisesActivity extends AppCompatActivity {
 
     private Button btnSideBridge, btnCrunches, btnLegRaises, btnSitUps;
+    private String imgEx = "side_bridge.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class AbsExercisesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.exerciseName = "SideBridge";
                 ProgramData.whichActivity = "Abs";
+                ProgramData.imageExercise = imgEx;
                 startActivity(new Intent(AbsExercisesActivity.this, ExerciseCustomViewActivity.class));
             }
         });

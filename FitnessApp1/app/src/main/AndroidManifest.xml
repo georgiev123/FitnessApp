@@ -3,7 +3,7 @@
     package="com.example.fitnessapp">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ProgramData"
@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Workouts.ExerciseCustomViewActivity"></activity>
+        <activity android:name=".ExerciseHistoryActivity"></activity>
+        <activity android:name=".Workouts.ExerciseCustomViewActivity" />
         <activity android:name=".Workouts.ChestExercisesActivity" />
         <activity android:name=".Workouts.BackExercisesActivity" />
         <activity android:name=".Workouts.BicepsExercisesActivity" />

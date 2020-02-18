@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import org.xmlpull.v1.XmlSerializer;
 
@@ -36,6 +39,7 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private String TAG = "asdf";
     private String username;
@@ -85,7 +89,24 @@ public class SignUpActivity extends AppCompatActivity {
         if(user != null) {
             Toast.makeText(this, "You signed up.",  Toast.LENGTH_SHORT).show();
             Intent HomePage = new Intent(this, PersonalInformationActivity.class);
-//            createXMLfile();
+
+            Map<String, Object> currUser = new HashMap<>();
+            currUser.put("username", username);
+
+            db.collection("Users")
+                    .document(mAuth.getCurrentUser().getUid())
+                    .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("asdf", "DocumentSnapshot successful written!");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("asdf", "Error!", e);
+                }
+            });
+
             startActivity(HomePage);
             finish();
         }else {

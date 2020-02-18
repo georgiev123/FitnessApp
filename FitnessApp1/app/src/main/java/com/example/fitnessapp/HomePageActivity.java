@@ -11,6 +11,8 @@ import android.os.Bundle;
 import com.example.fitnessapp.Pedometer.StepDetector;
 import com.example.fitnessapp.Pedometer.StepListener;
 import com.example.fitnessapp.Workouts.WorkoutActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
@@ -33,28 +37,30 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HomePageActivity extends AppCompatActivity implements SensorEventListener, StepListener {
 
-    public FirebaseFirestore mDB = FirebaseFirestore.getInstance();
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth mauth;
 
     private Button btnLogOut;
     private Button btnCaloriesDiary;
     private Button btnWorkouts;
-    private TextView currentUsername;
-    private TextView tvCalories;
+    private Button btnHistoryEx;
+    public TextView currentUsername;
+    public TextView tvCalories;
 
     public String username;
     public String gender;
     public String activityLevel;
     public String trainingGoal;
-    public int weight;
-    public int height;
-    public int age;
-    public int weeklyGoal;
+    public Double weight;
+    public Double height;
+    public Double age;
+    public Double weeklyGoal;
     public Double calories;
 
 
@@ -73,18 +79,41 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         mauth = FirebaseAuth.getInstance();
 
-        String userId = mauth.getCurrentUser().getUid();
-        Map<String, Object> user = new HashMap<>();
-
-
         currentUsername = findViewById(R.id.tvUsername);
-        currentUsername.setText(username);
 
-//        calculateCalories(weight,height,age,weeklyGoal,gender,activityLevel,trainingGoal);
+        DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
+        docRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()) {
+                                Log.d("asdf", "DocumentSnapshot data: " + document.getData());
+                                username = document.getString("username");
+                                currentUsername.setText(username);
+                            }else {
+                                Log.d("asdf", "No such document");
+                            }
+                        }else {
+                            Log.d("asdf", "Get failed with.", task.getException());
+                        }
+                    }
+                });
+
+
+        calculateCalories();
 
         tvCalories = findViewById(R.id.tvCaloriesHome);
-//        tvCalories.setText(((ProgramData) this.getApplication()).getCalories().toString() + " - 0" + " = error");
 
+
+        btnHistoryEx = findViewById(R.id.btnExHistory);
+        btnHistoryEx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, ExerciseHistoryActivity.class));
+            }
+        });
 
         btnLogOut = findViewById(R.id.btnLogout);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
@@ -126,40 +155,67 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
     }
 
-    private void calculateCalories(int weight, int height, int age, int weeklyGoal, String gender, String activityLevel, String trainingGoal) {
-        if(gender.equals("male")) {
-            calories = 66+(2.8*weight) + (32.3*height) - (6.8*age);
-        }else{
-            calories = 65+(2*weight) + (11.9*height) - (4.7*age);
-        }
+    private void calculateCalories() {
+        final DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
+        docRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()) {
+                                Log.d("asdf", "DocumentSnapshot data: " + document.getData());
+                                gender = document.getString("gender");
+                                activityLevel = document.getString("activity_level");
+                                weight = document.getDouble("weight");
+                                height = document.getDouble("height");
+                                age = document.getDouble("age");
+                                weeklyGoal = document.getDouble("weightLost_weekly");
+                                trainingGoal = document.getString("training_goal");
 
-        if(activityLevel.equals("Not Very Active")) {
-            calories *= 1.3;
-        }else if(activityLevel.equals("Lightly Active")) {
-            calories *= 1.475;
-        }else if(activityLevel.equals("Active")) {
-            calories *= 1.65;
-        }else {
-            calories *= 1.85;
-        }
 
-        calories /= (weeklyGoal*10)/2;
+                                if(gender.equals("male")) {
+                                    calories = 800+(11*weight) + (66*height) - (8*age);
+                                }else{
+                                    calories = 700+(8*weight) + (33*height) - (5*age);
+                                }
 
-        if(trainingGoal.equals("Lose Weight")) {
-            calories -= 200;
+                                if(activityLevel.equals("Not Very Active")) {
+                                    calories *= 2.5;
+                                }else if(activityLevel.equals("Lightly Active")) {
+                                    calories *= 2.65;
+                                }else if(activityLevel.equals("Active")) {
+                                    calories *= 2.8;
+                                }else {
+                                    calories *= 2.9;
+                                }
 
-        }else if(trainingGoal.equals("Gain Weight")) {
-            calories += 200;
-        }
+                                calories /= (weeklyGoal*3);
 
-        ((ProgramData) this.getApplication()).setCalories(calories);
+                                if(trainingGoal.equals("Lose Weight")) {
+                                    calories -= 200;
+
+                                }else if(trainingGoal.equals("Gain Weight")) {
+                                    calories += 200;
+                                }
+
+                                Toast.makeText(HomePageActivity.this, "calories =" + calories.intValue(), Toast.LENGTH_LONG).show();
+                                tvCalories.setText(calories.intValue() + " - 0" + " = error");
+                            }else {
+                                Log.d("asdf", "No such document");
+                            }
+                        }else {
+                            Log.d("asdf", "Get failed with.", task.getException());
+                        }
+                    }
+                });
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        numSteps = 0;
+//        numSteps = 0;
         textView.setText(TEXT_NUM_STEPS + numSteps);
         sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_FASTEST);
     }

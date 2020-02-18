@@ -12,9 +12,10 @@ import java.util.Set;
 public class ProgramData extends Application {
 
     public String currentUsername;
-    public Double calories;
+    public static int calories;
     public static String exerciseName;
     public static String whichActivity;
+    public static String imageExercise;
 
     public String getExerciseName() {
         return exerciseName;
@@ -34,11 +35,11 @@ public class ProgramData extends Application {
 
 
 
-    public Double getCalories() {
+    public int getCalories() {
         return calories;
     }
 
-    public void setCalories(Double calories) {
+    public void setCalories(int calories) {
         this.calories = calories;
     }
 

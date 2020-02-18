@@ -11,7 +11,7 @@
         android:id="@+id/ivExerciseImage"
         android:layout_width="435dp"
         android:layout_height="437dp"
-        android:layout_marginBottom="117dp"
+        android:layout_marginBottom="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,52 +20,50 @@
     <TextView
         android:id="@+id/textView11"
         android:layout_width="86dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="84dp"
-        android:layout_marginEnd="306dp"
         android:text="Weight"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/etRepetition"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etRepetition"
-        android:layout_width="61dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="240dp"
+        android:id="@+id/etExWeight"
+        android:layout_width="62dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="230dp"
         android:ems="10"
         android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/tvExercise" />
+        app:layout_constraintTop_toBottomOf="@+id/etRepetition" />
 
     <EditText
-        android:id="@+id/etExWeight"
-        android:layout_width="61dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="240dp"
+        android:id="@+id/etRepetition"
+        android:layout_width="62dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="230dp"
         android:ems="10"
         android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/etRepetition" />
+        app:layout_constraintTop_toBottomOf="@+id/tvExercise" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="86dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="306dp"
         android:text="Repetition"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/etExWeight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -93,6 +91,18 @@
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvExercise"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="48dp"
+        android:text="Back"
+        app:layout_constraintEnd_toStartOf="@+id/tvExercise"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 

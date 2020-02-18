@@ -1,9 +1,11 @@
 package com.example.fitnessapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,14 +14,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GoalsActivity extends AppCompatActivity {
 
     private FirebaseAuth mauth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private Button btnContinue;
     private EditText etGoalWeight;
@@ -93,23 +103,31 @@ public class GoalsActivity extends AppCompatActivity {
                 final String goalWeight = etGoalWeight.getText().toString();
                 if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked()) && goalWeight != "") {
 
-//                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/training_goal");
-//                    userRef.setValue(spTrainingGoal.getSelectedItem().toString());
-//
-//                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weight_goal");
-//                    userRef.setValue(goalWeight).toString();
-//
-//                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weightLost_weekly");
-//                    if(cbFirst.isChecked()) {
-//                        userRef.setValue(0.25).toString();
-//                    }else if(cbSecond.isChecked()) {
-//                        userRef.setValue(0.5).toString();
-//                    }else if(cbThird.isChecked()) {
-//                        userRef.setValue(0.75).toString();
-//                    }else if(cbForth.isChecked()) {
-//                        userRef.setValue(1).toString();
-//                    }
+                    Map<String, Object> currUser = new HashMap<>();
+                    currUser.put("training_goal", spTrainingGoal.getSelectedItem());
+                    currUser.put("weight_goal", goalWeight);
+                    if(cbFirst.isChecked()) {
+                        currUser.put("weightLost_weekly", 0.25);
+                    }else if(cbSecond.isChecked()) {
+                        currUser.put("weightLost_weekly", 0.5);
+                    }else if(cbThird.isChecked()) {
+                        currUser.put("weightLost_weekly", 0.75);
+                    }else if(cbForth.isChecked()) {
+                        currUser.put("weightLost_weekly", 1);
+                    }
 
+                    db.collection("Users").document(mauth.getCurrentUser().getUid())
+                            .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("asdf", "DocumentSnapshot successful written!");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("asdf", "Error!", e);
+                        }
+                    });
 
                     Intent homePage = new Intent(GoalsActivity.this, HomePageActivity.class);
                     startActivity(homePage);
