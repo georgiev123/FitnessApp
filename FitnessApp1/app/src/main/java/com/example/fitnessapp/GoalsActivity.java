@@ -20,8 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class GoalsActivity extends AppCompatActivity {
 
     private FirebaseAuth mauth;
-    private FirebaseDatabase mDB = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef;
 
     private Button btnContinue;
     private EditText etGoalWeight;
@@ -38,7 +36,6 @@ public class GoalsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_goals);
 
         mauth = FirebaseAuth.getInstance();
-        userRef = mDB.getReference();
 
         btnContinue = findViewById(R.id.btnContinueGoals);
         etGoalWeight = findViewById(R.id.etGoalWeight);
@@ -96,22 +93,22 @@ public class GoalsActivity extends AppCompatActivity {
                 final String goalWeight = etGoalWeight.getText().toString();
                 if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked()) && goalWeight != "") {
 
-                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/training_goal");
-                    userRef.setValue(spTrainingGoal.getSelectedItem().toString());
-
-                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weight_goal");
-                    userRef.setValue(goalWeight).toString();
-
-                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weightLost_weekly");
-                    if(cbFirst.isChecked()) {
-                        userRef.setValue(0.25).toString();
-                    }else if(cbSecond.isChecked()) {
-                        userRef.setValue(0.5).toString();
-                    }else if(cbThird.isChecked()) {
-                        userRef.setValue(0.75).toString();
-                    }else if(cbForth.isChecked()) {
-                        userRef.setValue(1).toString();
-                    }
+//                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/training_goal");
+//                    userRef.setValue(spTrainingGoal.getSelectedItem().toString());
+//
+//                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weight_goal");
+//                    userRef.setValue(goalWeight).toString();
+//
+//                    userRef = mDB.getReference("Users/user_" + mauth.getCurrentUser().getUid() + "/personal_information/physical_data/weightLost_weekly");
+//                    if(cbFirst.isChecked()) {
+//                        userRef.setValue(0.25).toString();
+//                    }else if(cbSecond.isChecked()) {
+//                        userRef.setValue(0.5).toString();
+//                    }else if(cbThird.isChecked()) {
+//                        userRef.setValue(0.75).toString();
+//                    }else if(cbForth.isChecked()) {
+//                        userRef.setValue(1).toString();
+//                    }
 
 
                     Intent homePage = new Intent(GoalsActivity.this, HomePageActivity.class);

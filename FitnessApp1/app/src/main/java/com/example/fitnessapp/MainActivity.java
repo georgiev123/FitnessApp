@@ -24,8 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseDatabase mDB = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef;
     private FirebaseAuth mauth;
 
     private Button btnSignIn;
@@ -37,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mauth = FirebaseAuth.getInstance();
-
-        userRef = mDB.getReference("Users");
 
         btnSignUp = findViewById(R.id.btnSignUpMain);
         btnSignUp.setOnClickListener(new View.OnClickListener() {

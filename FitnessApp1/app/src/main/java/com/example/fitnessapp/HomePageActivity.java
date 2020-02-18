@@ -1,8 +1,15 @@
 package com.example.fitnessapp;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
+import com.example.fitnessapp.Pedometer.StepDetector;
+import com.example.fitnessapp.Pedometer.StepListener;
 import com.example.fitnessapp.Workouts.WorkoutActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -12,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,14 +27,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HomePageActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
 
-    public FirebaseDatabase mDB;
-    public DatabaseReference userReference;
+public class HomePageActivity extends AppCompatActivity implements SensorEventListener, StepListener {
+
+    public FirebaseFirestore mDB = FirebaseFirestore.getInstance();
     public FirebaseAuth mauth;
 
     private Button btnLogOut;
@@ -46,6 +58,14 @@ public class HomePageActivity extends AppCompatActivity {
     public Double calories;
 
 
+    private TextView textView;
+    private StepDetector simpleStepDetector;
+    private SensorManager sensorManager;
+    private Sensor accel;
+    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
+    private int numSteps;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,31 +74,7 @@ public class HomePageActivity extends AppCompatActivity {
         mauth = FirebaseAuth.getInstance();
 
         String userId = mauth.getCurrentUser().getUid();
-        mDB = FirebaseDatabase.getInstance();
-        userReference = mDB.getReference("/Users/user_" + mauth.getCurrentUser().getUid());
-
-
-        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(HomePageActivity.this, "asdfads", Toast.LENGTH_LONG).show();
-                username = dataSnapshot.child("username").getValue().toString();
-                gender = dataSnapshot.child("gender").getValue().toString();
-                activityLevel = dataSnapshot.child("physical_data").child("activityLevel").getValue().toString();
-                trainingGoal = dataSnapshot.child("physical_data").child("training_goal").getValue().toString();
-                weight = (Integer) dataSnapshot.child("physical_data").child("weight").getValue();
-                height = (Integer) dataSnapshot.child("physical_data").child("height").getValue();
-                age = (Integer) dataSnapshot.child("age").getValue();
-                weeklyGoal = (Integer) dataSnapshot.child("physical_data").child("weightLost_weekly").getValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
-
+        Map<String, Object> user = new HashMap<>();
 
 
         currentUsername = findViewById(R.id.tvUsername);
@@ -88,6 +84,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         tvCalories = findViewById(R.id.tvCaloriesHome);
 //        tvCalories.setText(((ProgramData) this.getApplication()).getCalories().toString() + " - 0" + " = error");
+
 
         btnLogOut = findViewById(R.id.btnLogout);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +114,14 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(new Intent(HomePageActivity.this, WorkoutActivity.class));
             }
         });
+
+        textView = findViewById(R.id.tvPedometer);
+        textView.setTextSize(30);
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        simpleStepDetector = new StepDetector();
+        simpleStepDetector.registerListener(this);
 
 
     }
@@ -150,6 +155,38 @@ public class HomePageActivity extends AppCompatActivity {
         ((ProgramData) this.getApplication()).setCalories(calories);
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        numSteps = 0;
+        textView.setText(TEXT_NUM_STEPS + numSteps);
+        sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            simpleStepDetector.updateAccel(
+                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+        }
+    }
+
+    @Override
+    public void step(long timeNs) {
+        numSteps++;
+        textView.setText(TEXT_NUM_STEPS + numSteps);
+    }
 
 
 }

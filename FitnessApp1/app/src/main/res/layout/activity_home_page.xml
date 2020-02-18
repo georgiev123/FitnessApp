@@ -8,6 +8,17 @@
     android:background="@drawable/background">
 
 
+<!--    <com.github.lzyzsd.circleprogress.CircleProgress-->
+<!--        android:id="@+id/circle_progress"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_marginBottom="112dp"-->
+<!--        android:circle_progress="20"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/btnCaloriesDiary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
@@ -25,10 +36,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="139dp"
         android:layout_marginEnd="140dp"
-        android:layout_marginBottom="380dp"
+        android:layout_marginBottom="244dp"
         android:text="Calories Diary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -76,12 +88,25 @@
         android:layout_width="124dp"
         android:layout_height="47dp"
         android:layout_marginStart="143dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="144dp"
         android:text="Workouts"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCaloriesDiary"
         tools:text="Workouts" />
+
+    <TextView
+        android:id="@+id/tvPedometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="171dp"
+        android:layout_marginEnd="182dp"
+        android:layout_marginBottom="40dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/btnCaloriesDiary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

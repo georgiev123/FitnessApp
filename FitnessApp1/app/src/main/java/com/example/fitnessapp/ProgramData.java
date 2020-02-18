@@ -11,8 +11,28 @@ import java.util.Set;
 
 public class ProgramData extends Application {
 
-    private String currentUsername;
-    private Double calories;
+    public String currentUsername;
+    public Double calories;
+    public static String exerciseName;
+    public static String whichActivity;
+
+    public String getExerciseName() {
+        return exerciseName;
+    }
+
+    public void setExerciseName(String exerciseName) {
+        this.exerciseName = exerciseName;
+    }
+
+    public String getWhichActivity() {
+        return whichActivity;
+    }
+
+    public void setWhichActivity(String whichActivity) {
+        this.whichActivity = whichActivity;
+    }
+
+
 
     public Double getCalories() {
         return calories;

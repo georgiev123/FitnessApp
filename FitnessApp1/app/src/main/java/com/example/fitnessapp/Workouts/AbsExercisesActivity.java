@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.fitnessapp.ProgramData;
 import com.example.fitnessapp.R;
 
 public class AbsExercisesActivity extends AppCompatActivity {
@@ -26,8 +27,9 @@ public class AbsExercisesActivity extends AppCompatActivity {
         btnSideBridge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExerciseCustomViewActivity sideBr = new ExerciseCustomViewActivity("Side Bridge", "Abs");
-                startActivity(new Intent(AbsExercisesActivity.this, sideBr.getClass()));
+                ProgramData.exerciseName = "SideBridge";
+                ProgramData.whichActivity = "Abs";
+                startActivity(new Intent(AbsExercisesActivity.this, ExerciseCustomViewActivity.class));
             }
         });
     }

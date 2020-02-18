@@ -6,7 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Environment;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,15 +21,25 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mDB = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef;
 
     private String TAG = "asdf";
     private String username;
+    private EditText e1;
 
     private Button btnSignUp;
     private EditText etUsername;
@@ -41,7 +53,6 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
-
 
         btnSignUp = findViewById(R.id.btnSignUp);
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -73,11 +84,8 @@ public class SignUpActivity extends AppCompatActivity {
     public void updateUI(FirebaseUser user) {
         if(user != null) {
             Toast.makeText(this, "You signed up.",  Toast.LENGTH_SHORT).show();
-
-            userRef = mDB.getReference("Users/user_" + user.getUid() + "/personal_information/username");
-            userRef.setValue(username);
-
             Intent HomePage = new Intent(this, PersonalInformationActivity.class);
+//            createXMLfile();
             startActivity(HomePage);
             finish();
         }else {
@@ -104,5 +112,26 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    public void createXMLfile() {
+//
+//        try {
+//            File root = new File(Environment.getExternalStorageDirectory().getPath() + "com.example.fitnessapp");
+//            if (!root.exists()) {
+//                root.mkdirs();
+//            }
+//
+//            File filepath = new File(root, "myFile.txt");
+//
+//            FileWriter writer = new FileWriter(filepath);
+//            writer.append("asdfasdf");
+//            writer.flush();
+//            writer.close();
+//
+//
+//        }catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }

@@ -35,26 +35,26 @@
         android:id="@+id/etRepetition"
         android:layout_width="61dp"
         android:layout_height="35dp"
+        android:layout_marginTop="38dp"
         android:layout_marginEnd="240dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/etWeight" />
+        app:layout_constraintTop_toBottomOf="@+id/tvExercise" />
 
     <EditText
         android:id="@+id/etExWeight"
         android:layout_width="61dp"
         android:layout_height="35dp"
-        android:layout_marginTop="84dp"
         android:layout_marginEnd="240dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/etRepetition" />
 
     <TextView
         android:id="@+id/textView12"
