@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.fitnessapp">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:name=".ProgramData"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ExerciseHistoryActivity"></activity>
+        <activity android:name=".Workouts.ExerciseCustomViewActivity" />
+        <activity android:name=".Workouts.ChestExercisesActivity" />
+        <activity android:name=".Workouts.BackExercisesActivity" />
+        <activity android:name=".Workouts.BicepsExercisesActivity" />
+        <activity android:name=".Workouts.AbsExercisesActivity" />
+        <activity android:name=".Workouts.WorkoutActivity" />
+        <activity android:name=".GoalsActivity" />
+        <activity android:name=".ScanCodeActivity" />
+        <activity
+            android:name=".FoodActivity"
+            android:label="@string/title_activity_food"
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
+        <activity
+            android:name=".CaloriesDiaryActivity"
+            android:label="@string/title_activity_calories_diary"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PersonalInformationActivity"
+            android:label="@string/title_activity_personal_information"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomePageActivity"
+            android:label="@string/title_activity_home_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Workouts.CreateExerciseActivity"
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SignInActivity"
+            android:label="@string/title_activity_sign_in"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
