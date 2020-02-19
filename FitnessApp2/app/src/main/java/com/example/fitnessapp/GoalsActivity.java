@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -60,6 +61,36 @@ public class GoalsActivity extends AppCompatActivity {
         adapterTrainingGoal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTrainingGoal.setAdapter(adapterTrainingGoal);
 
+        spTrainingGoal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(spTrainingGoal.getSelectedItem().equals("Gain Weight")) {
+                    cbFirst.setText("Gain 0.25 kg per week");
+                    cbSecond.setText("Gain 0.5 kg per week");
+                    cbFirst.setAlpha(1);
+                    cbSecond.setAlpha(1);
+                    cbThird.setAlpha(0);
+                    cbForth.setAlpha(0);
+                }else if(spTrainingGoal.getSelectedItem().equals("Maintain Weight")) {
+                    cbFirst.setAlpha(0);
+                    cbSecond.setAlpha(0);
+                    cbThird.setAlpha(0);
+                    cbForth.setAlpha(0);
+                }else {
+                    cbFirst.setText("Lose 0.25 kg per week");
+                    cbSecond.setText("Lose 0.5 kg per week");
+                    cbFirst.setAlpha(1);
+                    cbSecond.setAlpha(1);
+                    cbThird.setAlpha(1);
+                    cbForth.setAlpha(1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         cbFirst.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +132,7 @@ public class GoalsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String goalWeight = etGoalWeight.getText().toString();
-                if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked()) && goalWeight != "") {
+                if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked() || spTrainingGoal.getSelectedItem().equals("Maintain Weight")) && goalWeight != "") {
 
                     Map<String, Object> currUser = new HashMap<>();
                     currUser.put("training_goal", spTrainingGoal.getSelectedItem());

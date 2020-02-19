@@ -11,21 +11,26 @@
         android:id="@+id/etRepetition3"
         android:layout_width="62dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="76dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="46dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etExWeight3" />
+        app:layout_constraintTop_toBottomOf="@+id/etExWeight3"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/etRepetition2"
         android:layout_width="62dp"
         android:layout_height="40dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="46dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
         app:layout_constraintEnd_toStartOf="@+id/etRepetition3"
         app:layout_constraintTop_toBottomOf="@+id/etExWeight2" />
 
@@ -43,12 +48,12 @@
         android:id="@+id/textView11"
         android:layout_width="86dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Weight"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnBack" />
 
     <EditText
         android:id="@+id/etExWeight1"
@@ -80,8 +85,8 @@
         android:id="@+id/etExWeight3"
         android:layout_width="62dp"
         android:layout_height="40dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="76dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="56dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -93,9 +98,11 @@
         android:layout_width="62dp"
         android:layout_height="40dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="46dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
         app:layout_constraintEnd_toStartOf="@+id/etRepetition2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView12"
@@ -105,11 +112,14 @@
         android:id="@+id/textView12"
         android:layout_width="86dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="46dp"
         android:text="Repetition"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvExercise"

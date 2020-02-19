@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fitnessapp.ProgramData;
 import com.example.fitnessapp.R;
@@ -88,12 +89,8 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                 formattedDate = df.format(c);
 
                 Map<String, Object> currUserEx = new HashMap<>();
-                if(!etExWeight1.getText().toString().equals("") && !etRepetitions1.getText().toString().equals("")) {
-                    Double currWeight1 = Double.parseDouble(etExWeight1.getText().toString());
-                    Double currRepetition1 = Double.parseDouble(etRepetitions1.getText().toString());
-                    currUserEx.put("weight1", currWeight1);
-                    currUserEx.put("repetition1", currRepetition1);
-                }
+                currUserEx.put("exercise_type", whichActivity);
+                currUserEx.put("exercise_name", exerciseName);
 
                 if(!etExWeight2.getText().toString().equals("") && !etRepetitions2.getText().toString().equals("")) {
                     Double currWeight2 = Double.parseDouble(etExWeight2.getText().toString());
@@ -110,20 +107,34 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                 }
 
 
-                db.collection("Users").document(mAuth.getCurrentUser().getUid())
-                        .collection("Workouts").document(whichActivity)
-                        .collection(exerciseName).document(formattedDate)
-                        .set(currUserEx).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("asdf", "DocumentSnapshot successful written!");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("asdf", "Error!", e);
-                    }
-                });
+                if(!etExWeight1.getText().toString().equals("") && !etRepetitions1.getText().toString().equals("")) {
+                    Double currWeight1 = Double.parseDouble(etExWeight1.getText().toString());
+                    Double currRepetition1 = Double.parseDouble(etRepetitions1.getText().toString());
+                    currUserEx.put("weight1", currWeight1);
+                    currUserEx.put("repetition1", currRepetition1);
+
+                    db.collection("Users").document(mAuth.getCurrentUser().getUid())
+                            .collection("Workouts").document(formattedDate)
+                            .set(currUserEx).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(ExerciseCustomViewActivity.this, "Your training set has been saven into the exercise history.", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("asdf", "Error!", e);
+                        }
+                    });
+                }
+
+                etExWeight1.setText("");
+                etExWeight2.setText("");
+                etExWeight3.setText("");
+                etRepetitions1.setText("");
+                etRepetitions2.setText("");
+                etRepetitions3.setText("");
+
             }
         });
 

@@ -50,8 +50,7 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
 
 
         db.collection("Users").document(mauth.getCurrentUser().getUid())
-                .collection("Workouts").document("Abs")
-                .collection("SideBridge").get()
+                .collection("Workouts").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -59,16 +58,27 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Map<String, Object> map = new HashMap<>();
                                 map.putAll(document.getData());
+
                                 mWeights.add(map.get("weight1").toString());
                                 mRepetitions.add(map.get("repetition1").toString());
-                                mWeights.add(map.get("weight2").toString());
-                                mRepetitions.add(map.get("repetition2").toString());
-                                mWeights.add(map.get("weight3").toString());
-                                mRepetitions.add(map.get("repetition3").toString());
+                                if(map.get("weight2") == null) {
+                                    mWeights.add("0");
+                                    mRepetitions.add("0");
+                                }else {
+                                    mWeights.add(map.get("weight2").toString());
+                                    mRepetitions.add(map.get("repetition2").toString());
+                                }
+
+                                if(map.get("weight3") == null) {
+                                    mWeights.add("0");
+                                    mRepetitions.add("0");
+                                }else {
+                                    mWeights.add(map.get("weight3").toString());
+                                    mRepetitions.add(map.get("repetition3").toString());
+                                }
 
                                 mDates.add(document.getId());
-                                DocumentReference exercisesRef = document.getReference();
-                                mExercises.add(exercisesRef.getParent().getId());
+                                mExercises.add(map.get("exercise_name").toString());
                             }
 
                             RecyclerView recyclerView = findViewById(R.id.recycle_view);

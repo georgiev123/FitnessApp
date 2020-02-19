@@ -10,7 +10,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="620dp">
+        android:layout_height="500dp"
+        android:layout_below="@+id/textView17"
+        android:layout_marginTop="70dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -19,9 +21,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/recycle_view"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="43dp"
         android:text="Back" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="30dp"
+        android:text="Exercises History"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 
     <!--    <Button-->
