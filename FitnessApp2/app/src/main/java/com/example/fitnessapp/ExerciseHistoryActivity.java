@@ -33,6 +33,7 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mauth = FirebaseAuth.getInstance();
+    private String TAG = "HistoryEx";
 
     private TextView tvWeightEx;
     private TextView tvRepetitionEx;
@@ -86,7 +87,7 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(ExerciseHistoryActivity.this));
                         }else {
-                            Log.d("asdf", "Get failed with.", task.getException());
+                            Log.d(TAG, "Get failed with.", task.getException());
                         }
 
                     }

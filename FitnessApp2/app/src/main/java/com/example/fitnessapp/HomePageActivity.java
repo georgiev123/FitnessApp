@@ -79,7 +79,14 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         mauth = FirebaseAuth.getInstance();
 
+        btnWorkouts = findViewById(R.id.btnWorkouts);
+        btnCaloriesDiary = findViewById(R.id.btnCaloriesDiary);
+        btnLogOut = findViewById(R.id.btnLogout);
+        btnHistoryEx = findViewById(R.id.btnExHistory);
+        tvCalories = findViewById(R.id.tvCaloriesHome);
         currentUsername = findViewById(R.id.tvUsername);
+        textView = findViewById(R.id.tvPedometer);
+        textView.setTextSize(30);
 
         DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
         docRef.get()
@@ -104,10 +111,10 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         calculateCalories();
 
-        tvCalories = findViewById(R.id.tvCaloriesHome);
 
 
-        btnHistoryEx = findViewById(R.id.btnExHistory);
+
+
         btnHistoryEx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +122,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
-        btnLogOut = findViewById(R.id.btnLogout);
+
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +134,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
-        btnCaloriesDiary = findViewById(R.id.btnCaloriesDiary);
+
         btnCaloriesDiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +143,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
-        btnWorkouts = findViewById(R.id.btnWorkouts);
+
         btnWorkouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,8 +151,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
-        textView = findViewById(R.id.tvPedometer);
-        textView.setTextSize(30);
+
+
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

@@ -40,6 +40,7 @@ public class GoalsActivity extends AppCompatActivity {
     private CheckBox cbSecond;
     private CheckBox cbThird;
     private CheckBox cbForth;
+    private  String TAG = "GoalsLog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,8 @@ public class GoalsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String goalWeight = etGoalWeight.getText().toString();
-                if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked() || spTrainingGoal.getSelectedItem().equals("Maintain Weight")) && goalWeight != "") {
+                if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked() ||
+                        spTrainingGoal.getSelectedItem().equals("Maintain Weight")) && goalWeight != "") {
 
                     Map<String, Object> currUser = new HashMap<>();
                     currUser.put("training_goal", spTrainingGoal.getSelectedItem());
@@ -151,12 +153,12 @@ public class GoalsActivity extends AppCompatActivity {
                             .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d("asdf", "DocumentSnapshot successful written!");
+                            Log.d(TAG, "DocumentSnapshot successful written!");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w("asdf", "Error!", e);
+                            Log.w(TAG, "Error!", e);
                         }
                     });
 

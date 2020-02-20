@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:screenOrientation="portrait">
 
 
     <EditText
@@ -112,7 +113,7 @@
         android:id="@+id/textView12"
         android:layout_width="86dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginBottom="46dp"
         android:text="Repetition"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

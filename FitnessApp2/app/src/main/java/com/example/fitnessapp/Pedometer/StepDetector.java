@@ -21,16 +21,12 @@ public class StepDetector {
         this.listener = listener;
     }
 
-    /**
-     * Accepts updates from the accelerometer.
-     */
     public void updateAccel(long timeNs, float x, float y, float z) {
         float[] currentAccel = new float[3];
         currentAccel[0] = x;
         currentAccel[1] = y;
         currentAccel[2] = z;
 
-        // First step is to update our guess of where the global z vector is.
         accelRingCounter++;
         accelRingX[accelRingCounter % ACCEL_RING_SIZE] = currentAccel[0];
         accelRingY[accelRingCounter % ACCEL_RING_SIZE] = currentAccel[1];
@@ -47,8 +43,6 @@ public class StepDetector {
         worldZ[1] = worldZ[1] / normalization_factor;
         worldZ[2] = worldZ[2] / normalization_factor;
 
-        // Next step is to figure out the component of the current acceleration
-        // in the direction of world_z and subtract gravity's contribution
         float currentZ = Sensor.dot(worldZ, currentAccel) - normalization_factor;
         velRingCounter++;
         velRing[velRingCounter % VEL_RING_SIZE] = currentZ;

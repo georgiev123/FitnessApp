@@ -39,6 +39,7 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String TAG = "LogCustomActivity";
 
     private TextView exName;
     private Button btnAddHistory;
@@ -123,7 +124,7 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w("asdf", "Error!", e);
+                            Log.w(TAG, "Error!", e);
                         }
                     });
                 }

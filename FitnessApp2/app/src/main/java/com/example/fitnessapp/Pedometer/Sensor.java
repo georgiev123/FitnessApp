@@ -29,7 +29,6 @@ public class Sensor {
         return (float) Math.sqrt(retval);
     }
 
-    // Note: only works with 3D vectors.
     public static float dot(float[] a, float[] b) {
         float retval = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
         return retval;
