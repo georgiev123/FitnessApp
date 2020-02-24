@@ -50,6 +50,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private Button btnCaloriesDiary;
     private Button btnWorkouts;
     private Button btnHistoryEx;
+    private Button btnFindFriends;
     public TextView currentUsername;
     public TextView tvCalories;
 
@@ -79,6 +80,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         mauth = FirebaseAuth.getInstance();
 
+        btnFindFriends = findViewById(R.id.btnFindFrs);
         btnWorkouts = findViewById(R.id.btnWorkouts);
         btnCaloriesDiary = findViewById(R.id.btnCaloriesDiary);
         btnLogOut = findViewById(R.id.btnLogout);
@@ -152,6 +154,12 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         });
 
 
+        btnFindFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this ,FindFriendsActivity.class));
+            }
+        });
 
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);

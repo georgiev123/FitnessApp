@@ -34,27 +34,25 @@
     <Button
         android:id="@+id/btnCaloriesDiary"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="16dp"
         android:text="Calories Diary"
         app:layout_constraintBottom_toTopOf="@+id/btnWorkouts"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:layout_marginStart="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="150dp"
         android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintEnd_toStartOf="@+id/btnFindFrs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,15 +85,15 @@
 
     <Button
         android:id="@+id/btnWorkouts"
-        android:layout_width="124dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="8dp"
         android:text="Workouts"
         app:layout_constraintBottom_toTopOf="@+id/btnLogout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.343"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Workouts" />
 
@@ -116,13 +114,21 @@
         android:id="@+id/btnExHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginEnd="179dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="150dp"
         android:layout_marginBottom="20dp"
         android:text="Exercises History"
         app:layout_constraintBottom_toTopOf="@+id/btnCaloriesDiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnFindFrs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Friends"
+        tools:layout_editor_absoluteX="291dp"
+        tools:layout_editor_absoluteY="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
