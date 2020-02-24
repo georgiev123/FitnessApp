@@ -51,7 +51,7 @@ public class ChestExercisesActivity extends AppCompatActivity {
         btnDumbbellFlys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgramData.exerciseName = "Dumbbell Flys";
+                ProgramData.exerciseName = "Dumbbell Flyes";
                 ProgramData.whichActivity = "Chest";
                 ProgramData.imageExercise = imgEx;
                 startActivity(new Intent(ChestExercisesActivity.this, ExerciseCustomViewActivity.class));

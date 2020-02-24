@@ -42,6 +42,7 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
     private String TAG = "LogCustomActivity";
 
     private TextView exName;
+    private TextView tvDescription;
     private Button btnAddHistory;
     private Button btnBack;
     private EditText etExWeight1;
@@ -64,11 +65,68 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        tvDescription = findViewById(R.id.tvExDescription);
         whichActivity = ((ProgramData) this.getApplication()).getWhichActivity();
         exerciseName = ((ProgramData) this.getApplication()).getExerciseName();
         exerciseImage = findViewById(R.id.ivExerciseImage);
-        // Да се измисли начин за автоматизирано взимане
-        exerciseImage.setImageResource(R.drawable.side_bridge);
+
+        switch (exerciseName) {
+            case "Side Bridge" :
+                exerciseImage.setImageResource(R.drawable.side_bridge);
+                tvDescription.setText("Muscle: Obliques " +
+                        "\nStep 1: Lie on your side. Make sure one leg is on top of the other. " +
+                        "Position the rorearm on the floor perpendicular with your body. " +
+                        "\nStep 2: use your forearm to lift your upper body of the ground. " +
+                        "The other arm is placed on the side of your body, Your body should be straight. " +
+                        "Only your forearm and the side of your foot should be touching The floor. Hold this position, ");
+                break;
+            case "Sit Ups" :
+                exerciseImage.setImageResource(R.drawable.sit_ups);
+                break;
+            case "Leg Raises" :
+                exerciseImage.setImageResource(R.drawable.leg_raises);
+                break;
+            case "Crunches" :
+                exerciseImage.setImageResource(R.drawable.crunches);
+                break;
+            case "Back Extensions" :
+                exerciseImage.setImageResource(R.drawable.back_extentions);
+                break;
+            case "Dumbbell Shrugs" :
+                exerciseImage.setImageResource(R.drawable.dumbbell_shrugs);
+                break;
+            case "Deadlifts" :
+                exerciseImage.setImageResource(R.drawable.deadlift);
+                break;
+            case "Barbell Shrugs" :
+                exerciseImage.setImageResource(R.drawable.barbbell_shrugs);
+                break;
+            case "Low Pulley Curls" :
+                exerciseImage.setImageResource(R.drawable.low_pulley_curls);
+                break;
+            case "Curls" :
+                exerciseImage.setImageResource(R.drawable.curls);
+                break;
+            case "Reverse Curls" :
+                exerciseImage.setImageResource(R.drawable.reverse_curls);
+                break;
+            case "Hammer Curls" :
+                exerciseImage.setImageResource(R.drawable.hammer_curls);
+                break;
+            case "Push-Ups" :
+                exerciseImage.setImageResource(R.drawable.push_ups);
+                break;
+            case "Bench Presses" :
+                exerciseImage.setImageResource(R.drawable.bench_presses);
+                break;
+            case "Dumbbell Flyes" :
+                exerciseImage.setImageResource(R.drawable.dumbbell_flyes);
+                break;
+            case "Dumbbell Presses" :
+                exerciseImage.setImageResource(R.drawable.dumbbell_presses);
+                break;
+        }
+
 
 
         etExWeight1 = findViewById(R.id.etExWeight1);
@@ -143,19 +201,26 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(whichActivity.equals("Abs")) {
-                    startActivity(new Intent(ExerciseCustomViewActivity.this, AbsExercisesActivity.class));
-                }else if(whichActivity.equals("Back")) {
-                    startActivity(new Intent(ExerciseCustomViewActivity.this, BackExercisesActivity.class));
-                }else if(whichActivity.equals("Biceps")) {
-                    startActivity(new Intent(ExerciseCustomViewActivity.this, BicepsExercisesActivity.class));
-                }else {
-                    startActivity(new Intent(ExerciseCustomViewActivity.this, ChestExercisesActivity.class));
-                }
-                finish();
-
+                startCurrActivity();
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        startCurrActivity();
+    }
+
+    private void startCurrActivity() {
+        if(whichActivity.equals("Abs")) {
+            startActivity(new Intent(ExerciseCustomViewActivity.this, AbsExercisesActivity.class));
+        }else if(whichActivity.equals("Back")) {
+            startActivity(new Intent(ExerciseCustomViewActivity.this, BackExercisesActivity.class));
+        }else if(whichActivity.equals("Biceps")) {
+            startActivity(new Intent(ExerciseCustomViewActivity.this, BicepsExercisesActivity.class));
+        }else {
+            startActivity(new Intent(ExerciseCustomViewActivity.this, ChestExercisesActivity.class));
+        }
+        finish();
     }
 }

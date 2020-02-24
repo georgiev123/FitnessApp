@@ -13,48 +13,46 @@
         android:layout_width="62dp"
         android:layout_height="40dp"
         android:layout_marginEnd="56dp"
-        android:layout_marginBottom="46dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etExWeight3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition2"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/etRepetition2"
         android:layout_width="62dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
-        app:layout_constraintEnd_toStartOf="@+id/etRepetition3"
-        app:layout_constraintTop_toBottomOf="@+id/etExWeight2" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition1"
+        app:layout_constraintEnd_toStartOf="@+id/etRepetition3" />
 
     <ImageView
         android:id="@+id/ivExerciseImage"
-        android:layout_width="435dp"
-        android:layout_height="437dp"
-        android:layout_marginBottom="84dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRepetition1"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="86dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="Weight"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBack" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etExWeight1"
+        app:layout_constraintEnd_toStartOf="@+id/etExWeight1"
+        app:layout_constraintHorizontal_bias="0.297"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etExWeight1"
@@ -66,8 +64,6 @@
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toStartOf="@+id/etExWeight2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/tvExercise" />
 
     <EditText
@@ -99,66 +95,84 @@
         android:layout_width="62dp"
         android:layout_height="40dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="46dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/etRepetition2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/etExWeight1" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etExWeight1"
+        app:layout_constraintTop_toBottomOf="@+id/etExWeight1"
+        app:layout_constraintVertical_bias="0.021" />
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="86dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:text="Repetition"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/ivExerciseImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition1"
+        app:layout_constraintEnd_toStartOf="@+id/etRepetition1"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="172dp"
+        android:layout_marginTop="6dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddSession"
+        app:layout_constraintStart_toEndOf="@+id/btnBack"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnAddSession"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="5dp"
         android:text="Add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvExercise"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvExercise"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="5dp"
         android:text="Back"
-        app:layout_constraintEnd_toStartOf="@+id/tvExercise"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvExercise"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="36dp"
+        android:text="Exercise Characteristics"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvExDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvExDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="40dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
