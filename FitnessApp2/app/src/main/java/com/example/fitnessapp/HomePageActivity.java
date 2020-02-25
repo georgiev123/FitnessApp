@@ -51,7 +51,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private Button btnWorkouts;
     private Button btnHistoryEx;
     private Button btnFindFriends;
-    public TextView currentUsername;
+    private Button currentUsername;
     public TextView tvCalories;
 
     public String username;
@@ -71,6 +71,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private Sensor accel;
     private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
+    private String TAG = "Home Activity";
 
 
     @Override
@@ -80,15 +81,18 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         mauth = FirebaseAuth.getInstance();
 
+        ProgramData.userProfile = mauth.getCurrentUser().getUid();
+
         btnFindFriends = findViewById(R.id.btnFindFrs);
         btnWorkouts = findViewById(R.id.btnWorkouts);
         btnCaloriesDiary = findViewById(R.id.btnCaloriesDiary);
         btnLogOut = findViewById(R.id.btnLogout);
         btnHistoryEx = findViewById(R.id.btnExHistory);
         tvCalories = findViewById(R.id.tvCaloriesHome);
-        currentUsername = findViewById(R.id.tvUsername);
+        currentUsername = findViewById(R.id.btnUserProfile);
         textView = findViewById(R.id.tvPedometer);
         textView.setTextSize(30);
+
 
         DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
         docRef.get()
@@ -98,14 +102,14 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                         if(task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if(document.exists()) {
-                                Log.d("asdf", "DocumentSnapshot data: " + document.getData());
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 username = document.getString("username");
                                 currentUsername.setText(username);
                             }else {
-                                Log.d("asdf", "No such document");
+                                Log.d(TAG, "No such document");
                             }
                         }else {
-                            Log.d("asdf", "Get failed with.", task.getException());
+                            Log.d(TAG, "Get failed with.", task.getException());
                         }
                     }
                 });
@@ -161,6 +165,13 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
+        currentUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, CustomProfileActivity.class));
+            }
+        });
+
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -205,7 +216,12 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                     calories *= 2.9;
                                 }
 
-                                calories /= (weeklyGoal*3);
+                                if(trainingGoal.equals("Gain Weight")) {
+                                    calories += ((weeklyGoal*1000)/height);
+                                }else if (trainingGoal.equals("Lose Weight")) {
+                                    calories /= (weeklyGoal*3);
+                                }
+
 
                                 if(trainingGoal.equals("Lose Weight")) {
                                     calories -= 200;

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +35,7 @@ public class GoalsActivity extends AppCompatActivity {
 
     private Button btnContinue;
     private EditText etGoalWeight;
+    private TextView tvWeeklyGoals;
     private Spinner spTrainingGoal;
     private static final String[] trainingGoals = {"Lose Weight", "Maintain Weight", "Gain Weight"};
     private CheckBox cbFirst;
@@ -49,6 +51,7 @@ public class GoalsActivity extends AppCompatActivity {
 
         mauth = FirebaseAuth.getInstance();
 
+        tvWeeklyGoals = findViewById(R.id.tvWeeklyGoals);
         btnContinue = findViewById(R.id.btnContinueGoals);
         etGoalWeight = findViewById(R.id.etGoalWeight);
         spTrainingGoal = findViewById(R.id.spTrainingGoal);
@@ -68,28 +71,29 @@ public class GoalsActivity extends AppCompatActivity {
                 if(spTrainingGoal.getSelectedItem().equals("Gain Weight")) {
                     cbFirst.setText("Gain 0.25 kg per week");
                     cbSecond.setText("Gain 0.5 kg per week");
-                    cbFirst.setAlpha(1);
-                    cbSecond.setAlpha(1);
-                    cbThird.setAlpha(0);
-                    cbForth.setAlpha(0);
+                    cbFirst.setVisibility(View.VISIBLE);
+                    cbSecond.setVisibility(View.VISIBLE);
+                    cbThird.setVisibility(View.GONE);
+                    cbForth.setVisibility(View.GONE);
                 }else if(spTrainingGoal.getSelectedItem().equals("Maintain Weight")) {
-                    cbFirst.setAlpha(0);
-                    cbSecond.setAlpha(0);
-                    cbThird.setAlpha(0);
-                    cbForth.setAlpha(0);
+                    tvWeeklyGoals.setVisibility(View.GONE);
+                    cbFirst.setVisibility(View.GONE);
+                    cbSecond.setVisibility(View.GONE);
+                    cbThird.setVisibility(View.GONE);
+                    cbForth.setVisibility(View.GONE);
                 }else {
                     cbFirst.setText("Lose 0.25 kg per week");
                     cbSecond.setText("Lose 0.5 kg per week");
-                    cbFirst.setAlpha(1);
-                    cbSecond.setAlpha(1);
-                    cbThird.setAlpha(1);
-                    cbForth.setAlpha(1);
+                    cbFirst.setVisibility(View.VISIBLE);
+                    cbSecond.setVisibility(View.VISIBLE);
+                    cbThird.setVisibility(View.VISIBLE);
+                    cbForth.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                spTrainingGoal.setPrompt("Your Training Goal");
             }
         });
 

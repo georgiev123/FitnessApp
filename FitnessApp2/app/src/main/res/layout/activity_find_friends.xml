@@ -14,7 +14,7 @@
         android:text="Your Friends"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/recycle_view"
+        app:layout_constraintBottom_toTopOf="@+id/lvFollowers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -45,42 +45,30 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/edit_text_border"
         android:onClick="confirmOnClick"
-        android:text="@string/tvSignIn"
+        android:text="Follow Friend"
         android:textColor="#E673EE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/tvFrst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="88dp"
-        android:layout_marginEnd="245dp"
+        android:layout_marginEnd="200dp"
         android:text="Add a Friend"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view"
-        android:layout_width="410dp"
-        android:layout_height="458dp"
-        android:layout_below="@+id/textView17"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/btnBackFindFr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="309dp"
         android:text="Back"
@@ -88,15 +76,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvCurrFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="72dp"
-        android:text="TextView"
+    <ListView
+        android:id="@+id/lvFollowers"
+        android:layout_width="409dp"
+        android:layout_height="456dp"
+        android:layout_marginStart="24dp"
+        android:divider="#000"
+        android:dividerHeight="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

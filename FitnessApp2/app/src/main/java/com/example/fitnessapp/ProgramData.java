@@ -16,6 +16,8 @@ public class ProgramData extends Application {
     public static String exerciseName;
     public static String whichActivity;
     public static String imageExercise;
+    public static String userProfile;
+
 
     public String getExerciseName() {
         return exerciseName;

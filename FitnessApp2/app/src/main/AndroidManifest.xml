@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".FindFriendsActivity"></activity>
+        <activity android:name=".CustomProfileActivity"></activity>
+        <activity android:name=".FindFriendsActivity" />
         <activity android:name=".ExerciseHistoryActivity" />
         <activity android:name=".Workouts.ExerciseCustomViewActivity" />
         <activity android:name=".Workouts.ChestExercisesActivity" />
