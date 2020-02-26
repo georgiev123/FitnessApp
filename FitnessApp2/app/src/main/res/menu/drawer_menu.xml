@@ -1,0 +1,43 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/btnNavProfile"
+                    android:icon="@drawable/ic_account"
+                    android:title="Username"/>
+            </group>
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/btnExHistory"
+            android:icon="@drawable/ic_date"
+            android:title="Exercise History" />
+        <item
+            android:id="@+id/btnCaloriesDiary"
+            android:icon="@drawable/ic_message"
+            android:title="Calories Diary" />
+        <item
+            android:id="@+id/btnWorkouts"
+            android:icon="@drawable/ic_fitness"
+            android:title="Workouts" />
+        <item
+            android:id="@+id/btnFollowers"
+            android:icon="@drawable/ic_group"
+            android:title="Follow" />
+    </group>
+
+    <item android:title="Log out">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/btnLogout"
+                    android:icon="@drawable/ic_message"
+                    android:title="Log Out" />
+            </group>
+        </menu>
+    </item>
+</menu>

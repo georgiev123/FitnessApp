@@ -1,7 +1,9 @@
 package com.example.fitnessapp;
 
 import android.animation.ObjectAnimator;
+import android.content.ClipData;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,7 +15,9 @@ import com.example.fitnessapp.Pedometer.StepListener;
 import com.example.fitnessapp.Workouts.WorkoutActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,10 +30,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -46,15 +60,10 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth mauth;
 
-    private Button btnLogOut;
-    private Button btnCaloriesDiary;
-    private Button btnWorkouts;
-    private Button btnHistoryEx;
-    private Button btnFindFriends;
-    private Button currentUsername;
+
     public TextView tvCalories;
 
-    public String username;
+    public static String username;
     public String gender;
     public String activityLevel;
     public String trainingGoal;
@@ -73,6 +82,13 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private int numSteps;
     private String TAG = "Home Activity";
 
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
+    private ActionBarDrawerToggle drawerToggle;
+
+    private MenuItem btnUsername;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +96,26 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         setContentView(R.layout.activity_home_page);
 
         mauth = FirebaseAuth.getInstance();
-
         ProgramData.userProfile = mauth.getCurrentUser().getUid();
 
-        btnFindFriends = findViewById(R.id.btnFindFrs);
-        btnWorkouts = findViewById(R.id.btnWorkouts);
-        btnCaloriesDiary = findViewById(R.id.btnCaloriesDiary);
-        btnLogOut = findViewById(R.id.btnLogout);
-        btnHistoryEx = findViewById(R.id.btnExHistory);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mDrawer = findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerToggle.syncState();
+
+        // Tie DrawerLayout events to the ActionBarToggle
+        mDrawer.addDrawerListener(drawerToggle);
+
+        nvDrawer = findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
+
+//..................................................................................................................
+
+        btnUsername = findViewById(R.id.btnNavProfile);
         tvCalories = findViewById(R.id.tvCaloriesHome);
-        currentUsername = findViewById(R.id.btnUserProfile);
         textView = findViewById(R.id.tvPedometer);
         textView.setTextSize(30);
 
@@ -104,7 +130,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                             if(document.exists()) {
                                 Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 username = document.getString("username");
-                                currentUsername.setText(username);
+//                                btnUsername.setTitle(username);
                             }else {
                                 Log.d(TAG, "No such document");
                             }
@@ -114,71 +140,90 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                     }
                 });
 
-
         calculateCalories();
-
-
-
-
-
-        btnHistoryEx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePageActivity.this, ExerciseHistoryActivity.class));
-            }
-        });
-
-
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(HomePageActivity.this, "You logged out.", Toast.LENGTH_LONG).show();
-                mauth.getInstance().signOut();
-                Intent mainActivity = new Intent(HomePageActivity.this, MainActivity.class);
-                startActivity(mainActivity);
-                finish();
-            }
-        });
-
-
-        btnCaloriesDiary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent caloriesDiary = new Intent(HomePageActivity.this, CaloriesDiaryActivity.class);
-                startActivity(caloriesDiary);
-            }
-        });
-
-
-        btnWorkouts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePageActivity.this, WorkoutActivity.class));
-            }
-        });
-
-
-        btnFindFriends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePageActivity.this ,FindFriendsActivity.class));
-            }
-        });
-
-        currentUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePageActivity.this, CustomProfileActivity.class));
-            }
-        });
-
-
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
+    }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
+        // and will not render the hamburger icon without it.
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+//        Fragment fragment = new Fragment();
+//        Class fragmentClass;
+        switch(menuItem.getItemId()) {
+            case R.id.btnNavProfile:
+                startActivity(new Intent(this, CustomProfileActivity.class));
+                break;
+            case R.id.btnExHistory:
+                startActivity(new Intent(this, ExerciseHistoryActivity.class));
+                break;
+            case R.id.btnCaloriesDiary:
+                startActivity(new Intent(this, CaloriesDiaryActivity.class));
+                break;
+            case R.id.btnWorkouts:
+                startActivity(new Intent(this, WorkoutActivity.class));
+                break;
+            case R.id.btnFollowers:
+                startActivity(new Intent(this, FindFriendsActivity.class));
+                break;
+            case R.id.btnLogout:
+                Toast.makeText(HomePageActivity.this, "You logged out.", Toast.LENGTH_LONG).show();
+                mauth.getInstance().signOut();
+                startActivity(new Intent(HomePageActivity.this, MainActivity.class));
+                finish();
+        }
+
+//        fragmentClass = HomePageActivity.class;
+
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Insert the fragment by replacing any existing fragment
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+        // Highlight the selected item has been done by NavigationView
+//        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
     }
 
     private void calculateCalories() {
@@ -231,7 +276,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                 }
 
                                 Toast.makeText(HomePageActivity.this, "calories =" + calories.intValue(), Toast.LENGTH_LONG).show();
-                                tvCalories.setText(calories.intValue() + " - 0" + " = error");
+                                Double caloriesRemaining = calories-ProgramData.caloriesIntake;
+                                tvCalories.setText(calories.intValue() + "   -  " + ProgramData.caloriesIntake.intValue() + "   =   " + caloriesRemaining.intValue());
                             }else {
                                 Log.d("asdf", "No such document");
                             }
@@ -241,6 +287,17 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                     }
                 });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
 
     @Override
@@ -273,6 +330,11 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     public void step(long timeNs) {
         numSteps++;
         textView.setText(TEXT_NUM_STEPS + numSteps);
+        if(numSteps >= 10) {
+
+//            db.collection("Users").document(mauth.getCurrentUser().getUid())
+//                    .set()
+        }
     }
 
 

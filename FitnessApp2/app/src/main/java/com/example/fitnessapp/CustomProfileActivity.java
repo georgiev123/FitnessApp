@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +34,7 @@ public class CustomProfileActivity extends AppCompatActivity {
     private TextView tvWeightGoal;
     private TextView tvTrainingGoal;
     private Button btnBack;
+    private ImageView profileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class CustomProfileActivity extends AppCompatActivity {
 
         mauth = FirebaseAuth.getInstance();
 
+        profileImage = findViewById(R.id.ivProfileImage);
         btnBack = findViewById(R.id.btnBackProfile);
         tvUsername = findViewById(R.id.tvProfileUsername);
         tvAge = findViewById(R.id.tvProfileAge);
@@ -71,6 +74,12 @@ public class CustomProfileActivity extends AppCompatActivity {
                     tvTrainingGoal.setText("Training Goal:" + map.get("training_goal").toString());
                     tvWeight.setText("Weight:" + map.get("weight").toString());
                     tvWeightGoal.setText("Weight Goal:" + map.get("weight_goal").toString());
+                    if(map.get("gender").toString().equals("male")) {
+                        profileImage.setImageResource(R.drawable.man);
+                    }else {
+                        profileImage.setImageResource(R.drawable.women);
+                    }
+
                     if (!map.get("training_goal").equals("Maintain Weight")) {
                         tvWeightLostWeekly.setText("Weight Lost Weekly:" + map.get("weightLost_weekly").toString());
                         tvWeightLostWeekly.setVisibility(View.VISIBLE);

@@ -22,9 +22,9 @@ public class FoodActivity extends AppCompatActivity {
     private Button btnBarcodeScan;
     public static TextView resutlTv;
 
-    final TextView textView = (TextView) findViewById(R.id.text);
-    RequestQueue queue = Volley.newRequestQueue(this);
-    String url ="http://www.google.com";
+//    final TextView textView = (TextView) findViewById(R.id.text);
+//    RequestQueue queue = Volley.newRequestQueue(this);
+//    String url ="http://www.google.com";
 
 
     @Override
@@ -42,19 +42,19 @@ public class FoodActivity extends AppCompatActivity {
             }
         });
 
-        StringRequest stringRequest = new StringRequest(StringRequest.Method.GET, url, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-//                JSONObject jobj = new JSONObject(response.toString());
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        queue.add(stringRequest);
+//        StringRequest stringRequest = new StringRequest(StringRequest.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+////                JSONObject jobj = new JSONObject(response.toString());
+//            }
+//        }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//
+//        queue.add(stringRequest);
 
     }
 

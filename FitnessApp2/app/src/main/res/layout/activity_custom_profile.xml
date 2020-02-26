@@ -106,11 +106,14 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="320dp"
+        android:layout_marginBottom="50dp"
         android:text="Weight Lost Weekly"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfileWeightGoal" />
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileWeightGoal"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvProfileHeight"
@@ -138,9 +141,9 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ivProfileImage"
+        android:layout_width="122dp"
+        android:layout_height="128dp"
         android:layout_marginStart="125dp"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="158dp"

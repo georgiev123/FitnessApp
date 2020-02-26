@@ -1,9 +1,9 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#673AB7</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
@@ -35,7 +35,6 @@
 <!--            xmlns:android="http://schemas.android.com/apk/res/android">-->
 <!--        </shape>-->
 <!--    </style>-->
-
 
     <declare-styleable name="CircleProgress">
         <attr name="circle_progress" format="integer"/>

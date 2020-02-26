@@ -17,6 +17,7 @@ public class ProgramData extends Application {
     public static String whichActivity;
     public static String imageExercise;
     public static String userProfile;
+    public static Double caloriesIntake = 0.0;
 
 
     public String getExerciseName() {

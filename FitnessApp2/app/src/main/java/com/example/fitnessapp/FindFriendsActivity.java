@@ -147,6 +147,7 @@ public class FindFriendsActivity extends AppCompatActivity {
                                     db.collection("Users").document(mauth.getCurrentUser().getUid())
                                             .collection("Followings").document(edUsernameS.getText().toString())
                                             .set(mp);
+                                    edUsernameS.setText("");
                                     break;
                                 }else {
 //                                    Toast.makeText(FindFriendsActivity.this, "User not found.", Toast.LENGTH_SHORT).show();

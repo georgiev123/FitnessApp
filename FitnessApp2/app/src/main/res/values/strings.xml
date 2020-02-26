@@ -30,4 +30,7 @@
     <string name="title_activity_personal_information">PersonalInformationActivity</string>
     <string name="title_activity_calories_diary">CaloriesDiaryActivity</string>
     <string name="title_activity_food">FoodActivity</string>
+    <string name="message">Message</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

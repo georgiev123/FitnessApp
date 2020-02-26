@@ -11,12 +11,16 @@
         android:id="@+id/textView20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Friends"
+        android:layout_marginTop="230dp"
+        android:text="Your Followee"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toTopOf="@+id/lvFollowers"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.181" />
 
     <EditText
         android:id="@+id/etusernameFr"
@@ -78,9 +82,10 @@
 
     <ListView
         android:id="@+id/lvFollowers"
-        android:layout_width="409dp"
-        android:layout_height="456dp"
+        android:layout_width="383dp"
+        android:layout_height="400dp"
         android:layout_marginStart="24dp"
+        android:background="@drawable/list_viewborder"
         android:divider="#000"
         android:dividerHeight="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
