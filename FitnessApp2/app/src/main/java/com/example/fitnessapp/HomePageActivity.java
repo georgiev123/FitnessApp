@@ -246,34 +246,27 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
 
                                 if(gender.equals("male")) {
-                                    calories = 800+(11*weight) + (66*height) - (8*age);
+                                    calories = (10*weight) + (6.25*(height*100)) - (5*age) + 5;
                                 }else{
-                                    calories = 700+(8*weight) + (33*height) - (5*age);
+                                    calories = (10*weight) + (6.25*(height*100)) - (5*age) - 161;
                                 }
 
                                 if(activityLevel.equals("Not Very Active")) {
-                                    calories *= 2.5;
+                                    calories *= 1.2;
                                 }else if(activityLevel.equals("Lightly Active")) {
-                                    calories *= 2.65;
+                                    calories *= 1.375;
                                 }else if(activityLevel.equals("Active")) {
-                                    calories *= 2.8;
+                                    calories *= 1.55;
                                 }else {
-                                    calories *= 2.9;
+                                    calories *= 1.725;
                                 }
 
                                 if(trainingGoal.equals("Gain Weight")) {
-                                    calories += ((weeklyGoal*1000)/height);
+                                    calories += ((weeklyGoal*1500)/2);
                                 }else if (trainingGoal.equals("Lose Weight")) {
-                                    calories /= (weeklyGoal*3);
+                                    calories /= ((weeklyGoal*1000)/2);
                                 }
 
-
-                                if(trainingGoal.equals("Lose Weight")) {
-                                    calories -= 200;
-
-                                }else if(trainingGoal.equals("Gain Weight")) {
-                                    calories += 200;
-                                }
 
                                 Toast.makeText(HomePageActivity.this, "calories =" + calories.intValue(), Toast.LENGTH_LONG).show();
                                 Double caloriesRemaining = calories-ProgramData.caloriesIntake;
