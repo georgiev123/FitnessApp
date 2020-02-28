@@ -1,18 +1,33 @@
 package com.example.fitnessapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.Result;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private ZXingScannerView scannerView;
     int MY_PERMISSIONS_REQUEST_CAMERA=0;
@@ -43,8 +58,31 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
     }
 
     @Override
-    public void handleResult(Result result) {
+    public void handleResult(final Result result) {
         FoodActivity.resutlTv.setText((result.getText()));
+        db.collection("FoodDB").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = new HashMap<>();
+                                map.putAll(document.getData());
+
+                                if(result.getText().equals(map.get("barcode").toString())) {
+                                    startActivity(new Intent(ScanCodeActivity.this, CustomFoodActivity.class));
+                                    CustomFoodActivity.tvBarcode.setText(map.get("barcode").toString());
+                                    CustomFoodActivity.tvName.setText(document.getId());
+                                }
+                            }
+
+                        }else {
+                            Log.d("asdf", "Get failed with.", task.getException());
+                        }
+
+                    }
+                });
+
         onBackPressed();
     }
 

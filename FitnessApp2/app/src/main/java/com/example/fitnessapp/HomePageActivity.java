@@ -27,9 +27,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -64,17 +69,9 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     public TextView tvCalories;
 
     public static String username;
-    public String gender;
-    public String activityLevel;
-    public String trainingGoal;
-    public Double weight;
-    public Double height;
-    public Double age;
-    public Double weeklyGoal;
-    public Double calories;
-
 
     private TextView textView;
+    private TextView tvFeed;
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
@@ -106,7 +103,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
 
-        // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
         nvDrawer = findViewById(R.id.nvView);
@@ -116,6 +112,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         btnUsername = findViewById(R.id.btnNavProfile);
         tvCalories = findViewById(R.id.tvCaloriesHome);
+        tvFeed = findViewById(R.id.tvFeed);
         textView = findViewById(R.id.tvPedometer);
         textView.setTextSize(30);
 
@@ -140,7 +137,47 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                     }
                 });
 
-        calculateCalories();
+
+        db.collection("Users").document(mauth.getCurrentUser().getUid())
+                .collection("Workouts").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                db.collection("Users").document(document.getId())
+                                        .collection("Achievements").document("Pedometer")
+                                        .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                                        if (e != null) {
+                                            Log.w(TAG, "Listen failed.", e);
+                                            return;
+                                        }
+
+                                        if (snapshot != null && snapshot.exists()) {
+                                            Map<String, Object> mp = new HashMap<>();
+                                            mp.putAll(snapshot.getData());
+                                            tvFeed.setText(mp.get("steps").toString());
+                                        } else {
+                                            Log.d(TAG, "Current data: null");
+                                        }
+
+                                    }
+                                });
+                            }
+
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+
+
+
+        calculateCalories("HomePage", tvCalories, mauth, null);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
@@ -150,7 +187,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
     }
 
@@ -162,8 +198,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
-        // and will not render the hamburger icon without it.
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
@@ -226,8 +260,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         mDrawer.closeDrawers();
     }
 
-    private void calculateCalories() {
-        final DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
+    public void calculateCalories(final String  calledFromActivity ,final TextView caloriesTV, final FirebaseAuth fAuth, final TextView macrosTV) {
+        final DocumentReference docRef = db.collection("Users").document(fAuth.getCurrentUser().getUid());
         docRef.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -235,7 +269,16 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                         if(task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if(document.exists()) {
-                                Log.d("asdf", "DocumentSnapshot data: " + document.getData());
+                                String gender;
+                                String activityLevel;
+                                String trainingGoal;
+                                Double weight;
+                                Double height;
+                                Double age;
+                                Double weeklyGoal;
+                                Double calories;
+
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 gender = document.getString("gender");
                                 activityLevel = document.getString("activity_level");
                                 weight = document.getDouble("weight");
@@ -264,18 +307,35 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                 if(trainingGoal.equals("Gain Weight")) {
                                     calories += ((weeklyGoal*1500)/2);
                                 }else if (trainingGoal.equals("Lose Weight")) {
-                                    calories /= ((weeklyGoal*1000)/2);
+                                    calories -= ((weeklyGoal*1000)/2);
                                 }
 
 
-                                Toast.makeText(HomePageActivity.this, "calories =" + calories.intValue(), Toast.LENGTH_LONG).show();
+//                                Toast.makeText(HomePageActivity.this, "calories =" + calories.intValue(), Toast.LENGTH_LONG).show();
                                 Double caloriesRemaining = calories-ProgramData.caloriesIntake;
-                                tvCalories.setText(calories.intValue() + "   -  " + ProgramData.caloriesIntake.intValue() + "   =   " + caloriesRemaining.intValue());
+                                caloriesTV.setText(calories.intValue() + "   -  " + ProgramData.caloriesIntake.intValue() + "   =   " + caloriesRemaining.intValue());
+                                if(calledFromActivity.equals("CaloriesDiary")) {
+                                    Double carbs;
+                                    Double protein;
+                                    Double fats;
+
+                                   if(trainingGoal.equals("Lose Weight")) {
+                                        carbs = calories*0.45;
+                                        protein = calories*0.35;
+                                        fats = calories*0.2;
+                                    }else {
+                                        carbs = calories*0.5;
+                                        protein = calories*0.25;
+                                        fats = calories*0.25;
+                                    }
+
+                                   macrosTV.setText("carbs :  " + carbs.intValue() + "   proteins :  " + protein.intValue() + "   fats :  " + fats.intValue());
+                                }
                             }else {
-                                Log.d("asdf", "No such document");
+                                Log.d(TAG, "No such document");
                             }
                         }else {
-                            Log.d("asdf", "Get failed with.", task.getException());
+                            Log.d(TAG, "Get failed with.", task.getException());
                         }
                     }
                 });
@@ -288,10 +348,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 
     @Override
     public void onResume() {
@@ -323,10 +379,15 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     public void step(long timeNs) {
         numSteps++;
         textView.setText(TEXT_NUM_STEPS + numSteps);
+
         if(numSteps >= 10) {
 
-//            db.collection("Users").document(mauth.getCurrentUser().getUid())
-//                    .set()
+            Map<String, Object> map = new HashMap<>();
+            map.put("steps", numSteps);
+
+            db.collection("Users").document(mauth.getCurrentUser().getUid())
+                    .collection("Achievements").document("Pedometer")
+                    .set(map);
         }
     }
 
