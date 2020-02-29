@@ -1,7 +1,5 @@
 package com.example.fitnessapp;
 
-import android.animation.ObjectAnimator;
-import android.content.ClipData;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.hardware.SensorEvent;
@@ -9,24 +7,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 
-import com.example.fitnessapp.Pedometer.PedometerService;
-import com.example.fitnessapp.Pedometer.Sensor;
 import com.example.fitnessapp.Pedometer.StepDetector;
 import com.example.fitnessapp.Pedometer.StepListener;
 import com.example.fitnessapp.Workouts.FitnessProgramProposalActivity;
 import com.example.fitnessapp.Workouts.WorkoutActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -40,26 +28,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,8 +100,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         tvFeed = findViewById(R.id.tvFeed);
         stepCounter = findViewById(R.id.tvPedometer);
         stepCounter.setTextSize(30);
-
-//        startService();
 
         DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
         docRef.get()
@@ -362,7 +335,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onResume() {
         super.onResume();
-//        numSteps = 0;
+
         stepCounter.setText(TEXT_NUM_STEPS + numSteps);
         sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_FASTEST);
     }
@@ -370,9 +343,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
-    }
 
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -403,17 +375,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         }
     }
 
-//    public void startService() {
-//        Intent serviceIntent = new Intent(this, PedometerService.class);
-//        serviceIntent.putExtra("inputExtra", "Pedometer");
-//
-//        ContextCompat.startForegroundService(this, serviceIntent);
-//    }
-//
-//    public void stopService() {
-//        Intent serviceIntent = new Intent(this, PedometerService.class);
-//        stopService(serviceIntent);
-//    }
 
     @Override
     public void onRestart() {

@@ -69,13 +69,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Log.d(TAG, "ONbINDvIEWhOLDER: CALLED");
-
-//        Glide.with(context)
-//                .load(mWeights.get(position))
-//                .load(mRepetitions.get(position))
-//                .load(mExecrcises.get(position))
-//                .load(mDates.get(position));
 
         if(((Activity) context).getLocalClassName().equals("ExerciseHistoryActivity")) {
             holder.weight1.setText(mWeights.get(position+positionChange));

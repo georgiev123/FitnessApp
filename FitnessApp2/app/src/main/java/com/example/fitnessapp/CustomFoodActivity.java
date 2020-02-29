@@ -52,6 +52,12 @@ public class CustomFoodActivity extends AppCompatActivity {
         tvGrams = findViewById(R.id.tvInfoGrams);
         btnAddMeal = findViewById(R.id.btnAddFood);
 
+        if(ProgramData.openedByBarcodeScanner) {
+            btnAddMeal.setText("Add Food To Your Meal");
+        }else {
+            btnAddMeal.setText("Back");
+        }
+
 
         db.collection("FoodDB").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -63,12 +69,12 @@ public class CustomFoodActivity extends AppCompatActivity {
                                 map.putAll(document.getData());
 
                                 if(ProgramData.barcodeScanned.equals(map.get("barcode").toString())) {
-                                    tvBarcode.setText(map.get("barcode").toString());
-                                    tvCalories.setText(map.get("calories").toString());
-                                    tvCarbs.setText(map.get("carbs").toString());
-                                    tvProteins.setText(map.get("proteins").toString());
-                                    tvFats.setText(map.get("fats").toString());
-                                    tvGrams.setText(map.get("grams").toString());
+                                    tvBarcode.setText("Barcode : " + map.get("barcode").toString());
+                                    tvCalories.setText("Calories : " + map.get("calories").toString());
+                                    tvCarbs.setText("Carbs : " + map.get("carbs").toString());
+                                    tvProteins.setText("Proteins : " + map.get("proteins").toString());
+                                    tvFats.setText("Fats : " + map.get("fats").toString());
+                                    tvGrams.setText("Grams : " + map.get("grams").toString());
                                     tvName.setText(document.getId());
                                 }
                             }
@@ -84,21 +90,21 @@ public class CustomFoodActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ProgramData.openedByBarcodeScanner) {
-                    ProgramData.caloriesIntake += Double.parseDouble(tvCalories.getText().toString());
-                    ProgramData.carbsIntake += Double.parseDouble(tvCarbs.getText().toString());
-                    ProgramData.proteinsIntake += Double.parseDouble(tvProteins.getText().toString());
-                    ProgramData.fatsIntake += Double.parseDouble(tvFats.getText().toString());
+                    ProgramData.caloriesIntake += Double.parseDouble(tvCalories.getText().toString().split("\\s+")[2]);
+                    ProgramData.carbsIntake += Double.parseDouble(tvCarbs.getText().toString().split("\\s+")[2]);
+                    ProgramData.proteinsIntake += Double.parseDouble(tvProteins.getText().toString().split("\\s+")[2]);
+                    ProgramData.fatsIntake += Double.parseDouble(tvFats.getText().toString().split("\\s+")[2]);
                     Date c = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY hh:mm:ss");
                     String formattedDate = df.format(c);
 
                     Map<String, Object> map = new HashMap<>();
-                    map.put("food_name", tvName.getText());
-                    map.put("calories", tvCalories.getText());
+                    map.put("food_name", tvName.getText().toString());
+                    map.put("calories", tvCalories.getText().toString().split("\\s+")[2]);
                     map.put("meal_number", ProgramData.whichMeal);
-                    map.put("carbs", tvCarbs.getText().toString());
-                    map.put("proteins", tvProteins.getText().toString());
-                    map.put("fats", tvFats.getText().toString());
+                    map.put("carbs", tvCarbs.getText().toString().split("\\s+")[2]);
+                    map.put("proteins", tvProteins.getText().toString().split("\\s+")[2]);
+                    map.put("fats", tvFats.getText().toString().split("\\s+")[2]);
 
                     db.collection("Users").document(mauth.getCurrentUser().getUid())
                             .collection("Meals").document(formattedDate).set(map);

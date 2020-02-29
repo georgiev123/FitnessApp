@@ -94,7 +94,22 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String[] clickedFood = meal1.getItemAtPosition(position).toString().split("\\s+");
+                onClickInfo(clickedFood[0]);
+            }
+        });
 
+        meal2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String[] clickedFood = meal2.getItemAtPosition(position).toString().split("\\s+");
+                onClickInfo(clickedFood[0]);
+            }
+        });
+
+        meal3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String[] clickedFood = meal3.getItemAtPosition(position).toString().split("\\s+");
                 onClickInfo(clickedFood[0]);
             }
         });
