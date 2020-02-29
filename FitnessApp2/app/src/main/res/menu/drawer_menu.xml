@@ -18,7 +18,7 @@
             android:title="Exercise History" />
         <item
             android:id="@+id/btnCaloriesDiary"
-            android:icon="@drawable/ic_message"
+            android:icon="@drawable/ic_assessment"
             android:title="Calories Diary" />
         <item
             android:id="@+id/btnWorkouts"
@@ -28,6 +28,10 @@
             android:id="@+id/btnFollowers"
             android:icon="@drawable/ic_group"
             android:title="Follow" />
+        <item
+            android:id="@+id/btnFitnesProgram"
+            android:icon="@drawable/ic_assignment"
+            android:title="Fitness Program" />
     </group>
 
     <item android:title="Log out">
@@ -35,7 +39,7 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/btnLogout"
-                    android:icon="@drawable/ic_message"
+                    android:icon="@drawable/ic_exit_to_app"
                     android:title="Log Out" />
             </group>
         </menu>

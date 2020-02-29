@@ -66,8 +66,8 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         tvDescription = findViewById(R.id.tvExDescription);
-        whichActivity = ((ProgramData) this.getApplication()).getWhichActivity();
-        exerciseName = ((ProgramData) this.getApplication()).getExerciseName();
+        whichActivity = ProgramData.whichActivity;
+        exerciseName = ProgramData.exerciseName;
         exerciseImage = findViewById(R.id.ivExerciseImage);
 
         switch (exerciseName) {
@@ -75,55 +75,203 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                 exerciseImage.setImageResource(R.drawable.side_bridge);
                 tvDescription.setText("Muscle: Obliques " +
                         "\nStep 1: Lie on your side. Make sure one leg is on top of the other. " +
-                        "Position the rorearm on the floor perpendicular with your body. " +
-                        "\nStep 2: use your forearm to lift your upper body of the ground. " +
-                        "The other arm is placed on the side of your body, Your body should be straight. " +
-                        "Only your forearm and the side of your foot should be touching The floor. Hold this position, ");
+                        "Position the forearm on the floor perpendicular with your body. " +
+                        "\nStep 2: Use your forearm to lift your upper body of the ground. " +
+                        "The other arm is placed on the side of your body. Your body should be straight. " +
+                        "Only your forearm and the side of your foot should be touching the floor. Hold this position. ");
                 break;
             case "Sit Ups" :
                 exerciseImage.setImageResource(R.drawable.sit_ups);
+                tvDescription.setText("Muscle: Rectus Abdominis\n" +
+                        "Step 1: Lie on the stability Position\n" +
+                        "hands on yout head and feet on the\n" +
+                        "Step 2:Raise your upper while\n" +
+                        "k&ping back On the stability\n" +
+                        "bail Hold for one second Return to starling\n" +
+                        "position");
                 break;
             case "Leg Raises" :
                 exerciseImage.setImageResource(R.drawable.leg_raises);
+                tvDescription.setText("Muscle: Rectus Abdominis\n" +
+                        "Step 1: Lie the your legs\n" +
+                        "Straight Position your hands behind your\n" +
+                        "Step 2: Raise your upper body Hold\n" +
+                        "for one seconff Return to starting positiom");
                 break;
             case "Crunches" :
                 exerciseImage.setImageResource(R.drawable.crunches);
+                tvDescription.setText("Muscle: Rectus Abdominis\n" +
+                        "Step 1: While lying\n" +
+                        "yout legs. raise your heels an inch Off the\n" +
+                        "and place yout hands by your sides.\n" +
+                        "Step 2: Keeping pur parallel to the\n" +
+                        "your torso and legs so they form a e. As\n" +
+                        "you raise yourself. bend your knees and pull\n" +
+                        "them up toward your Chest.");
                 break;
             case "Back Extensions" :
                 exerciseImage.setImageResource(R.drawable.back_extentions);
+                tvDescription.setText("Muscle: Loner Back\n" +
+                        "Step 1: into a\n" +
+                        "station by placing feet undet the leg\n" +
+                        "brace ancho' so that it is hrnked there,\n" +
+                        "Step 2: With your upper thighs resting the bad.\n" +
+                        "lock your hands behind head and bend\n" +
+                        "forward at 'he hips until your upper body is\n" +
+                        "just Shott Of being 90 degrees to the\n" +
+                        "Step 3; Slowly raise your until in\n" +
+                        "line with yow then lower it\n" +
+                        "Alternat.vely. you can hold onto a weight by\n" +
+                        "it with arms across your chest\n" +
+                        "and do 'he\n");
                 break;
             case "Dumbbell Shrugs" :
                 exerciseImage.setImageResource(R.drawable.dumbbell_shrugs);
+                tvDescription.setText("Muscle: Trapezius\n" +
+                        "Step 1: Stand upright two fairly\n" +
+                        "Heavy dumbbells at your Sides. with\n" +
+                        "palms facing each other (neutral-grip).\n" +
+                        "Step 2: Keep your Shoulders relaxed Shrug\n" +
+                        "your shoulders as if you we«e trying to touch\n" +
+                        "them to your ears„\n" +
+                        "Step 3: Hotd the top most position. then\n" +
+                        "gradually lower them to the starling posilico\n" +
+                        "Do not your Or shift head\n" +
+                        "forward during the motion Repeat");
                 break;
             case "Deadlifts" :
                 exerciseImage.setImageResource(R.drawable.deadlift);
+                tvDescription.setText("Step 1: Stand \"Ith your feet hip-distance apart\n" +
+                        "and bend down in sitting until your\n" +
+                        "t the Keep back\n" +
+                        "Straight and make Sure that Spine iS as\n" +
+                        "close to the neutral position as possib'e, Take\n" +
+                        "an grip on the bar hands\n" +
+                        "Slightly wider than a Shout-dewidth apart\n" +
+                        "Step 2; Exhale. draw your abdominal rnuscres\n" +
+                        "in. and lilt the bat by pushing up thraliga\n" +
+                        "Step 3: AS the bar reaches yCwr knees during\n" +
+                        "the lilt phase. push yrmr nips forward to rose\n" +
+                        "your torso so that you are Standing tall with\n" +
+                        "by yow sides and bar resting\n");
                 break;
             case "Barbell Shrugs" :
                 exerciseImage.setImageResource(R.drawable.barbbell_shrugs);
+                tvDescription.setText("Muscle: Trapezius\n" +
+                        "Step 1: Stand upright two fairly\n" +
+                        "Heavy barbell at your Sides. With your palms\n" +
+                        "facing each other (neutral-grip).\n" +
+                        "Step 2: Keep Shoulders relaxed Shrug\n" +
+                        "your shoulders as if you we«e trying to\n" +
+                        "them to your ears„\n" +
+                        "Step 3: Hotd the top most position. then\n" +
+                        "gradually lower them to the starling posi1iLY1.\n" +
+                        "Do not your eltms Or shifl head\n" +
+                        "forward during the motion\n");
                 break;
             case "Low Pulley Curls" :
                 exerciseImage.setImageResource(R.drawable.low_pulley_curls);
+                tvDescription.setText("Muscle: Biceps grachii\n" +
+                        "Step 1: Adjust to the lowest\n" +
+                        "While standing straight. face the pulley Hold\n" +
+                        "handle with underhand qrip.\n" +
+                        "Step 2: Lift handle with Hold for\n" +
+                        "one second. Return to starting positiom");
                 break;
             case "Curls" :
                 exerciseImage.setImageResource(R.drawable.curls);
+                tvDescription.setText("Muscle: Biceps Brachii\n" +
+                        "Step 1: a in euh hand with\n" +
+                        "you' palms weights facing outward.\n" +
+                        "arms should form a 90 degree angle.\n" +
+                        "Step 2: Keeping p3ur elbow Close to body\n" +
+                        "and in a steady position. curl the weight up\n" +
+                        "towards your shoulder Lower weights slowly\n" +
+                        "back to Starting");
                 break;
             case "Reverse Curls" :
                 exerciseImage.setImageResource(R.drawable.reverse_curls);
+                tvDescription.setText("Muscle: Biceps grachi•\n" +
+                        "Step 1: a Barbell hand with your feet\n" +
+                        "about shewlder width apart Hang both arms\n" +
+                        "donn •n front of your body. lully extended with\n" +
+                        "Nms facing tcyward your\n" +
+                        "Step 2: Raise the dumbbells up to the height\n" +
+                        "of your shoulder while keeping\n" +
+                        "flied in gagitiOn Sid&\n" +
+                        "Step 3; Retum to starting position by lowering\n" +
+                        "the back to the Original\n" +
+                        "position.");
                 break;
             case "Hammer Curls" :
                 exerciseImage.setImageResource(R.drawable.hammer_curls);
+                tvDescription.setText("Muscle: Biceps grachii\n" +
+                        "Step 1: a in euh hand with\n" +
+                        "you' palms facing Outward.\n" +
+                        "arms should form a 90 degree angle.\n" +
+                        "Step 2: Keeping pur Close to body\n" +
+                        "and in a steady position, curt the weight up\n" +
+                        "shm.lder Lower weights slowly\n" +
+                        "back to Starting\n");
                 break;
             case "Push-Ups" :
                 exerciseImage.setImageResource(R.drawable.push_ups);
+                tvDescription.setText("Muscle: Pectoralis\n" +
+                        "Step 1. Lie prone with your arms straight,\n" +
+                        "your palms flat on the floor, and your hands\n" +
+                        "shoulder-width apart (or wider).\n" +
+                        "Step 2. Hold your feet together or very slightly\n" +
+                        "spread: Inhale and bend your elbows to bring\n" +
+                        "your torso near the floor, avoiding extreme\n" +
+                        "hyperextension of your spine Push yourself\n" +
+                        "back to arms, extended position, exhaling as\n" +
+                        "you complete the movement.\n");
                 break;
             case "Bench Presses" :
                 exerciseImage.setImageResource(R.drawable.bench_presses);
+                tvDescription.setText("Muscle: Pectoralis\n" +
+                        "Step 1: Lay flat on a bench and have your feet\n" +
+                        "fiat on the floor. The bar, when racked, will\n" +
+                        "be slightly behind your head. It is important\n" +
+                        "to use a spotter for this exercise, especially\n" +
+                        "if you are using a free bar or dumbbells, to\n" +
+                        "eliminate the chance of dropping the weight\n" +
+                        "on yourself.\n" +
+                        "Step 2: Once you have lifted the weight off\n" +
+                        "of the rack, the bar will be directly over the\n" +
+                        "center of your chest. Keep your head on the\n" +
+                        "bench at all times throughout the movement.");
                 break;
             case "Dumbbell Flyes" :
                 exerciseImage.setImageResource(R.drawable.dumbbell_flyes);
+                tvDescription.setText("Muscle: Pectoralis\n" +
+                        "Step 1: To perform dumbbell flies pick, up a\n" +
+                        "relatively light weight in each hand. You will\n" +
+                        "need to experiment to determine how much\n" +
+                        "weight is your flies. with a lighter weight\n" +
+                        "then slowly work your way up. Lie down on\n" +
+                        "a weight bench and raise both dumbbells\n" +
+                        "straight up over your chest with your arms\n" +
+                        "straight.\n" +
+                        "Step 2: This is your starting position. Spread\n" +
+                        "both arms outward in a wide arc until your\n" +
+                        "arms are out at your sides. Your arms can\n" +
+                        "be slightly bent. This is the fly part of the\n" +
+                        "dumbbell flies. It is called that because you");
                 break;
             case "Dumbbell Presses" :
                 exerciseImage.setImageResource(R.drawable.dumbbell_presses);
+                tvDescription.setText("Muscle: Pectoralis\n" +
+                        "Step 1: Lie flat on the bench with feet on the\n" +
+                        "floor for stability, your arms extended upward,\n" +
+                        "and your hands facing in toward each other\n" +
+                        "holding the dumbbells: Inhale and lower the\n" +
+                        "dumbbells to chest level, bending your elbows\n" +
+                        "and rotating your forearms to bring your hand\n" +
+                        "in pronation Press the dumbbells back up\n" +
+                        "and do an isometric contraction to isolate\n" +
+                        "the stress on the pectorals; exhale as you\n" +
+                        "complete the movement.");
                 break;
         }
 

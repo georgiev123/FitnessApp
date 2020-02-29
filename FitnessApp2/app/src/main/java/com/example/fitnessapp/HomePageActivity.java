@@ -4,14 +4,16 @@ import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 
+import com.example.fitnessapp.Pedometer.PedometerService;
+import com.example.fitnessapp.Pedometer.Sensor;
 import com.example.fitnessapp.Pedometer.StepDetector;
 import com.example.fitnessapp.Pedometer.StepListener;
+import com.example.fitnessapp.Workouts.FitnessProgramProposalActivity;
 import com.example.fitnessapp.Workouts.WorkoutActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -70,11 +73,10 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
     public static String username;
 
-    private TextView textView;
+    public static TextView stepCounter;
     private TextView tvFeed;
-    private StepDetector simpleStepDetector;
-    private SensorManager sensorManager;
-    private Sensor accel;
+
+
     private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
     private String TAG = "Home Activity";
@@ -86,6 +88,9 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
     private MenuItem btnUsername;
 
+    private SensorManager sensorManager;
+    private android.hardware.Sensor accel;
+    private StepDetector simpleStepDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,14 +113,20 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         nvDrawer = findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
 
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accel = sensorManager.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER);
+        simpleStepDetector = new StepDetector();
+        simpleStepDetector.registerListener(this);
 //..................................................................................................................
 
         btnUsername = findViewById(R.id.btnNavProfile);
         tvCalories = findViewById(R.id.tvCaloriesHome);
         tvFeed = findViewById(R.id.tvFeed);
-        textView = findViewById(R.id.tvPedometer);
-        textView.setTextSize(30);
+        stepCounter = findViewById(R.id.tvPedometer);
+        stepCounter.setTextSize(30);
 
+//        startService();
 
         DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
         docRef.get()
@@ -175,13 +186,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
-
-
         calculateCalories("HomePage", tvCalories, mauth, null);
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetector();
-        simpleStepDetector.registerListener(this);
     }
 
     @Override
@@ -233,6 +238,9 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             case R.id.btnFollowers:
                 startActivity(new Intent(this, FindFriendsActivity.class));
                 break;
+            case R.id.btnFitnesProgram:
+                startActivity(new Intent(this, FitnessProgramProposalActivity.class));
+                break;
             case R.id.btnLogout:
                 Toast.makeText(HomePageActivity.this, "You logged out.", Toast.LENGTH_LONG).show();
                 mauth.getInstance().signOut();
@@ -255,9 +263,9 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         // Highlight the selected item has been done by NavigationView
 //        menuItem.setChecked(true);
         // Set action bar title
-        setTitle(menuItem.getTitle());
+//        setTitle(menuItem.getTitle());
         // Close the navigation drawer
-        mDrawer.closeDrawers();
+//        mDrawer.closeDrawers();
     }
 
     public void calculateCalories(final String  calledFromActivity ,final TextView caloriesTV, final FirebaseAuth fAuth, final TextView macrosTV) {
@@ -329,7 +337,9 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                         fats = calories*0.25;
                                     }
 
-                                   macrosTV.setText("carbs :  " + carbs.intValue() + "   proteins :  " + protein.intValue() + "   fats :  " + fats.intValue());
+                                   macrosTV.setText("carbs :  " + (carbs.intValue() - ProgramData.carbsIntake.intValue()) +
+                                           "   proteins :  " + (protein.intValue() - ProgramData.proteinsIntake.intValue())
+                                           + "   fats :  " + (fats.intValue() - ProgramData.fatsIntake.intValue()));
                                 }
                             }else {
                                 Log.d(TAG, "No such document");
@@ -353,7 +363,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     public void onResume() {
         super.onResume();
 //        numSteps = 0;
-        textView.setText(TEXT_NUM_STEPS + numSteps);
+        stepCounter.setText(TEXT_NUM_STEPS + numSteps);
         sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
@@ -363,22 +373,24 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         sensorManager.unregisterListener(this);
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        if (event.sensor.getType() == android.hardware.Sensor.TYPE_ACCELEROMETER) {
             simpleStepDetector.updateAccel(
                     event.timestamp, event.values[0], event.values[1], event.values[2]);
         }
     }
 
     @Override
+    public void onAccuracyChanged(android.hardware.Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
     public void step(long timeNs) {
         numSteps++;
-        textView.setText(TEXT_NUM_STEPS + numSteps);
+        stepCounter.setText(TEXT_NUM_STEPS + numSteps);
 
         if(numSteps >= 10) {
 
@@ -389,6 +401,24 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                     .collection("Achievements").document("Pedometer")
                     .set(map);
         }
+    }
+
+//    public void startService() {
+//        Intent serviceIntent = new Intent(this, PedometerService.class);
+//        serviceIntent.putExtra("inputExtra", "Pedometer");
+//
+//        ContextCompat.startForegroundService(this, serviceIntent);
+//    }
+//
+//    public void stopService() {
+//        Intent serviceIntent = new Intent(this, PedometerService.class);
+//        stopService(serviceIntent);
+//    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        calculateCalories("HomePage", tvCalories, mauth, null);
     }
 
 

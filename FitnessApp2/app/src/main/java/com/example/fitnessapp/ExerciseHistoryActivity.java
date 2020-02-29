@@ -35,8 +35,6 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
     private FirebaseAuth mauth = FirebaseAuth.getInstance();
     private String TAG = "HistoryEx";
 
-    private TextView tvWeightEx;
-    private TextView tvRepetitionEx;
     private Button btnBackHome;
 
     private ArrayList<String> mWeights = new ArrayList<>();

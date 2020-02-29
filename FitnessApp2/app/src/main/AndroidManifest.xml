@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".CustomFoodActivity"></activity>
+        <activity android:name=".Workouts.FitnessProgramProposalActivity"></activity>
+        <activity android:name=".CustomFoodActivity" />
         <activity android:name=".CustomProfileActivity" />
         <activity android:name=".FindFriendsActivity" />
         <activity android:name=".ExerciseHistoryActivity" />
@@ -61,6 +62,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".Pedometer.PedometerService" />
     </application>
 
 </manifest>

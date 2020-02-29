@@ -3,11 +3,18 @@ package com.example.fitnessapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,6 +23,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +31,8 @@ public class CustomProfileActivity extends AppCompatActivity {
 
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth mauth;
+
+    public static final int PICK_IMAGE = 1;
 
     private TextView tvUsername;
     private TextView tvAge;
@@ -34,6 +44,7 @@ public class CustomProfileActivity extends AppCompatActivity {
     private TextView tvWeightGoal;
     private TextView tvTrainingGoal;
     private Button btnBack;
+    private Button btnChoosePhoto;
     private ImageView profileImage;
 
     @Override
@@ -54,6 +65,7 @@ public class CustomProfileActivity extends AppCompatActivity {
         tvWeightLostWeekly = findViewById(R.id.tvProfileWeightWeeklyGoal);
         tvWeightGoal = findViewById(R.id.tvProfileWeightGoal);
         tvTrainingGoal = findViewById(R.id.tvProfileTrainingGoal);
+        btnChoosePhoto = findViewById(R.id.btnChoosePhoto);
 
         tvWeightLostWeekly.setVisibility(View.GONE);
 
@@ -88,11 +100,35 @@ public class CustomProfileActivity extends AppCompatActivity {
                 }
             });
 
+        btnChoosePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+            Toast.makeText(CustomProfileActivity.this, "Stana li", Toast.LENGTH_LONG).show();
+            Uri selectedImage = data.getData();
+            profileImage.setImageURI(selectedImage);
+
+
+        }
+//        InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
     }
 }

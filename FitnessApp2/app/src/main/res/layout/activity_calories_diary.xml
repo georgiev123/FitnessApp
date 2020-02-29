@@ -12,7 +12,7 @@
         android:id="@+id/textView4"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="200dp"
         android:text="Calories Remaining"
@@ -26,7 +26,7 @@
         android:id="@+id/tvCaloriesGoal"
         android:layout_width="360dp"
         android:layout_height="32dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -36,9 +36,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <ScrollView
-        android:layout_width="390dp"
+        android:layout_width="360dp"
         android:layout_height="420dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:srcCompat="@drawable/circle_white_solid_background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,6 +66,13 @@
                     android:text="Meal 1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+                <ListView
+                    android:id="@+id/lvMeal1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_viewborder"
+                    android:divider="#000" />
+
                 <Button
                     android:id="@+id/btnAddFoodMeal1"
                     android:layout_width="match_parent"
@@ -68,6 +80,12 @@
                     android:text="Add Food" />
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:srcCompat="@drawable/circle_white_solid_background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,6 +99,13 @@
                     android:text="Meal 2"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+                <ListView
+                    android:id="@+id/lvMeal2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_viewborder"
+                    android:divider="#000" />
+
                 <Button
                     android:id="@+id/btnAddFoodMeal2"
                     android:layout_width="match_parent"
@@ -88,6 +113,12 @@
                     android:text="Add Food" />
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:srcCompat="@drawable/circle_white_solid_background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,6 +131,13 @@
                     android:layout_height="wrap_content"
                     android:text="Meal 3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <ListView
+                    android:id="@+id/lvMeal3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_viewborder"
+                    android:divider="#000" />
 
                 <Button
                     android:id="@+id/btnAddFoodMeal3"
@@ -117,7 +155,7 @@
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="305dp"
         android:text="Macros"
@@ -131,7 +169,7 @@
         android:id="@+id/tvMacros"
         android:layout_width="360dp"
         android:layout_height="32dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="306dp"
         android:text="Macros"

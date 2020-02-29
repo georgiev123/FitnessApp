@@ -77,7 +77,7 @@ public class FoodActivity extends AppCompatActivity {
                                 mCalories.add(map.get("calories").toString());
                             }
 
-                            RecyclerView recyclerView = findViewById(R.id.recycle_view);
+                            RecyclerView recyclerView = findViewById(R.id.recycle_view_food);
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(FoodActivity.this, mNames, mCalories, mGrams, null);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(FoodActivity.this));

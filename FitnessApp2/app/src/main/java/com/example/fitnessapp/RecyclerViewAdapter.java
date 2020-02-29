@@ -1,5 +1,6 @@
 package com.example.fitnessapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +40,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public RecyclerViewAdapter(Context context, ArrayList<String> firstArr, ArrayList<String> secondArr, ArrayList<String> thirdArr, ArrayList<String> forthArr) {
         this.context = context;
-        if(context.getApplicationContext().toString().equals("ExerciseHistoryActivity")) {
+
+        if(((Activity) context).getLocalClassName().equals("ExerciseHistoryActivity")) {
             this.mWeights= firstArr;
             this.mRepetitions = secondArr;
             this.mExecrcises = thirdArr;
@@ -48,14 +51,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.mGrams = secondArr;
             this.mCalories = thirdArr;
         }
-
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if(context.getText(0).toString().equals("ExerciseHistoryActivity")) {
+        if(((Activity) context).getLocalClassName().equals("ExerciseHistoryActivity")) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_history_item,parent,false);
         }else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_food_item,parent,false);
@@ -75,7 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //                .load(mExecrcises.get(position))
 //                .load(mDates.get(position));
 
-        if(context.getText(0).toString().equals("ExerciseHistoryActivity")) {
+        if(((Activity) context).getLocalClassName().equals("ExerciseHistoryActivity")) {
             holder.weight1.setText(mWeights.get(position+positionChange));
             holder.weight2.setText(mWeights.get(position+1+positionChange));
             holder.weight3.setText(mWeights.get(position+2+positionChange));
@@ -87,8 +89,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             positionChange += 2;
         }else {
             holder.foodName.setText(mProductName.get(position+positionChange));
-            holder.foodCalories.setText(mCalories.get(position+1+positionChange));
-            holder.foodWeight.setText(mGrams.get(position+2+positionChange));
+            holder.foodCalories.setText(mCalories.get(position+positionChange));
+            holder.foodWeight.setText(mGrams.get(position+positionChange));
             positionChange += 2;
             holder.foodItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,8 +111,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-
-
         TextView weight1;
         TextView weight2;
         TextView weight3;
@@ -128,7 +128,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            if(context.getText(0).toString().equals("ExerciseHistoryActivity")) {
+            if(((Activity) context).getLocalClassName().equals("ExerciseHistoryActivity")) {
                 weight1 = itemView.findViewById(R.id.weight1);
                 weight2 = itemView.findViewById(R.id.weight2);
                 weight3 = itemView.findViewById(R.id.weight3);

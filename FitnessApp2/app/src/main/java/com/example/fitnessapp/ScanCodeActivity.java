@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -71,8 +72,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
                                 if(result.getText().equals(map.get("barcode").toString())) {
                                     startActivity(new Intent(ScanCodeActivity.this, CustomFoodActivity.class));
-                                    CustomFoodActivity.tvBarcode.setText(map.get("barcode").toString());
-                                    CustomFoodActivity.tvName.setText(document.getId());
+                                    ProgramData.barcodeScanned = result.toString();
                                 }
                             }
 
@@ -82,6 +82,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
                     }
                 });
+
+        ProgramData.openedByBarcodeScanner = true;
 
         onBackPressed();
     }
