@@ -148,11 +148,9 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                         } else {
                                             Log.d(TAG, "Current data: null");
                                         }
-
                                     }
                                 });
                             }
-
                 } else {
                     Log.d(TAG, "Current data: null");
                 }
@@ -171,7 +169,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
@@ -192,7 +189,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
 //        Fragment fragment = new Fragment();
 //        Class fragmentClass;
         switch(menuItem.getItemId()) {

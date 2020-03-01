@@ -3,11 +3,6 @@ package com.example.fitnessapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,9 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +36,13 @@ public class FoodActivity extends AppCompatActivity {
 
 
     private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mGrams = new ArrayList<>();
+    private ArrayList<Double> mGrams = new ArrayList<>();
     private ArrayList<String> mCalories = new ArrayList<>();
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +51,11 @@ public class FoodActivity extends AppCompatActivity {
 
         mauth = FirebaseAuth.getInstance();
         resutlTv = findViewById(R.id.result_text);
+
+        recyclerView = findViewById(R.id.recycle_view_food);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         btnBarcodeScan = findViewById(R.id.btnBarcodeScan);
         btnBarcodeScan.setOnClickListener(new View.OnClickListener() {
@@ -73,14 +75,13 @@ public class FoodActivity extends AppCompatActivity {
                                 map.putAll(document.getData());
 
                                 mNames.add(document.getId());
-                                mGrams.add(map.get("grams").toString());
+                                mGrams.add(Double.parseDouble(map.get("grams").toString()));
                                 mCalories.add(map.get("calories").toString());
-                            }
 
-                            RecyclerView recyclerView = findViewById(R.id.recycle_view_food);
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(FoodActivity.this, mNames, mCalories, mGrams, null);
-                            recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(FoodActivity.this));
+                            }
+                            ProgramData.addMeal = true;
+                            mAdapter = new RecycleViewFood(mNames, mGrams, mCalories);
+                            recyclerView.setAdapter(mAdapter);
                         }else {
                             Log.d(TAG, "Get failed with.", task.getException());
                         }
@@ -89,11 +90,5 @@ public class FoodActivity extends AppCompatActivity {
                 });
 
     }
-
-
-
-
-
-
 
 }

@@ -72,7 +72,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
                                 if(result.getText().equals(map.get("barcode").toString())) {
                                     startActivity(new Intent(ScanCodeActivity.this, CustomFoodActivity.class));
-                                    ProgramData.barcodeScanned = result.toString();
+                                    ProgramData.foodChoosed = document.getId();
                                 }
                             }
 
@@ -83,7 +83,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
                     }
                 });
 
-        ProgramData.openedByBarcodeScanner = true;
+        ProgramData.addMeal = true;
 
         onBackPressed();
     }

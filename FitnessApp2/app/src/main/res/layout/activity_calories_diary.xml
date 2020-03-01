@@ -66,12 +66,10 @@
                     android:text="Meal 1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <ListView
-                    android:id="@+id/lvMeal1"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMeal1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/list_viewborder"
-                    android:divider="#000" />
+                    android:layout_height="match_parent" />
 
                 <Button
                     android:id="@+id/btnAddFoodMeal1"
@@ -99,12 +97,10 @@
                     android:text="Meal 2"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <ListView
-                    android:id="@+id/lvMeal2"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMeal2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/list_viewborder"
-                    android:divider="#000" />
+                    android:layout_height="match_parent" />
 
                 <Button
                     android:id="@+id/btnAddFoodMeal2"
@@ -132,12 +128,10 @@
                     android:text="Meal 3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <ListView
-                    android:id="@+id/lvMeal3"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMeal3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/list_viewborder"
-                    android:divider="#000" />
+                    android:layout_height="match_parent" />
 
                 <Button
                     android:id="@+id/btnAddFoodMeal3"

@@ -25,8 +25,9 @@ public class ProgramData extends Application {
     public static Double proteinsIntake = 0.0;
     public static Double fatsIntake = 0.0;
     public static String whichMeal;
-    public static String barcodeScanned;
-    public static Boolean openedByBarcodeScanner = false;
+    public static Boolean addMeal = false;
+    public static Boolean doRestart = false;
+    public static String foodChoosed = "";
 
     public static final String CHANNEL_ID = "exampleServiceChannel";
 

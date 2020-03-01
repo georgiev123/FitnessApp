@@ -12,13 +12,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        android:text="Name" />
+        android:text="Name"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvFoodCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="200dp"
         android:layout_marginTop="45dp"
         android:layout_toRightOf="@+id/tvFoodName"
         android:text="TextView" />
@@ -30,16 +31,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="60dp"
         android:text="TextView" />
-
-    <Button
-        android:id="@+id/btnFoodItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/tvFoodCalories"
-        android:text="Button"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
 </RelativeLayout>

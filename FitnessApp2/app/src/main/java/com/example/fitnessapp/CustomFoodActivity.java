@@ -52,7 +52,7 @@ public class CustomFoodActivity extends AppCompatActivity {
         tvGrams = findViewById(R.id.tvInfoGrams);
         btnAddMeal = findViewById(R.id.btnAddFood);
 
-        if(ProgramData.openedByBarcodeScanner) {
+        if(ProgramData.addMeal) {
             btnAddMeal.setText("Add Food To Your Meal");
         }else {
             btnAddMeal.setText("Back");
@@ -68,7 +68,7 @@ public class CustomFoodActivity extends AppCompatActivity {
                                 Map<String, Object> map = new HashMap<>();
                                 map.putAll(document.getData());
 
-                                if(ProgramData.barcodeScanned.equals(map.get("barcode").toString())) {
+                                if(ProgramData.foodChoosed.equals(document.getId())) {
                                     tvBarcode.setText("Barcode : " + map.get("barcode").toString());
                                     tvCalories.setText("Calories : " + map.get("calories").toString());
                                     tvCarbs.setText("Carbs : " + map.get("carbs").toString());
@@ -89,7 +89,7 @@ public class CustomFoodActivity extends AppCompatActivity {
         btnAddMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ProgramData.openedByBarcodeScanner) {
+                if(ProgramData.addMeal) {
                     ProgramData.caloriesIntake += Double.parseDouble(tvCalories.getText().toString().split("\\s+")[2]);
                     ProgramData.carbsIntake += Double.parseDouble(tvCarbs.getText().toString().split("\\s+")[2]);
                     ProgramData.proteinsIntake += Double.parseDouble(tvProteins.getText().toString().split("\\s+")[2]);
@@ -105,10 +105,14 @@ public class CustomFoodActivity extends AppCompatActivity {
                     map.put("carbs", tvCarbs.getText().toString().split("\\s+")[2]);
                     map.put("proteins", tvProteins.getText().toString().split("\\s+")[2]);
                     map.put("fats", tvFats.getText().toString().split("\\s+")[2]);
+                    map.put("grams", tvGrams.getText().toString().split("\\s+")[2]);
+                    map.put("barcode", tvBarcode.getText().toString().split("\\s+")[2]);
 
                     db.collection("Users").document(mauth.getCurrentUser().getUid())
                             .collection("Meals").document(formattedDate).set(map);
-                    ProgramData.openedByBarcodeScanner = false;
+                    ProgramData.addMeal = false;
+                }else {
+                    ProgramData.doRestart = false;
                 }
 
                 finish();

@@ -9,23 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,7 +73,7 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
                             }
 
                             RecyclerView recyclerView = findViewById(R.id.recycle_view);
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(ExerciseHistoryActivity.this, mWeights, mRepetitions, mExercises, mDates);
+                            RecyclerViewExerciseHistory adapter = new RecyclerViewExerciseHistory(ExerciseHistoryActivity.this, mWeights, mRepetitions, mExercises, mDates);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(ExerciseHistoryActivity.this));
                         }else {
