@@ -29,12 +29,15 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,18 +46,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth mauth;
 
-
     public TextView tvCalories;
-
-    public static String username;
-
     public static TextView stepCounter;
-    private TextView tvFeed;
-
-
-    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
-    private int numSteps;
-    private String TAG = "Home Activity";
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -67,6 +60,19 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private android.hardware.Sensor accel;
     private StepDetector simpleStepDetector;
 
+    public static String username;
+    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
+    private int numSteps;
+    private String TAG = "Home Activity";
+
+    private ArrayList<String> arrNames = new ArrayList<>();
+    private ArrayList<String> arrActivities = new ArrayList<>();
+    private ArrayList<String> arrKindActivities = new ArrayList<>();
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,11 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         mauth = FirebaseAuth.getInstance();
         ProgramData.userProfile = mauth.getCurrentUser().getUid();
+
+        recyclerView = findViewById(R.id.rvFolloweeFeed);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -88,7 +99,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         nvDrawer = findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
 
-
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
@@ -97,7 +107,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
         btnUsername = findViewById(R.id.btnNavProfile);
         tvCalories = findViewById(R.id.tvCaloriesHome);
-        tvFeed = findViewById(R.id.tvFeed);
         stepCounter = findViewById(R.id.tvPedometer);
         stepCounter.setTextSize(30);
 
@@ -121,6 +130,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                     }
                 });
 
+        setRecyclerView();
 
         db.collection("Users").document(mauth.getCurrentUser().getUid())
                 .collection("Workouts").get()
@@ -144,7 +154,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                         if (snapshot != null && snapshot.exists()) {
                                             Map<String, Object> mp = new HashMap<>();
                                             mp.putAll(snapshot.getData());
-                                            tvFeed.setText(mp.get("steps").toString());
                                         } else {
                                             Log.d(TAG, "Current data: null");
                                         }
@@ -158,6 +167,41 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         });
 
         calculateCalories("HomePage", tvCalories, mauth, null);
+    }
+
+    private void setRecyclerView() {
+        db.collection("Users").document(mauth.getCurrentUser().getUid())
+                .collection("Followings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for (final QueryDocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.putAll(document.getData());
+                        arrNames.add(document.getId());
+                        db.collection("Users").document(map.get("user_uid").toString())
+                                .collection("Achievements").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task1) {
+                                if(task1.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                        Map<String, Object> map1 = new HashMap<>();
+                                        map1.putAll(document1.getData());
+
+
+                                        arrActivities.add(map1.get("steps").toString());
+                                        arrKindActivities.add(document1.getId());
+                                    }
+
+                                    mAdapter = new RecyclerViewFolowee(arrNames, arrActivities, arrKindActivities);
+                                    recyclerView.setAdapter(mAdapter);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -375,6 +419,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onRestart() {
         super.onRestart();
+        setRecyclerView();
         calculateCalories("HomePage", tvCalories, mauth, null);
     }
 

@@ -129,14 +129,14 @@
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginStart="38dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="123dp"
         android:text="     Lose 0,25 kg per week"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWeeklyGoals" />
 
     <CheckBox
         android:id="@+id/cbSecond"

@@ -144,6 +144,7 @@ public class FindFriendsActivity extends AppCompatActivity {
                                     mp.put("age", map.get("age"));
                                     mp.put("gender", map.get("gender").toString());
                                     mp.put("height", map.get("height").toString());
+                                    mp.put("user_uid", document.getId());
                                     db.collection("Users").document(mauth.getCurrentUser().getUid())
                                             .collection("Followings").document(edUsernameS.getText().toString())
                                             .set(mp);

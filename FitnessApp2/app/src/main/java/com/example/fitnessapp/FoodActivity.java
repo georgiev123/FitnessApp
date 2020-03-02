@@ -80,7 +80,7 @@ public class FoodActivity extends AppCompatActivity {
 
                             }
                             ProgramData.addMeal = true;
-                            mAdapter = new RecycleViewFood(mNames, mGrams, mCalories);
+                            mAdapter = new RecyclerViewFood(mNames, mGrams, mCalories);
                             recyclerView.setAdapter(mAdapter);
                         }else {
                             Log.d(TAG, "Get failed with.", task.getException());

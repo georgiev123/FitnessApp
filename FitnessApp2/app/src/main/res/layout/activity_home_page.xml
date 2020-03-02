@@ -14,6 +14,7 @@
         android:layout_height="match_parent">
 
         <!-- This LinearLayout represents the contents of the screen  -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,26 +31,7 @@
                 android:id="@+id/flContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" >
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="151dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="290dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvFeed"
-                            android:layout_width="match_parent"
-                            android:layout_height="36dp"
-                            android:text="TextView" />
-                    </LinearLayout>
-                </HorizontalScrollView>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <TextView
                     android:id="@+id/tvPedometer"
@@ -86,6 +68,12 @@
                     android:layout_marginTop="260dp"
                     android:text="Followee Feeds"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvFolloweeFeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="300dp"/>
             </FrameLayout>
         </LinearLayout>
 

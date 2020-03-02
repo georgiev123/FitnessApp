@@ -10,16 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.fitnessapp.ProgramData.calories;
 import static com.example.fitnessapp.ProgramData.caloriesIntake;
 import static com.example.fitnessapp.ProgramData.carbsIntake;
 import static com.example.fitnessapp.ProgramData.fatsIntake;
@@ -46,6 +42,10 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
     private TextView tvMacros;
     private HomePageActivity hp;
     public Double height;
+    private Double caloriesInt = 0.0;
+    private Double carbsInt = 0.0;
+    private Double fatsInt = 0.0;
+    private Double proteinsInt = 0.0;
 
     public ArrayList<String> arrName1 = new ArrayList<>();
     public ArrayList<Double> arrGrams1 = new ArrayList<>();
@@ -124,7 +124,15 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
             }
         });
 
-        getOldMacros();
+        db.collection("Users").document(mauth.getCurrentUser().getUid()).collection("Meals")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult().size() > 0) {
+                    getOldMacros();
+                }
+            }
+        });
 
         hp.calculateCalories("CaloriesDiary", tvCaloriesGoal, mauth, tvMacros);
         setListViews();
@@ -178,11 +186,11 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
                             ProgramData.addMeal = false;
 
 
-                            mAdapter1 = new RecycleViewFood(arrName1, arrGrams1, arrCalories1);
+                            mAdapter1 = new RecyclerViewFood(arrName1, arrGrams1, arrCalories1);
                             rvMeal1.setAdapter(mAdapter1);
-                            mAdapter2 = new RecycleViewFood(arrName2, arrGrams2, arrCalories2);
+                            mAdapter2 = new RecyclerViewFood(arrName2, arrGrams2, arrCalories2);
                             rvMeal2.setAdapter(mAdapter2);
-                            mAdapter3 = new RecycleViewFood(arrName3, arrGrams3, arrCalories3);
+                            mAdapter3 = new RecyclerViewFood(arrName3, arrGrams3, arrCalories3);
                             rvMeal3.setAdapter(mAdapter3);
 
 
@@ -200,10 +208,6 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()) {
-                    Double caloriesInt = 0.0;
-                    Double carbsInt = 0.0;
-                    Double fatsInt = 0.0;
-                    Double proteinsInt = 0.0;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> map = new HashMap<>();
                         map.putAll(document.getData());
@@ -212,17 +216,19 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
                         carbsInt += Double.parseDouble(map.get("carbs").toString());
                         proteinsInt += Double.parseDouble(map.get("proteins").toString());
                         fatsInt += Double.parseDouble(map.get("fats").toString());
+
                     }
-                    tvCaloriesGoal.setText(caloriesInt.intValue());
-                    tvMacros.setText(carbsInt.intValue() + " " + proteinsInt.intValue() + " " + fatsInt.intValue());
+
+                    tvCaloriesGoal.setText("0.0");
+                    tvMacros.setText(0.0 + " " + 0.0 + " " + 0.0);
+
                 }else {
-                    Log.d("asdf", "Get failed with.", task.getException());
+                    Log.d(TAG, "Get failed with.", task.getException());
                 }
 
             }
         });
-
-        caloriesIntake = Double.parseDouble(tvCaloriesGoal.getText().toString());
+//        caloriesIntake = Double.parseDouble(tvCaloriesGoal.getText().toString());
         carbsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[0]);
         proteinsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[1]);
         fatsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[2]);
