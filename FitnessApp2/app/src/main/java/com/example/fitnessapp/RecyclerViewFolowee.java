@@ -23,15 +23,6 @@ public class RecyclerViewFolowee extends RecyclerView.Adapter<RecyclerViewFolowe
         public TextView tvActivities;
         public MyViewHolder(View v) {
             super(v);
-//            v.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    TextView tempTV = v.findViewById(R.id.tvFoodName);
-//                    ProgramData.foodChoosed = tempTV.getText().toString();
-//                    v.getContext().startActivity(new Intent(v.getContext(), CustomFoodActivity.class));
-//                }
-//            });
-
             tvNames = v.findViewById(R.id.tvFolloweeName);
             tvActivities = v.findViewById(R.id.tvFolloweeActivity);
         }
@@ -55,9 +46,9 @@ public class RecyclerViewFolowee extends RecyclerView.Adapter<RecyclerViewFolowe
     public void onBindViewHolder(@NonNull RecyclerViewFolowee.MyViewHolder holder, int position) {
         holder.tvNames.setText(arrFolloweeNames.get(position));
         if(arrActivityKind.get(position).equals("Pedometer")) {
-            holder.tvActivities.setText("Walked\n" + arrFolloweeActivity.get(position) + " steps.");
+            holder.tvActivities.setText("Walked\n" + arrFolloweeActivity.get(position) + " steps");
         }else {
-            holder.tvActivities.setText("Did " + arrFolloweeActivity.get(position) + " workouts today.");
+            holder.tvActivities.setText("Did " + arrFolloweeActivity.get(position) + "\n workouts today");
         }
 
     }

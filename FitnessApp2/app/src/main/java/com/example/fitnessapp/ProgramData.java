@@ -14,8 +14,6 @@ import java.util.Set;
 
 public class ProgramData extends Application {
 
-    public String currentUsername;
-    public static int calories;
     public static String exerciseName;
     public static String whichActivity;
     public static String imageExercise;
@@ -28,27 +26,29 @@ public class ProgramData extends Application {
     public static Boolean addMeal = false;
     public static Boolean doRestart = false;
     public static String foodChoosed = "";
+    public static Integer lastStepAchievement = 0;
+    public static Integer exercisesCount = 0;
+    public static Integer exercisesToAchievement = 1;
 
     public static final String CHANNEL_ID = "exampleServiceChannel";
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
 
-        createNotificationChannel();
+    public static void clear() {
+        exerciseName = "";
+        whichActivity = "";
+        imageExercise = "";
+        userProfile = "";
+        caloriesIntake = 0.0;
+        carbsIntake = 0.0;
+        proteinsIntake = 0.0;
+        fatsIntake = 0.0;
+        whichMeal = "";
+        addMeal = false;
+        doRestart = false;
+        foodChoosed = "";
+        lastStepAchievement = 0;
+        exercisesCount = 0;
+        exercisesToAchievement = 1;
+
     }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel serviceChannel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Example Service Channel",
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(serviceChannel);
-        }
-    }
-
 }

@@ -6,7 +6,7 @@
                 <item
                     android:id="@+id/btnNavProfile"
                     android:icon="@drawable/ic_account"
-                    android:title="Username"/>
+                    android:title="Profile"/>
             </group>
         </menu>
     </item>

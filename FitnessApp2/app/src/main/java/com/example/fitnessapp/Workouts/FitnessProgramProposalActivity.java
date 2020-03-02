@@ -74,5 +74,6 @@ public class FitnessProgramProposalActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }

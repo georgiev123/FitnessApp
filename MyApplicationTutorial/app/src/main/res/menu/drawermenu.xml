@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/db" android:title="dashboard" android:icon="@drawable/weight_emoji"/>
-<item android:id="@+id/event" android:title="Event" android:icon="@drawable/weight_emoji"/>
-<item android:id="@+id/search" android:title="Search" android:icon="@drawable/weight_emoji"/>
-<item android:id="@+id/Settings" android:title="Settings" android:icon="@drawable/weight_emoji"/>
-<item android:id="@+id/activities" android:title="Activities" android:icon="@color/colorPrimaryDark"/>
-<item android:id="@+id/logout" android:title="LogOut" android:icon="@drawable/weight_emoji"/>
-</menu>

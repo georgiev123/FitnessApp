@@ -12,9 +12,12 @@ import com.example.fitnessapp.Pedometer.StepListener;
 import com.example.fitnessapp.Workouts.FitnessProgramProposalActivity;
 import com.example.fitnessapp.Workouts.WorkoutActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -41,29 +44,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.fitnessapp.ProgramData.lastStepAchievement;
+import static java.lang.Thread.sleep;
+
 public class HomePageActivity extends AppCompatActivity implements SensorEventListener, StepListener {
 
-    public FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public FirebaseAuth mauth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mauth;
+    private DocumentReference currUserRef;
 
-    public TextView tvCalories;
-    public static TextView stepCounter;
-
-    private DrawerLayout mDrawer;
-    private Toolbar toolbar;
-    private NavigationView nvDrawer;
-    private ActionBarDrawerToggle drawerToggle;
-
-    private MenuItem btnUsername;
-
-    private SensorManager sensorManager;
-    private android.hardware.Sensor accel;
-    private StepDetector simpleStepDetector;
-
-    public static String username;
-    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
-    private int numSteps;
     private String TAG = "Home Activity";
+    private final String TEXT_NUM_STEPS = "Number of Steps: ";
+    private int numSteps;
 
     private ArrayList<String> arrNames = new ArrayList<>();
     private ArrayList<String> arrActivities = new ArrayList<>();
@@ -73,13 +65,24 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private TextView tvCalories;
+    private TextView stepCounter;
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
+    private ActionBarDrawerToggle drawerToggle;
+    private MenuItem btnUsername;
+    private SensorManager sensorManager;
+    private android.hardware.Sensor accel;
+    private StepDetector simpleStepDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
         mauth = FirebaseAuth.getInstance();
-        ProgramData.userProfile = mauth.getCurrentUser().getUid();
+        currUserRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
 
         recyclerView = findViewById(R.id.rvFolloweeFeed);
         recyclerView.setHasFixedSize(true);
@@ -93,9 +96,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
-
         mDrawer.addDrawerListener(drawerToggle);
-
         nvDrawer = findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
 
@@ -103,96 +104,52 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         accel = sensorManager.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
-//..................................................................................................................
 
         btnUsername = findViewById(R.id.btnNavProfile);
         tvCalories = findViewById(R.id.tvCaloriesHome);
         stepCounter = findViewById(R.id.tvPedometer);
         stepCounter.setTextSize(30);
 
-        DocumentReference docRef = db.collection("Users").document(mauth.getCurrentUser().getUid());
-        docRef.get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if(document.exists()) {
-                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                                username = document.getString("username");
-//                                btnUsername.setTitle(username);
-                            }else {
-                                Log.d(TAG, "No such document");
-                            }
-                        }else {
-                            Log.d(TAG, "Get failed with.", task.getException());
-                        }
-                    }
-                });
-
-        setRecyclerView();
-
-        db.collection("Users").document(mauth.getCurrentUser().getUid())
-                .collection("Workouts").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                db.collection("Users").document(document.getId())
-                                        .collection("Achievements").document("Pedometer")
-                                        .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-
-                                        if (e != null) {
-                                            Log.w(TAG, "Listen failed.", e);
-                                            return;
-                                        }
-
-                                        if (snapshot != null && snapshot.exists()) {
-                                            Map<String, Object> mp = new HashMap<>();
-                                            mp.putAll(snapshot.getData());
-                                        } else {
-                                            Log.d(TAG, "Current data: null");
-                                        }
-                                    }
-                                });
-                            }
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
+        currUserRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot doc = task.getResult();
+                nvDrawer.getMenu().getItem(0).setTitle(doc.get("username").toString());
             }
         });
 
+        ProgramData.userProfile = mauth.getCurrentUser().getUid();
+        setRecyclerView();
         calculateCalories("HomePage", tvCalories, mauth, null);
     }
 
     private void setRecyclerView() {
-        db.collection("Users").document(mauth.getCurrentUser().getUid())
-                .collection("Followings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        currUserRef.collection("Followings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
+                if(task.isSuccessful() && task.getResult().size() > 0) {
                     for (final QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> map = new HashMap<>();
                         map.putAll(document.getData());
-                        arrNames.add(document.getId());
                         db.collection("Users").document(map.get("user_uid").toString())
                                 .collection("Achievements").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task1) {
-                                if(task1.isSuccessful()) {
+                                if(task1.isSuccessful() && task1.getResult().size() > 0) {
                                     for (QueryDocumentSnapshot document1 : task1.getResult()) {
                                         Map<String, Object> map1 = new HashMap<>();
                                         map1.putAll(document1.getData());
 
+                                        arrNames.add(document.getId());
 
-                                        arrActivities.add(map1.get("steps").toString());
+                                        if(document1.getId().equals("Pedometer")) {
+                                            arrActivities.add(map1.get("steps").toString());
+                                        }else {
+                                            arrActivities.add(map1.get("exercises_count").toString());
+                                        }
+
                                         arrKindActivities.add(document1.getId());
                                     }
-
                                     mAdapter = new RecyclerViewFolowee(arrNames, arrActivities, arrKindActivities);
                                     recyclerView.setAdapter(mAdapter);
                                 }
@@ -204,86 +161,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         });
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
-    }
-
-    private void setupDrawerContent(NavigationView navigationView) {
-
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
-                });
-    }
-
-    public void selectDrawerItem(MenuItem menuItem) {
-//        Fragment fragment = new Fragment();
-//        Class fragmentClass;
-        switch(menuItem.getItemId()) {
-            case R.id.btnNavProfile:
-                startActivity(new Intent(this, CustomProfileActivity.class));
-                break;
-            case R.id.btnExHistory:
-                startActivity(new Intent(this, ExerciseHistoryActivity.class));
-                break;
-            case R.id.btnCaloriesDiary:
-                startActivity(new Intent(this, CaloriesDiaryActivity.class));
-                break;
-            case R.id.btnWorkouts:
-                startActivity(new Intent(this, WorkoutActivity.class));
-                break;
-            case R.id.btnFollowers:
-                startActivity(new Intent(this, FindFriendsActivity.class));
-                break;
-            case R.id.btnFitnesProgram:
-                startActivity(new Intent(this, FitnessProgramProposalActivity.class));
-                break;
-            case R.id.btnLogout:
-                Toast.makeText(HomePageActivity.this, "You logged out.", Toast.LENGTH_LONG).show();
-                mauth.getInstance().signOut();
-                startActivity(new Intent(HomePageActivity.this, MainActivity.class));
-                finish();
-        }
-
-//        fragmentClass = HomePageActivity.class;
-
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        // Insert the fragment by replacing any existing fragment
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
-//        menuItem.setChecked(true);
-        // Set action bar title
-//        setTitle(menuItem.getTitle());
-        // Close the navigation drawer
-//        mDrawer.closeDrawers();
-    }
-
     public void calculateCalories(final String  calledFromActivity ,final TextView caloriesTV, final FirebaseAuth fAuth, final TextView macrosTV) {
-        final DocumentReference docRef = db.collection("Users").document(fAuth.getCurrentUser().getUid());
-        docRef.get()
+        currUserRef.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -332,7 +211,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                 }
 
 
-//                                Toast.makeText(HomePageActivity.this, "calories =" + calories.intValue(), Toast.LENGTH_LONG).show();
                                 Double caloriesRemaining = calories-ProgramData.caloriesIntake;
                                 caloriesTV.setText(calories.intValue() + "   -  " + ProgramData.caloriesIntake.intValue() + "   =   " + caloriesRemaining.intValue());
                                 if(calledFromActivity.equals("CaloriesDiary")) {
@@ -340,7 +218,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                     Double protein;
                                     Double fats;
 
-                                   if(trainingGoal.equals("Lose Weight")) {
+                                    if(trainingGoal.equals("Lose Weight")) {
                                         carbs = calories*0.45;
                                         protein = calories*0.35;
                                         fats = calories*0.2;
@@ -350,9 +228,9 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                         fats = calories*0.25;
                                     }
 
-                                   macrosTV.setText("carbs :  " + (carbs.intValue() - ProgramData.carbsIntake.intValue()) +
-                                           "   proteins :  " + (protein.intValue() - ProgramData.proteinsIntake.intValue())
-                                           + "   fats :  " + (fats.intValue() - ProgramData.fatsIntake.intValue()));
+                                    macrosTV.setText("carbs :  " + (carbs.intValue() - ProgramData.carbsIntake.intValue()) +
+                                            "   proteins :  " + (protein.intValue() - ProgramData.proteinsIntake.intValue())
+                                            + "   fats :  " + (fats.intValue() - ProgramData.fatsIntake.intValue()));
                                 }
                             }else {
                                 Log.d(TAG, "No such document");
@@ -362,6 +240,64 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                         }
                     }
                 });
+    }
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        switch(menuItem.getItemId()) {
+            case R.id.btnNavProfile:
+                startActivity(new Intent(this, CustomProfileActivity.class));
+                break;
+            case R.id.btnExHistory:
+                startActivity(new Intent(this, ExerciseHistoryActivity.class));
+                break;
+            case R.id.btnCaloriesDiary:
+                startActivity(new Intent(this, CaloriesDiaryActivity.class));
+                break;
+            case R.id.btnWorkouts:
+                startActivity(new Intent(this, WorkoutActivity.class));
+                break;
+            case R.id.btnFollowers:
+                startActivity(new Intent(this, FindFriendsActivity.class));
+                break;
+            case R.id.btnFitnesProgram:
+                startActivity(new Intent(this, FitnessProgramProposalActivity.class));
+                break;
+            case R.id.btnLogout:
+                Toast.makeText(HomePageActivity.this, "You logged out.", Toast.LENGTH_LONG).show();
+                mauth.getInstance().signOut();
+                ProgramData.clear();
+                startActivity(new Intent(HomePageActivity.this, MainActivity.class));
+                finish();
+        }
+
     }
 
     @Override
@@ -395,33 +331,33 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     }
 
     @Override
-    public void onAccuracyChanged(android.hardware.Sensor sensor, int accuracy) {
-
-    }
+    public void onAccuracyChanged(android.hardware.Sensor sensor, int accuracy) {}
 
     @Override
     public void step(long timeNs) {
         numSteps++;
         stepCounter.setText(TEXT_NUM_STEPS + numSteps);
 
-        if(numSteps >= 10) {
+        if(numSteps >= lastStepAchievement) {
 
             Map<String, Object> map = new HashMap<>();
             map.put("steps", numSteps);
 
-            db.collection("Users").document(mauth.getCurrentUser().getUid())
-                    .collection("Achievements").document("Pedometer")
+            currUserRef.collection("Achievements").document("Pedometer")
                     .set(map);
+
+            lastStepAchievement *= 10;
         }
     }
-
 
     @Override
     public void onRestart() {
         super.onRestart();
+        arrNames.clear();
+        arrActivities.clear();
+        arrKindActivities.clear();
         setRecyclerView();
         calculateCalories("HomePage", tvCalories, mauth, null);
     }
-
 
 }

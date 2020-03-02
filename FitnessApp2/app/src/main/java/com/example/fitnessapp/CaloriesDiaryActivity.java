@@ -75,7 +75,6 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         mauth = FirebaseAuth.getInstance();
         hp = new HomePageActivity();
 
-
         rvMeal1 = findViewById(R.id.rvMeal1);
         rvMeal2 = findViewById(R.id.rvMeal2);
         rvMeal3 = findViewById(R.id.rvMeal3);
@@ -185,7 +184,6 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
 
                             ProgramData.addMeal = false;
 
-
                             mAdapter1 = new RecyclerViewFood(arrName1, arrGrams1, arrCalories1);
                             rvMeal1.setAdapter(mAdapter1);
                             mAdapter2 = new RecyclerViewFood(arrName2, arrGrams2, arrCalories2);
@@ -219,8 +217,8 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
 
                     }
 
-                    tvCaloriesGoal.setText("0.0");
-                    tvMacros.setText(0.0 + " " + 0.0 + " " + 0.0);
+//                    tvCaloriesGoal.setText("0.0");
+//                    tvMacros.setText(0.0 + " " + 0.0 + " " + 0.0);
 
                 }else {
                     Log.d(TAG, "Get failed with.", task.getException());
@@ -229,9 +227,9 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
             }
         });
 //        caloriesIntake = Double.parseDouble(tvCaloriesGoal.getText().toString());
-        carbsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[0]);
-        proteinsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[1]);
-        fatsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[2]);
+//        carbsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[0]);
+//        proteinsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[1]);
+//        fatsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[2]);
     }
 }
 

@@ -73,8 +73,6 @@ public class SignInActivity extends AppCompatActivity {
                             updateUI(user);
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }

@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
@@ -35,10 +36,9 @@ import java.util.Map;
 
 public class ExerciseCustomViewActivity extends AppCompatActivity {
 
-//    https://github.com/shrikanth7698/Collapsible-Calendar-View-Android - collapsible-calendar-view
-
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference currUserRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
     private String TAG = "LogCustomActivity";
 
     private TextView exName;
@@ -320,7 +320,7 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                     currUserEx.put("weight1", currWeight1);
                     currUserEx.put("repetition1", currRepetition1);
 
-                    db.collection("Users").document(mAuth.getCurrentUser().getUid())
+                    currUserRef
                             .collection("Workouts").document(formattedDate)
                             .set(currUserEx).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -335,20 +335,24 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                     });
                 }
 
+                ProgramData.exercisesCount += 1;
+
+                if(ProgramData.exercisesCount == ProgramData.exercisesToAchievement) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("exercises_count", ProgramData.exercisesCount);
+
+                    currUserRef
+                            .collection("Achievements").document("Workouts")
+                            .set(map);
+                    ProgramData.exercisesToAchievement *= 5;
+                }
+
                 etExWeight1.setText("");
                 etExWeight2.setText("");
                 etExWeight3.setText("");
                 etRepetitions1.setText("");
                 etRepetitions2.setText("");
                 etRepetitions3.setText("");
-
-            }
-        });
-
-        btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 startCurrActivity();
             }
         });

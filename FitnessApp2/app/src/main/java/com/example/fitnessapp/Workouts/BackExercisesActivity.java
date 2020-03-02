@@ -13,7 +13,6 @@ import com.example.fitnessapp.R;
 public class BackExercisesActivity extends AppCompatActivity {
 
     private Button btnBackExt, btnDeadlift, btnDumbbellShrugs, btnBarbellShrugs;
-    private String imgEx = "side_bridge.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,6 @@ public class BackExercisesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.exerciseName = "Back Extensions";
                 ProgramData.whichActivity = "Back";
-                ProgramData.imageExercise = imgEx;
                 startActivity(new Intent(BackExercisesActivity.this, ExerciseCustomViewActivity.class));
                 finish();
             }
@@ -42,7 +40,6 @@ public class BackExercisesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.exerciseName = "Dumbbell Shrugs";
                 ProgramData.whichActivity = "Back";
-                ProgramData.imageExercise = imgEx;
                 startActivity(new Intent(BackExercisesActivity.this, ExerciseCustomViewActivity.class));
                 finish();
             }
@@ -54,7 +51,6 @@ public class BackExercisesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.exerciseName = "Deadlifts";
                 ProgramData.whichActivity = "Back";
-                ProgramData.imageExercise = imgEx;
                 startActivity(new Intent(BackExercisesActivity.this, ExerciseCustomViewActivity.class));
                 finish();
             }
@@ -66,7 +62,6 @@ public class BackExercisesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.exerciseName = "Barbell Shrugs";
                 ProgramData.whichActivity = "Back";
-                ProgramData.imageExercise = imgEx;
                 startActivity(new Intent(BackExercisesActivity.this, ExerciseCustomViewActivity.class));
                 finish();
             }
