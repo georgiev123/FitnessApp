@@ -2,9 +2,11 @@ package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,9 +27,7 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mauth = FirebaseAuth.getInstance();
-    private String TAG = "HistoryEx";
-
-    private Button btnBackHome;
+    private String TAG = "Exercises History";
 
     private ArrayList<String> mWeights = new ArrayList<>();
     private ArrayList<String> mRepetitions = new ArrayList<>();
@@ -39,6 +39,17 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_history);
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarExercisesHistory);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         db.collection("Users").document(mauth.getCurrentUser().getUid())
                 .collection("Workouts").get()
@@ -84,14 +95,6 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
                 });
 
 //        Toast.makeText(ExerciseHistoryActivity.this, test, Toast.LENGTH_SHORT).show();
-
-        btnBackHome = findViewById(R.id.btnBackH);
-        btnBackHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
     }
 }

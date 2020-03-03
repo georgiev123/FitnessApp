@@ -48,7 +48,7 @@ public class RecyclerViewFolowee extends RecyclerView.Adapter<RecyclerViewFolowe
         if(arrActivityKind.get(position).equals("Pedometer")) {
             holder.tvActivities.setText("Walked\n" + arrFolloweeActivity.get(position) + " steps");
         }else {
-            holder.tvActivities.setText("Did " + arrFolloweeActivity.get(position) + "\n workouts today");
+            holder.tvActivities.setText("Did " + arrFolloweeActivity.get(position) + "\n" + " exercises");
         }
 
     }

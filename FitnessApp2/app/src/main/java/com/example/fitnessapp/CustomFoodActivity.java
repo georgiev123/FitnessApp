@@ -2,8 +2,10 @@ package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,7 @@ public class CustomFoodActivity extends AppCompatActivity {
 
     private FirebaseAuth mauth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String TAG = "Food Information";
 
     public TextView tvBarcode;
     public TextView tvName;
@@ -51,6 +54,18 @@ public class CustomFoodActivity extends AppCompatActivity {
         tvFats = findViewById(R.id.tvInfoFats);
         tvGrams = findViewById(R.id.tvInfoGrams);
         btnAddMeal = findViewById(R.id.btnAddFood);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarCustomFood);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         if(ProgramData.addMeal) {
             btnAddMeal.setText("Add Food To Your Meal");

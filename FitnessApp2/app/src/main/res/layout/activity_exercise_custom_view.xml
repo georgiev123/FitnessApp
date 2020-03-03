@@ -8,87 +8,66 @@
     android:screenOrientation="portrait">
 
 
-    <EditText
-        android:id="@+id/etRepetition3"
-        android:layout_width="62dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="56dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition2"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarCustomExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#9C27B0"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/etRepetition2"
-        android:layout_width="62dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition1"
-        app:layout_constraintEnd_toStartOf="@+id/etRepetition3" />
+        <Button
+            android:id="@+id/btnAddEx"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:background="@drawable/ic_check"
+            android:gravity="right"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="10dp"
+            android:layout_marginStart="125dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/ivExerciseImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView18"
+        android:layout_width="369dp"
+        android:layout_height="299dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.372"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etRepetition1"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/textView11"
+    <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Weight"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etExWeight1"
-        app:layout_constraintEnd_toStartOf="@+id/etExWeight1"
-        app:layout_constraintHorizontal_bias="0.297"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/etExWeight1"
-        android:layout_width="62dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toStartOf="@+id/etExWeight2"
-        app:layout_constraintTop_toBottomOf="@+id/tvExercise" />
-
-    <EditText
-        android:id="@+id/etExWeight2"
-        android:layout_width="62dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toStartOf="@+id/etExWeight3"
-        app:layout_constraintTop_toBottomOf="@+id/tvExercise" />
-
-    <EditText
-        android:id="@+id/etExWeight3"
-        android:layout_width="62dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="56dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_height="164dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvExercise" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvExDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="TextView"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
 
     <EditText
         android:id="@+id/etRepetition1"
@@ -100,70 +79,107 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/etRepetition2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/etExWeight1"
         app:layout_constraintTop_toBottomOf="@+id/etExWeight1"
         app:layout_constraintVertical_bias="0.021" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+    <EditText
+        android:id="@+id/etExWeight1"
+        android:layout_width="62dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="10dp"
-        android:text="Repetition"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition1"
-        app:layout_constraintEnd_toStartOf="@+id/etRepetition1"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tvExercise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddSession"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnAddSession"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:text="Add"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvExercise"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:ems="10"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/etExWeight2"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCustomExercise" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="36dp"
         android:text="Exercise Characteristics"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvExDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivExerciseImage" />
+
+    <EditText
+        android:id="@+id/etExWeight3"
+        android:layout_width="62dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="30dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCustomExercise" />
+
+    <EditText
+        android:id="@+id/etRepetition3"
+        android:layout_width="62dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="30dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition2"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etRepetition2"
+        android:layout_width="62dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etRepetition1"
+        app:layout_constraintEnd_toStartOf="@+id/etRepetition3" />
+
+    <EditText
+        android:id="@+id/etExWeight2"
+        android:layout_width="62dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/etExWeight3"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCustomExercise" />
 
     <TextView
-        android:id="@+id/tvExDescription"
+        android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="40dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:text="Repetition"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toStartOf="@+id/etRepetition1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="30dp"
+        android:text="Weight"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toStartOf="@+id/etExWeight1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCustomExercise" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

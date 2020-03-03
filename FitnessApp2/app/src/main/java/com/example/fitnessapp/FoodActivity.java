@@ -1,6 +1,7 @@
 package com.example.fitnessapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,8 +34,6 @@ public class FoodActivity extends AppCompatActivity {
     private String TAG = "FoodActivity";
 
     private Button btnBarcodeScan;
-    public static TextView resutlTv;
-
 
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<Double> mGrams = new ArrayList<>();
@@ -50,12 +50,23 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
 
         mauth = FirebaseAuth.getInstance();
-        resutlTv = findViewById(R.id.result_text);
 
         recyclerView = findViewById(R.id.recycle_view_food);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarFoodActivity);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         btnBarcodeScan = findViewById(R.id.btnBarcodeScan);
         btnBarcodeScan.setOnClickListener(new View.OnClickListener() {

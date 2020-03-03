@@ -1,42 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:screenOrientation="portrait">
 
-    <CheckBox
-        android:id="@+id/cbForth"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="123dp"
-        android:text="     Lose 1 kg per week"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbThird" />
-
-    <CheckBox
-        android:id="@+id/cbThird"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="123dp"
-        android:text="     Lose 0,75 kg per week"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbSecond" />
-
     <EditText
         android:id="@+id/etGoalWeight"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
@@ -51,62 +26,60 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Button
         android:id="@+id/btnContinueGoals"
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="150dp"
         android:background="@drawable/edit_text_border_buttons"
         android:onClick="sendToMainScreen"
         android:text="@string/ContinueString"
         android:textColor="#E673EE"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbForth" />
 
 
     <Spinner
         android:id="@+id/spTrainingGoal"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/edit_text_border"
         android:paddingStart="50dp"
         android:paddingEnd="10dp"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/etGoalWeight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="228dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="40dp"
         android:text="What is your goal?"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/spTrainingGoal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.228"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvWeeklyGoals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="122dp"
+        android:layout_marginTop="40dp"
         android:text="What is your weekly goal?"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.188"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etGoalWeight" />
 
@@ -114,40 +87,59 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="316dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="20dp"
         android:text="What is your goal weight?"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/etGoalWeight"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.026"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.187"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTrainingGoal" />
 
     <CheckBox
         android:id="@+id/cbFirst"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="123dp"
+        android:layout_marginTop="30dp"
         android:text="     Lose 0,25 kg per week"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWeeklyGoals" />
+
+    <CheckBox
+        android:id="@+id/cbForth"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:text="     Lose 1 kg per week"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbThird" />
+
+    <CheckBox
+        android:id="@+id/cbThird"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:text="     Lose 0,75 kg per week"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbSecond" />
 
     <CheckBox
         android:id="@+id/cbSecond"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="123dp"
+        android:layout_marginTop="24dp"
         android:text="     Lose 0,5 kg per week"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cbFirst" />
 

@@ -2,8 +2,10 @@ package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,11 +36,11 @@ public class FindFriendsActivity extends AppCompatActivity {
 
     private FirebaseAuth mauth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String TAG = "Find Followees";
 
     private ListView listView;
     private EditText edUsernameS;
-    private Button btnAddFr, btnBack;
-
+    private Button btnAddFr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,6 @@ public class FindFriendsActivity extends AppCompatActivity {
 
         edUsernameS = findViewById(R.id.etusernameFr);
         btnAddFr = findViewById(R.id.btnAddFr);
-        btnBack = findViewById(R.id.btnBackFindFr);
 
         btnAddFr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +63,14 @@ public class FindFriendsActivity extends AppCompatActivity {
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarFindFollowees);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 ProgramData.userProfile = mauth.getCurrentUser().getUid();
                 finish();
             }

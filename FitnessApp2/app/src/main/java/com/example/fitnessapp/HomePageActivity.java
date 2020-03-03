@@ -53,7 +53,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private FirebaseAuth mauth;
     private DocumentReference currUserRef;
 
-    private String TAG = "Home Activity";
+    private String TAG = "Home";
     private final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
 
@@ -71,7 +71,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-    private MenuItem btnUsername;
     private SensorManager sensorManager;
     private android.hardware.Sensor accel;
     private StepDetector simpleStepDetector;
@@ -90,6 +89,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         recyclerView.setLayoutManager(layoutManager);
 
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(TAG);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mDrawer = findViewById(R.id.drawer_layout);
@@ -105,7 +105,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
 
-        btnUsername = findViewById(R.id.btnNavProfile);
         tvCalories = findViewById(R.id.tvCaloriesHome);
         stepCounter = findViewById(R.id.tvPedometer);
         stepCounter.setTextSize(30);
@@ -162,7 +161,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void calculateCalories(final String  calledFromActivity ,final TextView caloriesTV, final FirebaseAuth fAuth, final TextView macrosTV) {
-        currUserRef.get()
+        final DocumentReference docRef = db.collection("Users").document(fAuth.getCurrentUser().getUid());
+        docRef.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -242,7 +242,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                 });
     }
 
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -311,7 +310,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onResume() {
         super.onResume();
-
         stepCounter.setText(TEXT_NUM_STEPS + numSteps);
         sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_FASTEST);
     }
@@ -319,7 +317,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onPause() {
         super.onPause();
-
     }
 
     @Override

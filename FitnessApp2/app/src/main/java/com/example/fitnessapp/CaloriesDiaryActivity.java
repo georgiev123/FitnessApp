@@ -1,18 +1,22 @@
 package com.example.fitnessapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +38,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
     private FirebaseAuth mauth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private String TAG = "CaloriesDiaryActivity";
+    private String TAG = "Calories Diary";
     private Button btnMeal1;
     private Button btnMeal2;
     private Button btnMeal3;
@@ -93,6 +97,18 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         tvCaloriesGoal = findViewById(R.id.tvCaloriesGoal);
         tvMacros = findViewById(R.id.tvMacros);
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarDiary);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         btnMeal1 = findViewById(R.id.btnAddFoodMeal1);
         btnMeal1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +153,18 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         setListViews();
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Write your logic here
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onRestart() {

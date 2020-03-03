@@ -2,8 +2,10 @@ package com.example.fitnessapp.Workouts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,10 +40,9 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference currUserRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
-    private String TAG = "LogCustomActivity";
+    private DocumentReference currUserRef;
+    private String TAG;
 
-    private TextView exName;
     private TextView tvDescription;
     private Button btnAddHistory;
     private Button btnBack;
@@ -51,6 +52,7 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
     private EditText etRepetitions2;
     private EditText etExWeight3;
     private EditText etRepetitions3;
+    private Button btnAddExercise;
 
     public String exerciseName;
     public String whichActivity;
@@ -64,11 +66,27 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise_custom_view);
 
         mAuth = FirebaseAuth.getInstance();
+        currUserRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
 
         tvDescription = findViewById(R.id.tvExDescription);
         whichActivity = ProgramData.whichActivity;
         exerciseName = ProgramData.exerciseName;
         exerciseImage = findViewById(R.id.ivExerciseImage);
+        TAG = exerciseName;
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarCustomExercise);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        btnAddExercise = mToolbar.findViewById(R.id.btnAddEx);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startCurrActivity();
+                finish();
+            }
+        });
 
         switch (exerciseName) {
             case "Side Bridge" :
@@ -283,11 +301,9 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
         etRepetitions2 = findViewById(R.id.etRepetition2);
         etExWeight3 = findViewById(R.id.etExWeight3);
         etRepetitions3 = findViewById(R.id.etRepetition3);
-        exName = findViewById(R.id.tvExercise);
-        exName.setText(exerciseName);
 
-        btnAddHistory = findViewById(R.id.btnAddSession);
-        btnAddHistory.setOnClickListener(new View.OnClickListener() {
+
+        btnAddExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -336,7 +352,6 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                 }
 
                 ProgramData.exercisesCount += 1;
-
                 if(ProgramData.exercisesCount == ProgramData.exercisesToAchievement) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("exercises_count", ProgramData.exercisesCount);

@@ -7,31 +7,28 @@
     android:background="@drawable/background"
     android:screenOrientation="portrait">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarFoodActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#9C27B0"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnBarcodeScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="50dp"
         android:alpha="1"
         android:text="@string/scan_barcode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.978"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/result_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="66dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/btnBarcodeScan"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarFoodActivity" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_food"

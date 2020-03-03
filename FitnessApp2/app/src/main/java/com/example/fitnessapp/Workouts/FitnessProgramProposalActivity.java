@@ -2,7 +2,9 @@ package com.example.fitnessapp.Workouts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ public class FitnessProgramProposalActivity extends AppCompatActivity {
 
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth mauth;
+    private String TAG = "Fitness Program";
 
     private TextView proposalEx;
     private ImageView ivFitnessEx;
@@ -37,6 +40,18 @@ public class FitnessProgramProposalActivity extends AppCompatActivity {
         proposalEx = findViewById(R.id.tvProposalExercisesText);
         ivFitnessEx = findViewById(R.id.ivFitnessProgram);
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarFitnessProgram);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         db.collection("Users").document(ProgramData.userProfile)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -49,26 +64,25 @@ public class FitnessProgramProposalActivity extends AppCompatActivity {
                 if(map.get("training_goal").toString().equals("Lose Weight")) {
                     proposalEx.setText("You want to lose weight. So one of the most important things " +
                             "for successful weight loss is the balanced and healthy eating. But if you want" +
-                            "to have instant results you should also make big amount of exercises a day." +
-                            "\n\n For loosing weight is mostly recommended the types of cardio exercises and " +
-                            "these which are focused on more intense moving." +
-                            "\n\n For you training in Life Fitness out team recommends the exercises from the Abs and " +
-                            "cardio sections. Mainly - Crunches, Sit-Ups, Ropes and other of those kind.");
+                            "to have instant results you should also do a lot of of exercises each day." +
+                            "\n\nFor weight loss the recommended exercises are cardio based ones and ones which are focused on intense movement." +
+                            "\n\n For your training in Life Fitness our team recommends the exercises from the Abs and " +
+                            "Cardio sections. Mainly - Crunches, Sit-Ups, Ropes.");
                     ivFitnessEx.setImageResource(R.drawable.crunches);
                 }else if(map.get("training_goal").toString().equals("Gain Weight")) {
                     proposalEx.setText("You want to gain weight. So one of the most important things " +
-                            "for successful weight gain is the balanced and healthy eating. You cant gain " +
-                            "successfuly weight if you are eating a lot of unhealthy food. This will only " +
-                            "slow the wanted results. \n\nThe other thing about the weight gain is the corectly done " +
-                            "exercises. You must not try to do with more kilograms that you can. Slow and steady " +
-                            "wins the race. So for your program out team recommends the following exercises:" +
-                            "\n\n Chin-Ups, Deadlift, Curls, Bench Presses and other exercises focusing the body strength.");
+                            "for successful weight gain is the balanced and healthy eating. You can't " +
+                            "successfully gain weight if you are eating a lot of unhealthy food. This will only " +
+                            "slow down the process. \n\nThe other thing about the weight gain is the correctly done " +
+                            "exercises. You mustn't try doing the exercises with more kilograms than you can. Slow and steady " +
+                            "wins the race. So for your program our team recommends the following exercises:" +
+                            "\n\n Chin-Ups, Deadlift, Curls, Bench Presses.");
                     ivFitnessEx.setImageResource(R.drawable.bench_presses);
                 }else {
-                    proposalEx.setText("You want to maintain weight. So you just can follow our recommended calories" +
+                    proposalEx.setText("You want to maintain weight. So you can just follow our recommended calories" +
                             "and macros intake and do some light exercises which won't exhaust you very much." +
-                            "\n\n Our team recommends you to do some exercises for you agility and flexibility. Some" +
-                            "of them are : Dumbbell Lunges, Bench Jump, Single Leg Squad, Push-Ups, Chin-Ups and other. ");
+                            "\n\n Our team recommends you to do some exercises for your agility and flexibility. Some" +
+                            "of them are : Dumbbell Lunges, Bench Jump, Single Leg Squad, Push-Ups, Chin-Ups. ");
                     ivFitnessEx.setImageResource(R.drawable.sit_ups);
                 }
 

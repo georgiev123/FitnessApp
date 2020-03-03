@@ -7,6 +7,17 @@
     android:background="@drawable/background"
     android:screenOrientation="portrait">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarFindFollowees"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#9C27B0"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView20"
         android:layout_width="match_parent"
@@ -15,12 +26,10 @@
         android:text="Your Followee"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/lvFollowers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.181" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etusernameFr"
@@ -45,52 +54,41 @@
         android:id="@+id/btnAddFr"
         android:layout_width="146dp"
         android:layout_height="36dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/edit_text_border"
         android:onClick="confirmOnClick"
         android:text="Follow Friend"
         android:textColor="#E673EE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarFindFollowees" />
 
     <TextView
         android:id="@+id/tvFrst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="200dp"
         android:text="Add a Friend"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnBackFindFr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="309dp"
-        android:text="Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarFindFollowees" />
 
     <ListView
         android:id="@+id/lvFollowers"
         android:layout_width="383dp"
         android:layout_height="400dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/list_viewborder"
         android:divider="#000"
         android:dividerHeight="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

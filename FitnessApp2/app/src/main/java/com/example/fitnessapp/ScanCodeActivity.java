@@ -60,7 +60,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
     @Override
     public void handleResult(final Result result) {
-        FoodActivity.resutlTv.setText((result.getText()));
         db.collection("FoodDB").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

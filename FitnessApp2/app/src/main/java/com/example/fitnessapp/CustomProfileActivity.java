@@ -2,11 +2,13 @@ package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,7 +33,7 @@ public class CustomProfileActivity extends AppCompatActivity {
 
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth mauth;
-
+    private String TAG = "Profile Information";
     public static final int PICK_IMAGE = 1;
 
     private TextView tvUsername;
@@ -43,8 +45,6 @@ public class CustomProfileActivity extends AppCompatActivity {
     private TextView tvWeightLostWeekly;
     private TextView tvWeightGoal;
     private TextView tvTrainingGoal;
-    private Button btnBack;
-    private Button btnChoosePhoto;
     private ImageView profileImage;
 
     @Override
@@ -55,7 +55,6 @@ public class CustomProfileActivity extends AppCompatActivity {
         mauth = FirebaseAuth.getInstance();
 
         profileImage = findViewById(R.id.ivProfileImage);
-        btnBack = findViewById(R.id.btnBackProfile);
         tvUsername = findViewById(R.id.tvProfileUsername);
         tvAge = findViewById(R.id.tvProfileAge);
         tvGender = findViewById(R.id.tvProfileGender);
@@ -65,9 +64,19 @@ public class CustomProfileActivity extends AppCompatActivity {
         tvWeightLostWeekly = findViewById(R.id.tvProfileWeightWeeklyGoal);
         tvWeightGoal = findViewById(R.id.tvProfileWeightGoal);
         tvTrainingGoal = findViewById(R.id.tvProfileTrainingGoal);
-        btnChoosePhoto = findViewById(R.id.btnChoosePhoto);
-
         tvWeightLostWeekly.setVisibility(View.GONE);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarCustomProfile);
+        mToolbar.setTitle(TAG);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
             db.collection("Users").document(ProgramData.userProfile)
@@ -100,35 +109,31 @@ public class CustomProfileActivity extends AppCompatActivity {
                 }
             });
 
-        btnChoosePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE) {
-            Toast.makeText(CustomProfileActivity.this, "Stana li", Toast.LENGTH_LONG).show();
-            Uri selectedImage = data.getData();
-            profileImage.setImageURI(selectedImage);
-
-
-        }
-//        InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
-    }
 }
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_IMAGE) {
+//            Toast.makeText(CustomProfileActivity.this, "Stana li", Toast.LENGTH_LONG).show();
+//            Uri selectedImage = data.getData();
+//            profileImage.setImageURI(selectedImage);
+//
+//
+//        }
+//        InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
+//    }
+//
+//        btnChoosePhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+//            }
+//        });
