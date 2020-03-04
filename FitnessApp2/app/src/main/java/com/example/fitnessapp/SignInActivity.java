@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignInActivity extends AppCompatActivity {
 
     public FirebaseAuth mAuth;
-    private String TAG = "asdf";
+    private String TAG = "Log In";
 
     private Button btnSignIn;
     private EditText etEmail;
@@ -33,8 +33,6 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         mAuth = FirebaseAuth.getInstance();
-
-
 
         btnSignIn = findViewById(R.id.btnContinue);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +52,7 @@ public class SignInActivity extends AppCompatActivity {
     public void updateUI(FirebaseUser user) {
         if(user != null) {
             Toast.makeText(this, "You are logged in.",  Toast.LENGTH_SHORT).show();
-            Intent HomePage = new Intent(this, HomePageActivity.class);
-            startActivity(HomePage);
+            startActivity(new Intent(this, HomePageActivity.class));
             finish();
         }else {
             Toast.makeText(this, "You entered an invalid email or password. Please try again.",  Toast.LENGTH_LONG).show();

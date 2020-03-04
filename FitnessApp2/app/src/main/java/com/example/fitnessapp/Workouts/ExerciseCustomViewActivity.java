@@ -44,8 +44,6 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
     private String TAG;
 
     private TextView tvDescription;
-    private Button btnAddHistory;
-    private Button btnBack;
     private EditText etExWeight1;
     private EditText etRepetitions1;
     private EditText etExWeight2;

@@ -23,7 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import org.xmlpull.v1.XmlSerializer;
@@ -41,9 +45,8 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private String TAG = "asdf";
+    private String TAG = "Sign Up";
     private String username;
-    private EditText e1;
 
     private Button btnSignUp;
     private EditText etUsername;
@@ -76,39 +79,41 @@ public class SignUpActivity extends AppCompatActivity {
                 final String confPassword = etConfirmPassword.getText().toString();
 
                 if(password.equals(confPassword)) {
-                    signUpUser(email, password);
+                    signUpUser(email, username);
                 }else {
                     Toast.makeText(SignUpActivity.this, "You have invalid information.", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
 
     public void updateUI(FirebaseUser user) {
         if(user != null) {
-            Toast.makeText(this, "You signed up.",  Toast.LENGTH_SHORT).show();
-            Intent HomePage = new Intent(this, PersonalInformationActivity.class);
-
-            Map<String, Object> currUser = new HashMap<>();
-            currUser.put("username", username);
-
-            db.collection("Users")
-                    .document(mAuth.getCurrentUser().getUid())
-                    .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "DocumentSnapshot successful written!");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error!", e);
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()) {
+                        for(final QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> map = new HashMap<>();
+                            map.putAll(document.getData());
+
+                            if(map.get("username").toString().equals(username)) {
+                                Toast.makeText(SignUpActivity.this, "This username already exists. Please try again.",  Toast.LENGTH_LONG).show();
+                            }else {
+                                Map<String, Object> currUser = new HashMap<>();
+                                currUser.put("username", username);
+                                db.collection("Users").document(mAuth.getCurrentUser().getUid()).set(currUser);
+                                setUserInfo();
+                                Toast.makeText(SignUpActivity.this, "You signed up.",  Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(SignUpActivity.this, HomePageActivity.class));
+                                finish();
+
+                            }
+                        }
+                    }
                 }
             });
 
-            startActivity(HomePage);
-            finish();
         }else {
             Toast.makeText(this, "You entered an invalid email, password or username. Please try again.",  Toast.LENGTH_LONG).show();
         }
@@ -132,6 +137,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void setUserInfo() {
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).set(ProgramData.userInfoMap);
     }
 
 }

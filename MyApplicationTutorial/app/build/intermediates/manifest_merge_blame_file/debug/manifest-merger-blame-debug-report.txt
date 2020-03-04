@@ -1,0 +1,154 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.myapplicationtutorial"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="28"
+8-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+11-->[com.google.firebase:firebase-database:16.0.4] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\efa5a29aa5355bcf02dd2a220892c17f\jetified-firebase-database-16.0.4\AndroidManifest.xml:22:5-79
+11-->[com.google.firebase:firebase-database:16.0.4] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\efa5a29aa5355bcf02dd2a220892c17f\jetified-firebase-database-16.0.4\AndroidManifest.xml:22:22-76
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->[com.google.firebase:firebase-database:16.0.4] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\efa5a29aa5355bcf02dd2a220892c17f\jetified-firebase-database-16.0.4\AndroidManifest.xml:23:5-67
+12-->[com.google.firebase:firebase-database:16.0.4] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\efa5a29aa5355bcf02dd2a220892c17f\jetified-firebase-database-16.0.4\AndroidManifest.xml:23:22-64
+13
+14    <application
+14-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:5:5-41:19
+15        android:name="com.example.myapplicationtutorial.ProgramData"
+15-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:6:9-36
+16        android:allowBackup="true"
+16-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:7:9-35
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.1.0] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\0136ca65841c199e13145e51c5d77d51\core-1.1.0\AndroidManifest.xml:24:18-86
+18        android:debuggable="true"
+19        android:icon="@mipmap/ic_launcher"
+19-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:8:9-43
+20        android:label="@string/app_name"
+20-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:9:9-41
+21        android:roundIcon="@mipmap/ic_launcher_round"
+21-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:10:9-54
+22        android:supportsRtl="true"
+22-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:11:9-35
+23        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+23-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:12:9-65
+24        <activity
+24-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:13:9-16:59
+25            android:name="com.example.myapplicationtutorial.MakeCustomExercise"
+25-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:14:13-47
+26            android:label="@string/title_activity_make_custom_exercise"
+26-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:15:13-72
+27            android:theme="@style/NoActionBar" />
+27-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:16:13-47
+28        <activity
+28-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:17:9-20:50
+29            android:name="com.example.myapplicationtutorial.AbsExercises"
+29-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:18:13-41
+30            android:label="@string/title_activity_create_workout"
+30-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:19:13-66
+31            android:theme="@style/NoActionBar" />
+31-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:20:13-47
+32        <activity android:name="com.example.myapplicationtutorial.PersonalInformation" />
+32-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:21:9-57
+32-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:21:19-54
+33        <activity android:name="com.example.myapplicationtutorial.SignUp" />
+33-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:22:9-44
+33-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:22:19-41
+34        <activity android:name="com.example.myapplicationtutorial.RegistrationScreen" />
+34-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:23:9-56
+34-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:23:19-53
+35        <activity
+35-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:24:9-33:20
+36            android:name="com.example.myapplicationtutorial.DisplayMessageActivity"
+36-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:25:13-51
+37            android:parentActivityName="com.example.myapplicationtutorial.MainActivity" >
+37-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:26:13-55
+38            <meta-data
+38-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:27:13-29:49
+39                android:name="android.support.PARENT_ACTIVITY"
+39-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:28:17-63
+40                android:value=".MainActivity" />
+40-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:29:17-46
+41            <meta-data
+41-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:30:13-32:43
+42                android:name="com.google.android.gms.vision.DEPENDENCIES"
+42-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:31:17-74
+43                android:value="barcode" />
+43-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:32:17-40
+44        </activity>
+45        <activity android:name="com.example.myapplicationtutorial.MainActivity" >
+45-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:34:9-40:20
+45-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:34:19-47
+46            <intent-filter>
+46-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:35:13-39:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:36:17-69
+47-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:36:25-66
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:38:17-77
+49-->C:\Users\ivaylo.georgiev\Desktop\FitnessApp\MyApplicationTutorial\app\src\main\AndroidManifest.xml:38:27-74
+50            </intent-filter>
+51        </activity>
+52        <activity
+52-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:24:9-31:50
+53            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+53-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:25:13-85
+54            android:excludeFromRecents="true"
+54-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:26:13-46
+55            android:exported="true"
+55-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:27:13-36
+56            android:launchMode="singleTask"
+56-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:28:13-44
+57            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+57-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:29:13-102
+58            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+58-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:30:13-72
+59
+60        <service
+60-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:33:9-39:19
+61            android:name="com.google.firebase.components.ComponentDiscoveryService"
+61-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:34:13-84
+62            android:exported="false" >
+62-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:35:13-37
+63            <meta-data
+63-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:36:13-38:85
+64                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+64-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:37:17-109
+65                android:value="com.google.firebase.components.ComponentRegistrar" />
+65-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f9ee4df48b13f027a959909eb88ba2ed\jetified-firebase-auth-16.0.5\AndroidManifest.xml:38:17-82
+66        </service>
+67
+68        <activity
+68-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\76988cf6593b5485bc11a378c4415433\jetified-play-services-base-16.0.1\AndroidManifest.xml:23:9-26:75
+69            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+69-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\76988cf6593b5485bc11a378c4415433\jetified-play-services-base-16.0.1\AndroidManifest.xml:24:13-79
+70            android:exported="false"
+70-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\76988cf6593b5485bc11a378c4415433\jetified-play-services-base-16.0.1\AndroidManifest.xml:25:13-37
+71            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+71-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\76988cf6593b5485bc11a378c4415433\jetified-play-services-base-16.0.1\AndroidManifest.xml:26:13-72
+72
+73        <provider
+73-->[com.google.firebase:firebase-common:16.0.3] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\5bcbcfe0b2172166b51f877dfbc79563\jetified-firebase-common-16.0.3\AndroidManifest.xml:10:9-14:39
+74            android:name="com.google.firebase.provider.FirebaseInitProvider"
+74-->[com.google.firebase:firebase-common:16.0.3] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\5bcbcfe0b2172166b51f877dfbc79563\jetified-firebase-common-16.0.3\AndroidManifest.xml:11:13-77
+75            android:authorities="com.example.myapplicationtutorial.firebaseinitprovider"
+75-->[com.google.firebase:firebase-common:16.0.3] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\5bcbcfe0b2172166b51f877dfbc79563\jetified-firebase-common-16.0.3\AndroidManifest.xml:12:13-72
+76            android:exported="false"
+76-->[com.google.firebase:firebase-common:16.0.3] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\5bcbcfe0b2172166b51f877dfbc79563\jetified-firebase-common-16.0.3\AndroidManifest.xml:13:13-37
+77            android:initOrder="100" />
+77-->[com.google.firebase:firebase-common:16.0.3] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\5bcbcfe0b2172166b51f877dfbc79563\jetified-firebase-common-16.0.3\AndroidManifest.xml:14:13-36
+78
+79        <meta-data
+79-->[com.google.android.gms:play-services-basement:16.1.0] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f8d4c392dc24251037fe1131c2e07f5b\jetified-play-services-basement-16.1.0\AndroidManifest.xml:23:9-25:69
+80            android:name="com.google.android.gms.version"
+80-->[com.google.android.gms:play-services-basement:16.1.0] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f8d4c392dc24251037fe1131c2e07f5b\jetified-play-services-basement-16.1.0\AndroidManifest.xml:24:13-58
+81            android:value="@integer/google_play_services_version" />
+81-->[com.google.android.gms:play-services-basement:16.1.0] C:\Users\ivaylo.georgiev\.gradle\caches\transforms-2\files-2.1\f8d4c392dc24251037fe1131c2e07f5b\jetified-play-services-basement-16.1.0\AndroidManifest.xml:25:13-66
+82    </application>
+83
+84</manifest>

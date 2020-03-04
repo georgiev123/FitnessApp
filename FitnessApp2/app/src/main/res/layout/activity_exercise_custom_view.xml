@@ -22,13 +22,13 @@
 
         <Button
             android:id="@+id/btnAddEx"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
+            android:layout_width="23dip"
+            android:layout_height="23dip"
             android:background="@drawable/ic_check"
             android:gravity="right"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="10dp"
-            android:layout_marginStart="125dp"/>
+            android:layout_marginStart="200dp"/>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -45,11 +45,11 @@
 
     <ScrollView
         android:id="@+id/scrollView3"
-        android:layout_width="wrap_content"
-        android:layout_height="164dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="3dp"
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +100,7 @@
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="Exercise Characteristics"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="25sp"
@@ -112,7 +113,7 @@
         android:layout_width="62dp"
         android:layout_height="40dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="55dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -123,7 +124,7 @@
         android:id="@+id/etRepetition3"
         android:layout_width="62dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="55dp"
         android:ems="10"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"

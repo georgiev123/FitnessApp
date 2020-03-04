@@ -70,28 +70,27 @@ public class PersonalInformationActivity extends AppCompatActivity {
                 Double height = Double.parseDouble(spHeight.getSelectedItem().toString());
 
 
-                Map<String, Object> currUser = new HashMap<>();
-                currUser.put("age",  age);
-                currUser.put("gender", gender);
-                currUser.put("weight", weight);
-                currUser.put("height", height);
-                currUser.put("activity_level", spActivityLvl.getSelectedItem().toString());
+//                Map<String, Object> currUser = new HashMap<>();
+                ProgramData.userInfoMap.put("age",  age);
+                ProgramData.userInfoMap.put("gender", gender);
+                ProgramData.userInfoMap.put("weight", weight);
+                ProgramData.userInfoMap.put("height", height);
+                ProgramData.userInfoMap.put("activity_level", spActivityLvl.getSelectedItem().toString());
 
-                db.collection("Users").document(mAuth.getCurrentUser().getUid())
-                        .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("asdf", "DocumentSnapshot successful written!");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("asdf", "Error!", e);
-                    }
-                });
+//                db.collection("Users").document(mAuth.getCurrentUser().getUid())
+//                        .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d("asdf", "DocumentSnapshot successful written!");
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("asdf", "Error!", e);
+//                    }
+//                });
 
-                Intent homePage = new Intent(PersonalInformationActivity.this, GoalsActivity.class);
-                startActivity(homePage);
+                startActivity(new Intent(PersonalInformationActivity.this, GoalsActivity.class));
                 finish();
             }
         });

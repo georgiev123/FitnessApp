@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class ProgramData extends Application {
     public static Integer exercisesCount = 0;
     public static Integer exercisesToAchievement = 1;
 
-    public static final String CHANNEL_ID = "exampleServiceChannel";
+    public static Map<String, Object> userInfoMap = new HashMap<>();
 
 
     public static void clear() {
