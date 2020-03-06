@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tvFoodName"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="45dp"
-        android:layout_toRightOf="@+id/tvFoodName"
+        android:layout_toRightOf="@id/tvFoodWeight"
         android:text="TextView" />
 
     <TextView

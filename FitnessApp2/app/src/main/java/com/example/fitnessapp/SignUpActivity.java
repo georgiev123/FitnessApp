@@ -67,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 etUsername = findViewById(R.id.etUsername);
-                 username = etUsername.getText().toString();
+                username = etUsername.getText().toString();
 
                 etEmail = findViewById(R.id.etEmailSignUp);
                 final String email = etEmail.getText().toString();
@@ -78,8 +78,8 @@ public class SignUpActivity extends AppCompatActivity {
                 etConfirmPassword = findViewById(R.id.etConfirmPassword);
                 final String confPassword = etConfirmPassword.getText().toString();
 
-                if(password.equals(confPassword)) {
-                    signUpUser(email, username);
+                if(password.equals(confPassword) && !password.equals("")) {
+                    signUpUser(email, password);
                 }else {
                     Toast.makeText(SignUpActivity.this, "You have invalid information.", Toast.LENGTH_SHORT).show();
                 }
@@ -89,31 +89,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void updateUI(FirebaseUser user) {
         if(user != null) {
-            db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(task.isSuccessful()) {
-                        for(final QueryDocumentSnapshot document : task.getResult()) {
-                            Map<String, Object> map = new HashMap<>();
-                            map.putAll(document.getData());
+            Map<String, Object> map = new HashMap<>();
+            map.put("username", username);
 
-                            if(map.get("username").toString().equals(username)) {
-                                Toast.makeText(SignUpActivity.this, "This username already exists. Please try again.",  Toast.LENGTH_LONG).show();
-                            }else {
-                                Map<String, Object> currUser = new HashMap<>();
-                                currUser.put("username", username);
-                                db.collection("Users").document(mAuth.getCurrentUser().getUid()).set(currUser);
-                                setUserInfo();
-                                Toast.makeText(SignUpActivity.this, "You signed up.",  Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(SignUpActivity.this, HomePageActivity.class));
-                                finish();
-
-                            }
-                        }
-                    }
-                }
-            });
-
+            db.collection("Users").document(mAuth.getCurrentUser().getUid()).set(map);
+            Toast.makeText(SignUpActivity.this, "You signed up.",  Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(SignUpActivity.this, PersonalInformationActivity.class));
+            finish();
         }else {
             Toast.makeText(this, "You entered an invalid email, password or username. Please try again.",  Toast.LENGTH_LONG).show();
         }
@@ -130,17 +112,11 @@ public class SignUpActivity extends AppCompatActivity {
                             updateUI(user);
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignUpActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 
                     }
                 });
-    }
-
-    private void setUserInfo() {
-        db.collection("Users").document(mAuth.getCurrentUser().getUid()).set(ProgramData.userInfoMap);
     }
 
 }

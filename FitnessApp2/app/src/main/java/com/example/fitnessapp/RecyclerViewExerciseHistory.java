@@ -26,11 +26,10 @@ public class RecyclerViewExerciseHistory extends RecyclerView.Adapter<RecyclerVi
     private ArrayList<String> mRepetitions = new ArrayList<>();
     private ArrayList<String> mExecrcises = new ArrayList<>();
     private ArrayList<String> mDates = new ArrayList<>();
-
-
     private Context context;
 
-    public RecyclerViewExerciseHistory(Context context, ArrayList<String> firstArr, ArrayList<String> secondArr, ArrayList<String> thirdArr, ArrayList<String> forthArr) {
+    public RecyclerViewExerciseHistory(Context context, ArrayList<String> firstArr, ArrayList<String> secondArr,
+                                       ArrayList<String> thirdArr, ArrayList<String> forthArr) {
         this.context = context;
 
         if(((Activity) context).getLocalClassName().equals("ExerciseHistoryActivity")) {

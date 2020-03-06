@@ -60,7 +60,6 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Map<String, Object> map = new HashMap<>();
                                 map.putAll(document.getData());
-
                                 mWeights.add(map.get("weight1").toString());
                                 mRepetitions.add(map.get("repetition1").toString());
                                 if(map.get("weight2") == null) {
@@ -70,7 +69,6 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
                                     mWeights.add(map.get("weight2").toString());
                                     mRepetitions.add(map.get("repetition2").toString());
                                 }
-
                                 if(map.get("weight3") == null) {
                                     mWeights.add("0");
                                     mRepetitions.add("0");
@@ -78,13 +76,13 @@ public class ExerciseHistoryActivity extends AppCompatActivity {
                                     mWeights.add(map.get("weight3").toString());
                                     mRepetitions.add(map.get("repetition3").toString());
                                 }
-
                                 mDates.add(document.getId());
                                 mExercises.add(map.get("exercise_name").toString());
                             }
 
                             RecyclerView recyclerView = findViewById(R.id.recycle_view);
-                            RecyclerViewExerciseHistory adapter = new RecyclerViewExerciseHistory(ExerciseHistoryActivity.this, mWeights, mRepetitions, mExercises, mDates);
+                            RecyclerViewExerciseHistory adapter = new RecyclerViewExerciseHistory(ExerciseHistoryActivity.this,
+                                    mWeights, mRepetitions, mExercises, mDates);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(ExerciseHistoryActivity.this));
                         }else {

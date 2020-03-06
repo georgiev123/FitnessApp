@@ -140,33 +140,33 @@ public class GoalsActivity extends AppCompatActivity {
                 if((cbFirst.isChecked() || cbSecond.isChecked() || cbThird.isChecked() || cbForth.isChecked() ||
                         spTrainingGoal.getSelectedItem().equals("Maintain Weight")) && goalWeight != "") {
 
-//                    Map<String, Object> currUser = new HashMap<>();
-                    ProgramData.userInfoMap.put("training_goal", spTrainingGoal.getSelectedItem());
-                    ProgramData.userInfoMap.put("weight_goal", goalWeight);
+                    Map<String, Object> currUser = new HashMap<>();
+                    currUser.put("training_goal", spTrainingGoal.getSelectedItem());
+                    currUser.put("weight_goal", goalWeight);
                     if(cbFirst.isChecked()) {
-                        ProgramData.userInfoMap.put("weightLost_weekly", 0.25);
+                        currUser.put("weightLost_weekly", 0.25);
                     }else if(cbSecond.isChecked()) {
-                        ProgramData.userInfoMap.put("weightLost_weekly", 0.5);
+                        currUser.put("weightLost_weekly", 0.5);
                     }else if(cbThird.isChecked()) {
-                        ProgramData.userInfoMap.put("weightLost_weekly", 0.75);
+                        currUser.put("weightLost_weekly", 0.75);
                     }else if(cbForth.isChecked()) {
-                        ProgramData.userInfoMap.put("weightLost_weekly", 1);
+                        currUser.put("weightLost_weekly", 1);
                     }
 
-//                    db.collection("Users").document(mauth.getCurrentUser().getUid())
-//                            .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//                            Log.d(TAG, "DocumentSnapshot successful written!");
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.w(TAG, "Error!", e);
-//                        }
-//                    });
+                    db.collection("Users").document(mauth.getCurrentUser().getUid())
+                            .set(currUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successful written!");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error!", e);
+                        }
+                    });
 
-                    startActivity(new Intent(GoalsActivity.this, SignUpActivity.class));
+                    startActivity(new Intent(GoalsActivity.this, HomePageActivity.class));
                     finish();
 
                 }else {

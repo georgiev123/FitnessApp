@@ -340,7 +340,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             Map<String, Object> map = new HashMap<>();
             map.put("steps", numSteps);
 
-            currUserRef.collection("Achievements").document("Pedometer")
+            db.collection("Users").document(mauth.getCurrentUser().getUid())
+                    .collection("Achievements").document("Pedometer")
                     .set(map);
 
             lastStepAchievement *= 10;

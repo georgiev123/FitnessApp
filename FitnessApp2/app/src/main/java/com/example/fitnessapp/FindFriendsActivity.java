@@ -145,19 +145,17 @@ public class FindFriendsActivity extends AppCompatActivity {
                                 map.putAll(document.getData());
 
                                 String currDocUsername = map.get("username").toString();
-                                if(currDocUsername.equals(edUsernameS.getText().toString()) && !mauth.getCurrentUser().getUid().equals(document.getId())) {
+                                if(currDocUsername.equals(edUsernameS.getText().toString()) &&
+                                        !mauth.getCurrentUser().getUid().equals(document.getId())) {
                                     Map<String, Object> mp = new HashMap<>();
                                     mp.put("age", map.get("age"));
                                     mp.put("gender", map.get("gender").toString());
-                                    mp.put("height", map.get("height").toString());
                                     mp.put("user_uid", document.getId());
                                     db.collection("Users").document(mauth.getCurrentUser().getUid())
                                             .collection("Followings").document(edUsernameS.getText().toString())
                                             .set(mp);
                                     edUsernameS.setText("");
                                     break;
-                                }else {
-//                                    Toast.makeText(FindFriendsActivity.this, "User not found.", Toast.LENGTH_SHORT).show();
                                 }
                             }
 

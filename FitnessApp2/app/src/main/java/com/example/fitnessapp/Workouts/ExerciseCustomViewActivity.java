@@ -339,7 +339,8 @@ public class ExerciseCustomViewActivity extends AppCompatActivity {
                             .set(currUserEx).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(ExerciseCustomViewActivity.this, "Your training set has been saven into the exercise history.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ExerciseCustomViewActivity.this, "Your training set has been saven into the exercise history.",
+                                    Toast.LENGTH_LONG).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
