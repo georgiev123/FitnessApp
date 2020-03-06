@@ -27,9 +27,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.firebase:firebase-database:19.2.1'
-    implementation 'com.google.firebase:firebase-firestore:21.4.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.firebase:firebase-firestore:21.4.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation "androidx.navigation:navigation-fragment-ktx:2.2.1"
     implementation "androidx.navigation:navigation-ui-ktx:2.2.1"
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
@@ -37,9 +36,11 @@ dependencies {
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3'
     implementation "com.android.support:recyclerview-v7:29.0.0"
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.android.volley:volley:1.1.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     testImplementation 'org.testng:testng:6.9.6'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 }
