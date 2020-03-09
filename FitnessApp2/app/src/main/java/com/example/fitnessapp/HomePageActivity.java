@@ -108,12 +108,22 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         tvCalories = findViewById(R.id.tvCaloriesHome);
         stepCounter = findViewById(R.id.tvPedometer);
         stepCounter.setTextSize(30);
+        stepCounter.setText(TEXT_NUM_STEPS + 0);
 
         currUserRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot doc = task.getResult();
                 nvDrawer.getMenu().getItem(0).setTitle(doc.get("username").toString());
+            }
+        });
+
+        currUserRef.collection("Achievements").document("Pedometer")
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot doc = task.getResult();
+                stepCounter.setText(TEXT_NUM_STEPS + doc.get("steps").toString());
             }
         });
 
@@ -332,6 +342,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
     @Override
     public void step(long timeNs) {
+        numSteps = Integer.getInteger(stepCounter.getText().toString().split("\\s+")[3]);
         numSteps++;
         stepCounter.setText(TEXT_NUM_STEPS + numSteps);
 

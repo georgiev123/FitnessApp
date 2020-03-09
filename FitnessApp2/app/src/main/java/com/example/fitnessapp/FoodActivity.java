@@ -50,7 +50,7 @@ public class FoodActivity extends AppCompatActivity {
     private TextView tvTest;
 
     private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<Double> mGrams = new ArrayList<>();
+    private ArrayList<String> mGrams = new ArrayList<>();
     private ArrayList<String> mCalories = new ArrayList<>();
 
     private RecyclerView recyclerView;
@@ -67,33 +67,33 @@ public class FoodActivity extends AppCompatActivity {
 
         tvTest = findViewById(R.id.tvTEST);
 
-        OkHttpClient client = new  OkHttpClient();
-        String url = "https://world.openfoodfacts.org/api/v0/product/04963406/nutrition_grades";
-        Request request = new Request.Builder().url(url).build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()) {
-                    Headers responseHeaders = response.headers();
-                    final ArrayList<String> arrHeaders = new ArrayList<>();
-                    for(int i = 0; i < responseHeaders.size(); i++) {
-                        arrHeaders.add(responseHeaders.value(i));
-                    }
-
-                    FoodActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tvTest.setText(arrHeaders.get(0));
-                        }
-                    });
-                }
-            }
-        });
+//        OkHttpClient client = new  OkHttpClient();
+//        String url = "https://world.openfoodfacts.org/api/v0/product/04963406/nutrition_grades";
+//        Request request = new Request.Builder().url(url).build();
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                if(response.isSuccessful()) {
+//                    Headers responseHeaders = response.headers();
+//                    final ArrayList<String> arrHeaders = new ArrayList<>();
+//                    for(int i = 0; i < responseHeaders.size(); i++) {
+//                        arrHeaders.add(responseHeaders.value(i));
+//                    }
+//
+//                    FoodActivity.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            tvTest.setText(arrHeaders.get(0));
+//                        }
+//                    });
+//                }
+//            }
+//        });
 
         recyclerView = findViewById(R.id.recycle_view_food);
         recyclerView.setHasFixedSize(true);
@@ -130,8 +130,12 @@ public class FoodActivity extends AppCompatActivity {
                                 map.putAll(document.getData());
 
                                 mNames.add(document.getId());
-                                mGrams.add(Double.parseDouble(map.get("grams").toString()));
-                                mCalories.add(map.get("calories").toString());
+                                Integer gramsToInt = (int)Double.parseDouble(map.get("grams").toString());
+                                mGrams.add(gramsToInt.toString());
+
+                                Double gramsPerCalorie = (Double.parseDouble(map.get("grams").toString())/100);
+                                Integer gramsPerCalorieInt = (int)(Math.floor(Double.parseDouble(map.get("calories").toString()) * gramsPerCalorie));
+                                mCalories.add(gramsPerCalorieInt.toString());
 
                             }
                             ProgramData.addMeal = true;

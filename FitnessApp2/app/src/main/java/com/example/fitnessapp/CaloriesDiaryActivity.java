@@ -52,13 +52,13 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
     private Double proteinsInt = 0.0;
 
     public ArrayList<String> arrName1 = new ArrayList<>();
-    public ArrayList<Double> arrGrams1 = new ArrayList<>();
+    public ArrayList<String> arrGrams1 = new ArrayList<>();
     public ArrayList<String> arrCalories1 = new ArrayList<>();
     public ArrayList<String> arrName2 = new ArrayList<>();
-    public ArrayList<Double> arrGrams2 = new ArrayList<>();
+    public ArrayList<String> arrGrams2 = new ArrayList<>();
     public ArrayList<String> arrCalories2 = new ArrayList<>();
     public ArrayList<String> arrName3 = new ArrayList<>();
-    public ArrayList<Double> arrGrams3 = new ArrayList<>();
+    public ArrayList<String> arrGrams3 = new ArrayList<>();
     public ArrayList<String> arrCalories3 = new ArrayList<>();
 
     private RecyclerView rvMeal1;
@@ -195,18 +195,20 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
                                 Map<String, Object> map = new HashMap<>();
                                 map.putAll(document.getData());
 
+                                Integer gramsInt = (int)Double.parseDouble(map.get("grams").toString());
+                                Integer caloriesInt = (int)Double.parseDouble(map.get("calories").toString());
                                 if(map.get("meal_number").toString().equals("Meal1")) {
                                     arrName1.add(map.get("food_name").toString());
-                                    arrGrams1.add(Double.parseDouble(map.get("grams").toString()));
-                                    arrCalories1.add(map.get("calories").toString());
+                                    arrGrams1.add(gramsInt.toString());
+                                    arrCalories1.add(caloriesInt.toString());
                                 }else if(map.get("meal_number").toString().equals("Meal2")) {
                                     arrName2.add(map.get("food_name").toString());
-                                    arrGrams2.add(Double.parseDouble(map.get("grams").toString()));
-                                    arrCalories2.add(map.get("calories").toString());
+                                    arrGrams2.add(gramsInt.toString());
+                                    arrCalories2.add(caloriesInt.toString());
                                 }else {
                                     arrName3.add(map.get("food_name").toString());
-                                    arrGrams3.add(Double.parseDouble(map.get("grams").toString()));
-                                    arrCalories3.add(map.get("calories").toString());
+                                    arrGrams3.add(gramsInt.toString());
+                                    arrCalories3.add(caloriesInt.toString());
                                 }
                             }
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class RecyclerViewFood extends RecyclerView.Adapter<RecyclerViewFood.MyViewHolder> {
 
     private ArrayList<String> arrNames;
-    private ArrayList<Double> arrGrams;
+    private ArrayList<String> arrGrams;
     private ArrayList<String> arrCalories;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -38,7 +38,7 @@ public class RecyclerViewFood extends RecyclerView.Adapter<RecyclerViewFood.MyVi
         }
     }
 
-    public RecyclerViewFood(ArrayList<String> names, ArrayList<Double> grams, ArrayList<String> calories) {
+    public RecyclerViewFood(ArrayList<String> names, ArrayList<String> grams, ArrayList<String> calories) {
         arrNames = names;
         arrGrams = grams;
         arrCalories = calories;

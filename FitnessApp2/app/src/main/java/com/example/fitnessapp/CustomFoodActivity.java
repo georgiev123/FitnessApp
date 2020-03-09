@@ -85,12 +85,15 @@ public class CustomFoodActivity extends AppCompatActivity {
 
                                 if(ProgramData.foodChoosed.equals(document.getId())) {
                                     tvBarcode.setText("Barcode : " + map.get("barcode").toString());
-                                    tvCalories.setText("Calories : " + map.get("calories").toString());
-                                    tvCarbs.setText("Carbs : " + map.get("carbs").toString());
-                                    tvProteins.setText("Proteins : " + map.get("proteins").toString());
-                                    tvFats.setText("Fats : " + map.get("fats").toString());
-                                    tvGrams.setText("Grams : " + map.get("grams").toString());
                                     tvName.setText(document.getId());
+                                    tvGrams.setText("Grams : " + map.get("grams").toString());
+
+                                    Double currGrams = (Double.parseDouble(map.get("grams").toString())/100);
+                                    tvCalories.setText("Calories : " + (int)Math.floor(Double.parseDouble(map.get("calories").toString()) * currGrams));
+                                    tvCarbs.setText("Carbs : " + (int)Math.floor(Double.parseDouble(map.get("carbs").toString()) * currGrams));
+                                    tvProteins.setText("Proteins : " + (int)Math.floor(Double.parseDouble(map.get("proteins").toString()) * currGrams));
+                                    tvFats.setText("Fats : " + (int)Math.floor(Double.parseDouble(map.get("fats").toString()) * currGrams));
+
                                 }
                             }
 
@@ -115,11 +118,11 @@ public class CustomFoodActivity extends AppCompatActivity {
 
                     Map<String, Object> map = new HashMap<>();
                     map.put("food_name", tvName.getText().toString());
-                    map.put("calories", tvCalories.getText().toString().split("\\s+")[2]);
+                    map.put("calories", ProgramData.caloriesIntake);
                     map.put("meal_number", ProgramData.whichMeal);
-                    map.put("carbs", tvCarbs.getText().toString().split("\\s+")[2]);
-                    map.put("proteins", tvProteins.getText().toString().split("\\s+")[2]);
-                    map.put("fats", tvFats.getText().toString().split("\\s+")[2]);
+                    map.put("carbs", ProgramData.carbsIntake);
+                    map.put("proteins", ProgramData.proteinsIntake);
+                    map.put("fats", ProgramData.fatsIntake);
                     map.put("grams", tvGrams.getText().toString().split("\\s+")[2]);
                     map.put("barcode", tvBarcode.getText().toString().split("\\s+")[2]);
 
