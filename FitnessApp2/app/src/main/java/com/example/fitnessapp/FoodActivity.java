@@ -67,34 +67,6 @@ public class FoodActivity extends AppCompatActivity {
 
         tvTest = findViewById(R.id.tvTEST);
 
-//        OkHttpClient client = new  OkHttpClient();
-//        String url = "https://world.openfoodfacts.org/api/v0/product/04963406/nutrition_grades";
-//        Request request = new Request.Builder().url(url).build();
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if(response.isSuccessful()) {
-//                    Headers responseHeaders = response.headers();
-//                    final ArrayList<String> arrHeaders = new ArrayList<>();
-//                    for(int i = 0; i < responseHeaders.size(); i++) {
-//                        arrHeaders.add(responseHeaders.value(i));
-//                    }
-//
-//                    FoodActivity.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            tvTest.setText(arrHeaders.get(0));
-//                        }
-//                    });
-//                }
-//            }
-//        });
-
         recyclerView = findViewById(R.id.recycle_view_food);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
