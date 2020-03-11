@@ -56,6 +56,11 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private String TAG = "Home";
     private final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
+    private Double caloriesInt = 0.0;
+    private Double carbsInt = 0.0;
+    private Double fatsInt = 0.0;
+    private Double proteinsInt = 0.0;
+    private Double tvCaloriesIntake = 0.0;
 
     private ArrayList<String> arrNames = new ArrayList<>();
     private ArrayList<String> arrActivities = new ArrayList<>();
@@ -118,6 +123,19 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
+        currUserRef.collection("Achievements").document("Pedometer")
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot doc = task.getResult();
+                Map<String, Object> map = new HashMap<>();
+                map.putAll(doc.getData());
+                Long lg = (Long) map.get("steps");
+                stepCounter.setText(TEXT_NUM_STEPS + lg.intValue());
+
+            }
+        });
+
         ProgramData.userProfile = mauth.getCurrentUser().getUid();
         setRecyclerView();
         calculateCalories("HomePage", tvCalories, mauth, null);
@@ -162,6 +180,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void calculateCalories(final String  calledFromActivity ,final TextView caloriesTV, final FirebaseAuth fAuth, final TextView macrosTV) {
+        tvCaloriesIntake = ProgramData.caloriesIntake;
         final DocumentReference docRef = db.collection("Users").document(fAuth.getCurrentUser().getUid());
         docRef.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -172,7 +191,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                             if(document.exists()) {
                                 String gender;
                                 String activityLevel;
-                                String trainingGoal;
+                                final String trainingGoal;
                                 Double weight;
                                 Double height;
                                 Double age;
@@ -211,28 +230,50 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                     calories -= ((weeklyGoal*1000)/2);
                                 }
 
+                                final Double caloriesFinal = calories;
+                                currUserRef
+                                        .collection("Meals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                Map<String, Object> map = new HashMap<>();
+                                                map.putAll(document.getData());
 
-                                Double caloriesRemaining = calories-ProgramData.caloriesIntake;
-                                caloriesTV.setText(calories.intValue() + "   -  " + ProgramData.caloriesIntake.intValue() + "   =   " + caloriesRemaining.intValue());
-                                if(calledFromActivity.equals("CaloriesDiary")) {
-                                    Double carbs;
-                                    Double protein;
-                                    Double fats;
+                                                caloriesInt += Double.parseDouble(map.get("calories").toString());
+                                                carbsInt += Double.parseDouble(map.get("carbs").toString());
+                                                proteinsInt += Double.parseDouble(map.get("proteins").toString());
+                                                fatsInt += Double.parseDouble(map.get("fats").toString());
 
-                                    if(trainingGoal.equals("Lose Weight")) {
-                                        carbs = calories*0.45;
-                                        protein = calories*0.35;
-                                        fats = calories*0.2;
-                                    }else {
-                                        carbs = calories*0.5;
-                                        protein = calories*0.25;
-                                        fats = calories*0.25;
+                                            }
+
+                                            Double caloriesRemaining = caloriesFinal - caloriesInt;
+                                            caloriesTV.setText(caloriesFinal.intValue() + "   -  " + caloriesInt.intValue() + "   =   " + caloriesRemaining.intValue());
+                                            if (calledFromActivity.equals("CaloriesDiary")) {
+                                                Double carbs;
+                                                Double protein;
+                                                Double fats;
+                                                final String trainingGoalFinal = trainingGoal;
+
+                                                if (trainingGoalFinal.equals("Lose Weight")) {
+                                                    carbs = caloriesFinal * 0.45;
+                                                    protein = caloriesFinal * 0.35;
+                                                    fats = caloriesFinal * 0.2;
+                                                } else {
+                                                    carbs = caloriesFinal * 0.5;
+                                                    protein = caloriesFinal * 0.25;
+                                                    fats = caloriesFinal * 0.25;
+                                                }
+
+                                                macrosTV.setText("carbs:  " + (carbs.intValue() - carbsInt.intValue()) +
+                                                        "   proteins:  " + (protein.intValue() - proteinsInt.intValue())
+                                                        + "   fats:  " + (fats.intValue() - fatsInt.intValue()));
+                                            }
+                                        }else {
+                                            Log.d(TAG, "Get failed with.", task.getException());
+                                        }
                                     }
-
-                                    macrosTV.setText("carbs :  " + (carbs.intValue() - ProgramData.carbsIntake.intValue()) +
-                                            "   proteins :  " + (protein.intValue() - ProgramData.proteinsIntake.intValue())
-                                            + "   fats :  " + (fats.intValue() - ProgramData.fatsIntake.intValue()));
-                                }
+                                });
                             }else {
                                 Log.d(TAG, "No such document");
                             }
@@ -241,6 +282,10 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                         }
                     }
                 });
+    }
+
+    private void getOldMacros() {
+
     }
 
     @Override
@@ -295,8 +340,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                 mauth.getInstance().signOut();
                 ProgramData.clear();
                 startActivity(new Intent(HomePageActivity.this, MainActivity.class));
-                finish();
         }
+        finish();
 
     }
 
@@ -333,6 +378,8 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
 
     @Override
     public void step(long timeNs) {
+        String str = stepCounter.getText().toString().split("\\s+")[3];
+        numSteps = Integer.parseInt(str);
         numSteps++;
         stepCounter.setText(TEXT_NUM_STEPS + numSteps);
 

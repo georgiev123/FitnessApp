@@ -46,10 +46,6 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
     private TextView tvMacros;
     private HomePageActivity hp;
     public Double height;
-    private Double caloriesInt = 0.0;
-    private Double carbsInt = 0.0;
-    private Double fatsInt = 0.0;
-    private Double proteinsInt = 0.0;
 
     public ArrayList<String> arrName1 = new ArrayList<>();
     public ArrayList<String> arrGrams1 = new ArrayList<>();
@@ -97,7 +93,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         tvCaloriesGoal = findViewById(R.id.tvCaloriesGoal);
         tvMacros = findViewById(R.id.tvMacros);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarDiary);
+        Toolbar mToolbar = findViewById(R.id.toolbarDiary);
         mToolbar.setTitle(TAG);
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -105,6 +101,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(CaloriesDiaryActivity.this, HomePageActivity.class));
                 finish();
             }
         });
@@ -136,16 +133,6 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
                 ProgramData.doRestart = true;
                 ProgramData.whichMeal = "Meal3";
                 startActivity(new Intent(CaloriesDiaryActivity.this, FoodActivity.class));
-            }
-        });
-
-        db.collection("Users").document(mauth.getCurrentUser().getUid()).collection("Meals")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult().size() > 0) {
-                    getOldMacros();
-                }
             }
         });
 
@@ -230,37 +217,6 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
                 });
     }
 
-    private void getOldMacros() {
-        db.collection("Users").document(mauth.getCurrentUser().getUid())
-                .collection("Meals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Map<String, Object> map = new HashMap<>();
-                        map.putAll(document.getData());
-
-                        caloriesInt += Double.parseDouble(map.get("calories").toString());
-                        carbsInt += Double.parseDouble(map.get("carbs").toString());
-                        proteinsInt += Double.parseDouble(map.get("proteins").toString());
-                        fatsInt += Double.parseDouble(map.get("fats").toString());
-
-                    }
-
-//                    tvCaloriesGoal.setText("0.0");
-//                    tvMacros.setText(0.0 + " " + 0.0 + " " + 0.0);
-
-                }else {
-                    Log.d(TAG, "Get failed with.", task.getException());
-                }
-
-            }
-        });
-//        caloriesIntake = Double.parseDouble(tvCaloriesGoal.getText().toString());
-//        carbsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[0]);
-//        proteinsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[1]);
-//        fatsIntake = Double.parseDouble(tvMacros.getText().toString().split("\\s+")[2]);
-    }
 }
 
 
