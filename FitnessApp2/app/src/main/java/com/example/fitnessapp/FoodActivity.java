@@ -72,7 +72,7 @@ public class FoodActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarFoodActivity);
+        Toolbar mToolbar = findViewById(R.id.toolbarFoodActivity);
         mToolbar.setTitle(TAG);
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -105,9 +105,9 @@ public class FoodActivity extends AppCompatActivity {
                                 Integer gramsToInt = (int)Double.parseDouble(map.get("grams").toString());
                                 mGrams.add(gramsToInt.toString());
 
-                                Double gramsPerCalorie = (Double.parseDouble(map.get("grams").toString())/100);
-                                Integer gramsPerCalorieInt = (int)(Math.floor(Double.parseDouble(map.get("calories").toString()) * gramsPerCalorie));
-                                mCalories.add(gramsPerCalorieInt.toString());
+                                Double gramsPerCalories = (Double.parseDouble(map.get("grams").toString())/100);
+                                Integer gramsPerCaloriesInt = (int)(Math.floor(Double.parseDouble(map.get("calories").toString()) * gramsPerCalories));
+                                mCalories.add(gramsPerCaloriesInt.toString());
 
                             }
                             ProgramData.addMeal = true;

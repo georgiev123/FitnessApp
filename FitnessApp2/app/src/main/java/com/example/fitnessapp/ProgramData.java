@@ -19,10 +19,6 @@ public class ProgramData extends Application {
     public static String whichActivity;
     public static String imageExercise;
     public static String userProfile;
-    public static Double caloriesIntake = 0.0;
-    public static Double carbsIntake = 0.0;
-    public static Double proteinsIntake = 0.0;
-    public static Double fatsIntake = 0.0;
     public static String whichMeal;
     public static Boolean addMeal = false;
     public static Boolean doRestart = false;
@@ -39,10 +35,6 @@ public class ProgramData extends Application {
         whichActivity = "";
         imageExercise = "";
         userProfile = "";
-        caloriesIntake = 0.0;
-        carbsIntake = 0.0;
-        proteinsIntake = 0.0;
-        fatsIntake = 0.0;
         whichMeal = "";
         addMeal = false;
         doRestart = false;

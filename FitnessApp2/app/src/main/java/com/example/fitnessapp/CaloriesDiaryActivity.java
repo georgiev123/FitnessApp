@@ -29,11 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.fitnessapp.ProgramData.caloriesIntake;
-import static com.example.fitnessapp.ProgramData.carbsIntake;
-import static com.example.fitnessapp.ProgramData.fatsIntake;
-import static com.example.fitnessapp.ProgramData.proteinsIntake;
-
 public class CaloriesDiaryActivity extends AppCompatActivity {
     private FirebaseAuth mauth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -110,7 +105,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         btnMeal1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgramData.doRestart = true;
+                ProgramData.doRestart = false;
                 ProgramData.whichMeal = "Meal1";
                 startActivity(new Intent(CaloriesDiaryActivity.this, FoodActivity.class));
             }
@@ -120,7 +115,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         btnMeal2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgramData.doRestart = true;
+                ProgramData.doRestart = false;
                 ProgramData.whichMeal = "Meal2";
                 startActivity(new Intent(CaloriesDiaryActivity.this, FoodActivity.class));
             }
@@ -130,7 +125,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
         btnMeal3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgramData.doRestart = true;
+                ProgramData.doRestart = false;
                 ProgramData.whichMeal = "Meal3";
                 startActivity(new Intent(CaloriesDiaryActivity.this, FoodActivity.class));
             }

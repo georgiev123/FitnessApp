@@ -60,7 +60,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     private Double carbsInt = 0.0;
     private Double fatsInt = 0.0;
     private Double proteinsInt = 0.0;
-    private Double tvCaloriesIntake = 0.0;
 
     private ArrayList<String> arrNames = new ArrayList<>();
     private ArrayList<String> arrActivities = new ArrayList<>();
@@ -128,11 +127,12 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot doc = task.getResult();
-                Map<String, Object> map = new HashMap<>();
-                map.putAll(doc.getData());
-                Long lg = (Long) map.get("steps");
-                stepCounter.setText(TEXT_NUM_STEPS + lg.intValue());
-
+                if(doc.exists()) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.putAll(doc.getData());
+                    Long lg = (Long) map.get("steps");
+                    stepCounter.setText(TEXT_NUM_STEPS + lg.intValue());
+                }
             }
         });
 
@@ -180,7 +180,10 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void calculateCalories(final String  calledFromActivity ,final TextView caloriesTV, final FirebaseAuth fAuth, final TextView macrosTV) {
-        tvCaloriesIntake = ProgramData.caloriesIntake;
+        caloriesInt = 0.0;
+        carbsInt = 0.0;
+        fatsInt = 0.0;
+        proteinsInt = 0.0;
         final DocumentReference docRef = db.collection("Users").document(fAuth.getCurrentUser().getUid());
         docRef.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -231,8 +234,7 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                                 }
 
                                 final Double caloriesFinal = calories;
-                                currUserRef
-                                        .collection("Meals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                docRef.collection("Meals").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.isSuccessful()) {

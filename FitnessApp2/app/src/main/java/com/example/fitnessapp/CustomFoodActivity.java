@@ -38,6 +38,7 @@ public class CustomFoodActivity extends AppCompatActivity {
     public TextView tvProteins;
     public TextView tvFats;
     public TextView tvGrams;
+    private TextView tvCaloriesPerGrams;
     public Button btnAddMeal;
 
 
@@ -54,8 +55,9 @@ public class CustomFoodActivity extends AppCompatActivity {
         tvFats = findViewById(R.id.tvInfoFats);
         tvGrams = findViewById(R.id.tvInfoGrams);
         btnAddMeal = findViewById(R.id.btnAddFood);
+        tvCaloriesPerGrams = findViewById(R.id.tvCaloriesPerGram);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarCustomFood);
+        Toolbar mToolbar = findViewById(R.id.toolbarCustomFood);
         mToolbar.setTitle(TAG);
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -93,12 +95,13 @@ public class CustomFoodActivity extends AppCompatActivity {
                                     tvCarbs.setText("Carbs : " + (int)Math.floor(Double.parseDouble(map.get("carbs").toString()) * currGrams));
                                     tvProteins.setText("Proteins : " + (int)Math.floor(Double.parseDouble(map.get("proteins").toString()) * currGrams));
                                     tvFats.setText("Fats : " + (int)Math.floor(Double.parseDouble(map.get("fats").toString()) * currGrams));
+                                    tvCaloriesPerGrams.setText("Calories for 100g : " + Double.parseDouble(map.get("calories").toString()));
 
                                 }
                             }
 
                         }else {
-                            Log.d("asdf", "Get failed with.", task.getException());
+                            Log.d(TAG, "Get failed with.", task.getException());
                         }
 
                     }
@@ -108,29 +111,29 @@ public class CustomFoodActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ProgramData.addMeal) {
-                    ProgramData.caloriesIntake += Double.parseDouble(tvCalories.getText().toString().split("\\s+")[2]);
-                    ProgramData.carbsIntake += Double.parseDouble(tvCarbs.getText().toString().split("\\s+")[2]);
-                    ProgramData.proteinsIntake += Double.parseDouble(tvProteins.getText().toString().split("\\s+")[2]);
-                    ProgramData.fatsIntake += Double.parseDouble(tvFats.getText().toString().split("\\s+")[2]);
+                    Double pCalories = Double.parseDouble(tvCalories.getText().toString().split("\\s+")[2]);
+                    Double pCarbs = Double.parseDouble(tvCarbs.getText().toString().split("\\s+")[2]);
+                    Double pProteinsIntake = Double.parseDouble(tvProteins.getText().toString().split("\\s+")[2]);
+                    Double pFatsIntake = Double.parseDouble(tvFats.getText().toString().split("\\s+")[2]);
                     Date c = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY hh:mm:ss");
                     String formattedDate = df.format(c);
 
                     Map<String, Object> map = new HashMap<>();
+
                     map.put("food_name", tvName.getText().toString());
-                    map.put("calories", ProgramData.caloriesIntake);
+                    map.put("calories", pCalories);
                     map.put("meal_number", ProgramData.whichMeal);
-                    map.put("carbs", ProgramData.carbsIntake);
-                    map.put("proteins", ProgramData.proteinsIntake);
-                    map.put("fats", ProgramData.fatsIntake);
+                    map.put("carbs", pCarbs);
+                    map.put("proteins", pProteinsIntake);
+                    map.put("fats", pFatsIntake);
                     map.put("grams", tvGrams.getText().toString().split("\\s+")[2]);
                     map.put("barcode", tvBarcode.getText().toString().split("\\s+")[2]);
 
                     db.collection("Users").document(mauth.getCurrentUser().getUid())
                             .collection("Meals").document(formattedDate).set(map);
                     ProgramData.addMeal = false;
-                }else {
-                    ProgramData.doRestart = false;
+                    ProgramData.doRestart = true;
                 }
 
                 finish();
