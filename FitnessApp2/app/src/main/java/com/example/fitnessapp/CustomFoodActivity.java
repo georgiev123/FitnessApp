@@ -132,7 +132,6 @@ public class CustomFoodActivity extends AppCompatActivity {
 
                     db.collection("Users").document(mauth.getCurrentUser().getUid())
                             .collection("Meals").document(formattedDate).set(map);
-                    ProgramData.addMeal = false;
                     ProgramData.doRestart = true;
                 }
 

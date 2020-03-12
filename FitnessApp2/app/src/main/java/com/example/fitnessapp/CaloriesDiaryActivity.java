@@ -107,6 +107,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.doRestart = false;
                 ProgramData.whichMeal = "Meal1";
+                ProgramData.addMeal = true;
                 startActivity(new Intent(CaloriesDiaryActivity.this, FoodActivity.class));
             }
         });
@@ -117,6 +118,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.doRestart = false;
                 ProgramData.whichMeal = "Meal2";
+                ProgramData.addMeal = true;
                 startActivity(new Intent(CaloriesDiaryActivity.this, FoodActivity.class));
             }
         });
@@ -127,6 +129,7 @@ public class CaloriesDiaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgramData.doRestart = false;
                 ProgramData.whichMeal = "Meal3";
+                ProgramData.addMeal = true;
                 startActivity(new Intent(CaloriesDiaryActivity.this, FoodActivity.class));
             }
         });

@@ -1,5 +1,6 @@
 package com.example.fitnessapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,18 +42,15 @@ import okhttp3.Response;
 
 public class FoodActivity extends AppCompatActivity {
 
+    public static Activity foodActivity;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mauth;
-
     private String TAG = "FoodActivity";
 
     private Button btnBarcodeScan;
-    private TextView tvTest;
-
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mGrams = new ArrayList<>();
     private ArrayList<String> mCalories = new ArrayList<>();
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -62,10 +60,9 @@ public class FoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
+        foodActivity = this;
 
         mauth = FirebaseAuth.getInstance();
-
-        tvTest = findViewById(R.id.tvTEST);
 
         recyclerView = findViewById(R.id.recycle_view_food);
         recyclerView.setHasFixedSize(true);
@@ -80,6 +77,7 @@ public class FoodActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgramData.addMeal = false;
                 finish();
             }
         });
@@ -110,7 +108,6 @@ public class FoodActivity extends AppCompatActivity {
                                 mCalories.add(gramsPerCaloriesInt.toString());
 
                             }
-                            ProgramData.addMeal = true;
                             mAdapter = new RecyclerViewFood(mNames, mGrams, mCalories);
                             recyclerView.setAdapter(mAdapter);
                         }else {
@@ -120,6 +117,12 @@ public class FoodActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        ProgramData.addMeal = false;
+        finish();
     }
 
 }
