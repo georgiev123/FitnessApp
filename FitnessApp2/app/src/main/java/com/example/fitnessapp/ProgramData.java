@@ -23,7 +23,7 @@ public class ProgramData extends Application {
     public static Boolean addMeal = false;
     public static Boolean doRestart = false;
     public static String foodChoosed = "";
-    public static Integer lastStepAchievement = 0;
+    public static Integer lastStepAchievement = 10;
     public static Integer exercisesCount = 0;
     public static Integer exercisesToAchievement = 1;
 
@@ -39,7 +39,7 @@ public class ProgramData extends Application {
         addMeal = false;
         doRestart = false;
         foodChoosed = "";
-        lastStepAchievement = 0;
+        lastStepAchievement = 10;
         exercisesCount = 0;
         exercisesToAchievement = 1;
 

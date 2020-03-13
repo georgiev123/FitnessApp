@@ -37,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etPassword;
     private EditText etConfirmPassword;
+    public ArrayList<String> allUsernames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,18 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
+        allUsernames = new ArrayList<>();
+
+        db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for(QueryDocumentSnapshot doc : task.getResult()) {
+                        allUsernames.add(doc.get("username").toString());
+                    }
+                }
+            }
+        });
 
         btnSignUp = findViewById(R.id.btnSignUp);
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +81,14 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 etUsername = findViewById(R.id.etUsername);
+
+                for(int i = 0; i<allUsernames.size(); i++) {
+                    if(allUsernames.get(i).equals(etUsername.getText().toString())) {
+                        Toast.makeText(SignUpActivity.this, "This username is already used. Please try again.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
                 username = etUsername.getText().toString();
 
                 etEmail = findViewById(R.id.etEmailSignUp);

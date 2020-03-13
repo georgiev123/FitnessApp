@@ -286,9 +286,6 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
                 });
     }
 
-    private void getOldMacros() {
-
-    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -383,18 +380,28 @@ public class HomePageActivity extends AppCompatActivity implements SensorEventLi
         String str = stepCounter.getText().toString().split("\\s+")[3];
         numSteps = Integer.parseInt(str);
         numSteps++;
+        Integer digitsOfNumber = String.valueOf(numSteps).length();
         stepCounter.setText(TEXT_NUM_STEPS + numSteps);
 
-        if(numSteps >= lastStepAchievement) {
+        if (lastStepAchievement <= numSteps) {
+
+            if(digitsOfNumber>4) {
+                lastStepAchievement = (int)(Math.pow(10, 4));
+                while (lastStepAchievement < numSteps) {
+                    lastStepAchievement += 5000;
+                }
+            }else{
+                lastStepAchievement = (int)(Math.pow(10, digitsOfNumber));
+            }
 
             Map<String, Object> map = new HashMap<>();
             map.put("steps", numSteps);
 
-            db.collection("Users").document(mauth.getCurrentUser().getUid())
-                    .collection("Achievements").document("Pedometer")
-                    .set(map);
-
-            lastStepAchievement *= 10;
+            if(mauth.getCurrentUser() != null) {
+                db.collection("Users").document(mauth.getCurrentUser().getUid())
+                        .collection("Achievements").document("Pedometer")
+                        .set(map);
+            }
         }
     }
 

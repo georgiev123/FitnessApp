@@ -46,7 +46,7 @@ public class RecyclerViewFolowee extends RecyclerView.Adapter<RecyclerViewFolowe
     public void onBindViewHolder(@NonNull RecyclerViewFolowee.MyViewHolder holder, int position) {
         holder.tvNames.setText(arrFolloweeNames.get(position));
         if(arrActivityKind.get(position).equals("Pedometer")) {
-            holder.tvActivities.setText("Walked\n" + arrFolloweeActivity.get(position) + " steps");
+            holder.tvActivities.setText("Walked over\n" + arrFolloweeActivity.get(position) + " steps");
         }else {
             if(arrFolloweeActivity.get(position).equals("1")) {
                 holder.tvActivities.setText("  Did " + arrFolloweeActivity.get(position) + "\n" + " exercise");
